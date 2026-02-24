@@ -1,0 +1,18 @@
+.header-container {
+  display: flex;
+  flex-direction: column; /* Questo mette il titolo sopra e la ricerca sotto */
+  align-items: center;    /* Centra tutto orizzontalmente */
+  gap: 20px;              /* Aggiunge spazio tra il titolo e la barra */
+  padding: 20px;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+h1 {
+  margin: 0; /* Rimuove margini extra che potrebbero sballare il design */
+  font-family: sans-serif;
+}
