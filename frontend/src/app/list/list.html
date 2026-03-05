@@ -1,0 +1,15 @@
+<div>
+  <h2>available tours</h2>
+  <div
+    *ngFor="let tour of filteredTours"
+    (click)="select(tour.id)"
+    [style.background]="selectedId === tour.id ? '#ffb6c1' : 'white'"
+    style="cursor: pointer; padding: 10px; border-radius: 8px;"
+  >
+    <h3>{{ tour.name }}</h3>
+    <p>{{ tour.location }}</p>
+    <p>{{ tour.duration }}</p>
+    <p>${{ tour.price }}</p>
+    <hr>
+  </div>
+</div>

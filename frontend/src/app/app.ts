@@ -1,14 +1,18 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 import { SearchInput } from './search-input/search-input';
-
+import { List } from './list/list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SearchInput],
+  standalone: true,
+  imports: [SearchInput, List],
   templateUrl: './app.html',
-  styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('frontend');
+  currentSearch = '';
+  tours: any[] = [];
+
+  onTourAdded(tour: any) {
+    this.tours = [...this.tours, tour];
+  }
 }

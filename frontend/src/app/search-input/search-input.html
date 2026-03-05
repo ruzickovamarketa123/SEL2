@@ -1,4 +1,23 @@
-<div class="search-container">
-  <input type="text" placeholder="Search tour">
-  <button type="button">🔍</button>
+<div style="display: flex; gap: 8px;">
+  <input type="text" [(ngModel)]="searchTerm" placeholder="search for your dream tour" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #eee;">
+  <button type="button" (click)="onSearch()">🔍</button>
+  <button type="button" (click)="showModal = true">+ add tour</button>
+</div>
+
+<div *ngIf="showModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 100;">
+  <div style="background: white; padding: 24px; border-radius: 12px; width: 400px;">
+    <h3 style="margin: 0 0 16px 0;">add new tour</h3>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <input type="text" [(ngModel)]="newTour.name" placeholder="name" style="padding: 8px; border-radius: 8px; border: 1px solid #eee;">
+      <input type="text" [(ngModel)]="newTour.location" placeholder="country" style="padding: 8px; border-radius: 8px; border: 1px solid #eee;">
+      <input type="text" [(ngModel)]="newTour.duration" placeholder="duration (e.g. 3 days)" style="padding: 8px; border-radius: 8px; border: 1px solid #eee;">
+      <input type="number" [(ngModel)]="newTour.price" placeholder="price ($)" style="padding: 8px; border-radius: 8px; border: 1px solid #eee;">
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px;">
+      <button type="button" (click)="showModal = false">cancel</button>
+      <button type="button" (click)="addTour()">add</button>
+    </div>
+  </div>
 </div>
