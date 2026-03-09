@@ -1,0 +1,31 @@
+<div class="tour-details-container" *ngIf="tour">
+  <div class="details-header">
+    <div class="title-group">
+      <h1>{{ tour.name }}</h1>
+      <span class="location-badge">{{ tour.country }}</span>
+    </div>
+    <button class="close-btn" (click)="onClose()">×</button>
+  </div>
+
+  <hr class="divider">
+
+  <div class="details-body">
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="label">Duration:</span>
+        <span class="value">{{ tour.duration }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Price:</span>
+        <span class="value price">{{ tour.price | currency:'USD' }}</span>
+      </div>
+    </div>
+
+    <div class="description-section">
+      <h3>Description</h3>
+      <p>
+        {{ tour.description || 'No description available for this tour.' }}
+      </p>
+    </div>
+  </div>
+</div>

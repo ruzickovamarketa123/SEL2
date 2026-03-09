@@ -2,7 +2,7 @@
   <h2>available tours</h2>
   <div
     *ngFor="let tour of filteredTours"
-    (click)="select(tour.id)"
+    (click)="select(tour)"
     [style.background]="selectedId === tour.id ? '#ffb6c1' : 'white'"
     style="cursor: pointer; padding: 10px; border-radius: 8px;"
   >
