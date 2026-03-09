@@ -3,7 +3,7 @@
   <div
     *ngFor="let tour of filteredTours"
     (click)="select(tour)"
-    [style.background]="selectedId === tour.id ? '#ffb6c1' : 'white'"
+    [style.background]="selectedId === tour.id ? '#ffdbe2' : 'white'"
     style="cursor: pointer; padding: 10px; border-radius: 8px;"
   >
     <h3>{{ tour.name }}</h3>

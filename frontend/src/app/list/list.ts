@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'; // 1. Aggiungi Output e EventEmitter
+import { Component, Input, Output, EventEmitter } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,7 +11,6 @@ export class List {
   @Input() searchTerm = '';
   @Input() tours: any[] = [];
   
-  // 2. Crea l'evento che il componente App ascolterà
   @Output() tourSelected = new EventEmitter<any>(); 
 
   selectedId: number | null = null;
@@ -24,10 +23,9 @@ export class List {
     { id: 5, name: 'Safari Adventure', location: 'Kenya', duration: '7 days', price: 999 },
   ];
 
-  // 3. Modifica la funzione per ricevere l'intero oggetto 'tour'
   select(tour: any) {
-    this.selectedId = tour.id; // Per evidenziare graficamente la riga
-    this.tourSelected.emit(tour); // Invia l'oggetto al componente padre (App)
+    this.selectedId = tour.id; 
+    this.tourSelected.emit(tour); 
   }
 
   get filteredTours() {

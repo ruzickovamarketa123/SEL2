@@ -12,19 +12,19 @@
   <div class="details-body">
     <div class="info-grid">
       <div class="info-item">
-        <span class="label">Duration:</span>
+        <span class="label">duration:</span>
         <span class="value">{{ tour.duration }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Price:</span>
+        <span class="label">price:</span>
         <span class="value price">{{ tour.price | currency:'USD' }}</span>
       </div>
     </div>
 
     <div class="description-section">
-      <h3>Description</h3>
+      <h3>description</h3>
       <p>
-        {{ tour.description || 'No description available for this tour.' }}
+        {{ tour.description || 'no description available for this tour.' }}
       </p>
     </div>
   </div>

@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 export class Tour_Details {
     @Input() tour: any = null;
 
-    // Emette un evento per dire al padre di chiudere il pannello
   @Output() close = new EventEmitter<void>();
 
   onClose() {
