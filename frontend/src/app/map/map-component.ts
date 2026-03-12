@@ -10,7 +10,6 @@ const iconDefault = L.icon({
 });
 L.Marker.prototype.options.icon = iconDefault;
 
-// Coordinates for each tour location (matched by tour id)
 const TOUR_COORDS: Record<number, [number, number]> = {
   1: [48.8566, 2.3522],    // Paris, France
   2: [35.6762, 139.6503],  // Tokyo, Japan
@@ -45,7 +44,6 @@ export class MapComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     this.initialized = true;
 
-    // If a tour was already selected before map init, show it
     if (this.selectedTour) {
       this.updateMap(this.selectedTour);
     }
@@ -72,7 +70,7 @@ export class MapComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.marker = L.marker(coords)
       .addTo(this.map)
       .bindPopup(
-        `<b>${tour.name}</b><br>${tour.location} · ${tour.duration}<br><strong>$${tour.price}</strong>`,
+        `<b>${tour.name}</b><br>${tour.distance} · ${tour.estimatedTime} · ${tour.transportType}<br>`,
         { closeButton: false }
       )
       .openPopup();

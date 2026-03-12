@@ -8,30 +8,30 @@
     <div class="details-content">
       <div class="info-grid">
         <div class="info-item">
-          <span class="label">📍 From: </span>
+          <span class="label">from: </span>
           <span class="value">{{ tour.from }}</span>
         </div>
         <div class="info-item">
-          <span class="label">🏁 To: </span>
+          <span class="label">to: </span>
           <span class="value">{{ tour.to }}</span>
         </div>
         <div class="info-item">
-          <span class="label">🚲 Type: </span>
+          <span class="label">type: </span>
           <span class="value">{{ tour.transportType }}</span>
         </div>
         <div class="info-item">
-          <span class="label">📏 Distance: </span>
+          <span class="label">distance: </span>
           <span class="value">{{ tour.distance }} km</span>
         </div>
         <div class="info-item">
-          <span class="label">⏱️ Est. Time: </span>
+          <span class="label">duration: </span>
           <span class="value">{{ tour.estimatedTime }} min</span>
         </div>
       </div>
 
       <div class="description-section">
-        <h3>Description</h3>
-        <p>{{ tour.description || 'No description available for this tour.' }}</p>
+        <h3>description</h3>
+        <p>{{ tour.description || 'no description available for this tour.' }}</p>
       </div>
     </div>
   </div>
