@@ -1,33 +1,39 @@
 <div style="display: flex; flex-direction: column; height: 100vh; overflow: hidden; background-color: #f5f5f5;">
-  
+
   <div style="padding: 16px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 10;">
-    <search-input (searchChanged)="currentSearch = $event"
-                  (tourAdded)="onTourAdded($event)">
+    <search-input
+      (searchChanged)="currentSearch = $event"
+      (tourAdded)="onTourAdded($event)">
     </search-input>
   </div>
 
   <div style="display: flex; flex: 1; overflow: hidden;">
-    
-    <div style="width: 350px; overflow-y: auto; background: white; border-right: 1px solid #ddd; padding: 16px;">
-      <list [searchTerm]="currentSearch" 
-            [tours]="tours" 
-            (tourSelected)="selectedTour = $event">
+
+    <div style="width: 350px; overflow-y: auto; background: white; border-right: 1px solid #ddd; padding: 16px; flex-shrink: 0;">
+      <list
+        [searchTerm]="currentSearch"
+        [tours]="tours"
+        (tourSelected)="selectedTour = $event">
       </list>
     </div>
 
-    <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px; overflow-y: auto;">
-      
-      <div *ngIf="!selectedTour" style="color: #999; text-align: center;">
-        <h3>select a tour from the list to view the details</h3>
+    <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+
+      <div style="flex: 1; min-height: 0; padding: 16px 16px 0 16px;">
+        <div style="height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
+          <app-map [selectedTour]="selectedTour"></app-map>
+        </div>
       </div>
 
-      <div *ngIf="selectedTour" 
-           style="width: 100%; max-width: 800px; min-height: 500px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 32px; position: relative; animation: fadeIn 0.4s ease-out;">
-        
-        <tour_details [tour]="selectedTour" (close)="selectedTour = null"></tour_details>
-        
+      <div style="flex-shrink: 0; padding: 12px 16px 16px 16px;">
+        <div *ngIf="!selectedTour" style="background: white; border-radius: 12px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); color: #aaa; text-align: center;">
+          <p style="margin: 0; font-size: 14px;">Select a tour from the list to see details here.</p>
+        </div>
+        <div *ngIf="selectedTour" style="background: white; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); overflow: hidden;">
+          <tour_details [tour]="selectedTour" (close)="selectedTour = null"></tour_details>
+        </div>
       </div>
+
     </div>
-
   </div>
 </div>

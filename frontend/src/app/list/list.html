@@ -1,15 +1,25 @@
-<div>
-  <h2>available tours</h2>
-  <div
-    *ngFor="let tour of filteredTours"
-    (click)="select(tour)"
-    [style.background]="selectedId === tour.id ? '#ffdbe2' : 'white'"
-    style="cursor: pointer; padding: 10px; border-radius: 8px;"
-  >
-    <h3>{{ tour.name }}</h3>
-    <p>{{ tour.location }}</p>
-    <p>{{ tour.duration }}</p>
-    <p>${{ tour.price }}</p>
-    <hr>
+<div class="tour-list-container">
+  <h2 class="list-title">Available Tours</h2>
+  
+  <div class="scroll-area">
+    <div
+      *ngFor="let tour of filteredTours"
+      (click)="select(tour)"
+      class="tour-card"
+      [class.selected]="selectedId === tour.id"
+    >
+      <div class="card-header">
+        <h3 class="tour-name">{{ tour.name }}</h3>
+        <span class="type-badge">{{ tour.transportType }}</span>
+      </div>
+
+      <div class="card-details">
+        <div class="route">
+          <span class="route-point">{{ tour.from }}</span>
+          <span class="route-arrow">→</span>
+          <span class="route-point">{{ tour.to }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

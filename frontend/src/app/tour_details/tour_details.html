@@ -1,31 +1,38 @@
-<div class="tour-details-container" *ngIf="tour">
-  <div class="details-header">
-    <div class="title-group">
-      <h1>{{ tour.name }}</h1>
-      <span class="location-badge">{{ tour.country }}</span>
+@if (vm.tour(); as tour) {
+  <div class="tour-details-container">
+    <div class="details-header">
+      <h1 class="tour-title">{{ tour.name }}</h1>
+      <button class="close-btn" (click)="onClose()" title="Close details">×</button>
     </div>
-    <button class="close-btn" (click)="onClose()">×</button>
-  </div>
 
-  <hr class="divider">
-
-  <div class="details-body">
-    <div class="info-grid">
-      <div class="info-item">
-        <span class="label">duration:</span>
-        <span class="value">{{ tour.duration }}</span>
+    <div class="details-content">
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">📍 From: </span>
+          <span class="value">{{ tour.from }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">🏁 To: </span>
+          <span class="value">{{ tour.to }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">🚲 Type: </span>
+          <span class="value">{{ tour.transportType }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">📏 Distance: </span>
+          <span class="value">{{ tour.distance }} km</span>
+        </div>
+        <div class="info-item">
+          <span class="label">⏱️ Est. Time: </span>
+          <span class="value">{{ tour.estimatedTime }} min</span>
+        </div>
       </div>
-      <div class="info-item">
-        <span class="label">price:</span>
-        <span class="value price">{{ tour.price | currency:'USD' }}</span>
+
+      <div class="description-section">
+        <h3>Description</h3>
+        <p>{{ tour.description || 'No description available for this tour.' }}</p>
       </div>
     </div>
-
-    <div class="description-section">
-      <h3>description</h3>
-      <p>
-        {{ tour.description || 'no description available for this tour.' }}
-      </p>
-    </div>
   </div>
-</div>
+}

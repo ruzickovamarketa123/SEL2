@@ -1,18 +1,26 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TourDetailsViewModel } from './tour_details.vm';
+import { Tour } from './tour_details.model';
 
 @Component({
   selector: 'tour_details',
   standalone: true,
   imports: [CommonModule],
+  providers: [TourDetailsViewModel],
   templateUrl: './tour_details.html',
+  styleUrls: ['./tour_details.css']
 })
 export class Tour_Details {
-    @Input() tour: any = null;
+  readonly vm = inject(TourDetailsViewModel);
 
-  @Output() close = new EventEmitter<void>();
+  @Input() set tour(value: Tour | null) {
+    this.vm.tour.set(value);
+  }
+
+  @Output() close = this.vm.close;
 
   onClose() {
-    this.close.emit();
+    this.vm.onClose();
   }
 }

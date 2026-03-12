@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core'; // Aggiungi signal
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Tour } from '../tour_details/tour_details.model';
 
 @Component({
   selector: 'search-input',
@@ -9,21 +10,22 @@ import { CommonModule } from '@angular/common';
   templateUrl: './search-input.html',
 })
 export class SearchInput {
-  searchTerm = '';
-  showModal = false;
-
-  newTour = { name: '', location: '', duration: '', price: 0 };
+  searchTerm = signal('');
+  showModal = signal(false);
+  
+  newTour = signal({ name: '', description: '', from: '', to: '', transportType: null});
 
   @Output() searchChanged = new EventEmitter<string>();
-  @Output() tourAdded = new EventEmitter<any>();
+  @Output() tourAdded = new EventEmitter<Tour>();
 
   onSearch() {
-    this.searchChanged.emit(this.searchTerm);
+    this.searchChanged.emit(this.searchTerm());
   }
 
   addTour() {
-    this.tourAdded.emit({ ...this.newTour, id: Date.now() });
-    this.newTour = { name: '', location: '', duration: '', price: 0 };
-    this.showModal = false;
+    this.tourAdded.emit({ ...this.newTour(), id: Date.now() });
+    
+    this.newTour.set({ name: '', description: '', from: '', to: '', transportType: null});
+    this.showModal.set(false);
   }
 }
