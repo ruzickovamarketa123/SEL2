@@ -7,6 +7,7 @@ import { Tour } from '../tour_details/tour_details.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './list.html',
+  styleUrls: ['./list.css'],
 })
 export class List {
   @Input() searchTerm = '';
