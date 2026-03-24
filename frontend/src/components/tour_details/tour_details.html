@@ -1,11 +1,25 @@
 @if (vm.tour(); as tour) {
-  <div class="tour-details-container">
-    <div class="details-header">
+<div class="tour-details-container">
+  <div class="details-header">
+    <div class="header-left">
       <h1 class="tour-title">{{ tour.name }}</h1>
-      <button class="close-btn" (click)="onClose()" title="Close details">×</button>
+      <div class="header-actions">
+        <button class="action-btn edit" (click)="vm.onEdit()" title="Edit Tour">✎ Edit</button>
+        <button class="action-btn delete" (click)="vm.onDelete()" title="Delete Tour">🗑 Delete</button>
+      </div>
     </div>
+    
+    <div class="header-right">
+       <div class="tabs-nav">
+        <button [class.active]="vm.activeTab() === 'details'" (click)="vm.setTab('details')">Details</button>
+        <button [class.active]="vm.activeTab() === 'logs'" (click)="vm.setTab('logs')">Logs</button>
+      </div>
+      <button class="close-btn" (click)="onClose()">×</button>
+    </div>
+  </div>
 
-    <div class="details-content">
+  <div class="details-content">
+    @if (vm.activeTab() === 'details') {
       <div class="info-grid">
         <div class="info-item">
           <span class="label">from: </span>
@@ -29,10 +43,26 @@
         </div>
       </div>
 
+      <div class="ratings-section">
+        <div class="info-item">
+          <span class="label">popularity:</span>
+          <span class="value stars">{{ vm.getPopularityStars(tour) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">child-friendly:</span>
+          <span class="value stars">{{ vm.getChildFriendlyStars(tour) }}</span>
+        </div>
+      </div>
+
       <div class="description-section">
         <h3>description</h3>
         <p>{{ tour.description || 'no description available for this tour.' }}</p>
       </div>
-    </div>
+    } @else {
+      <div class="logs-section">
+        <p style="color: #666; font-style: italic;">Tour logs list component will be here...</p>
+      </div>
+    }
   </div>
+</div>
 }
