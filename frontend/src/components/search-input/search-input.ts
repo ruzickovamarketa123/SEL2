@@ -1,31 +1,40 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core'; // Aggiungi signal
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { Tour } from '../tour_details/tour_details.model';
+import { Component, EventEmitter, inject, Output } from "@angular/core";
+import { Tour, TransportType } from "../tour_details/tour_details.model";
+import { SearchInputViewModel } from "./search-input.vm";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: 'search-input',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule],
+  providers: [SearchInputViewModel],
   templateUrl: './search-input.html',
 })
+
 export class SearchInput {
-  searchTerm = signal('');
-  showModal = signal(false);
-  
-  newTour = signal({ name: '', description: '', from: '', to: '', transportType: null});
+  readonly vm = inject(SearchInputViewModel);
 
-  @Output() searchChanged = new EventEmitter<string>();
   @Output() tourAdded = new EventEmitter<Tour>();
+  @Output() searchChanged = new EventEmitter<string>(); 
 
-  onSearch() {
-    this.searchChanged.emit(this.searchTerm());
+
+  onTyping(value: string) {
+    this.searchChanged.emit(value);
   }
 
-  addTour() {
-    this.tourAdded.emit({ ...this.newTour(), id: Date.now() });
+  addTour(name: string, desc: string, from: string, to: string, type: any) {
     
-    this.newTour.set({ name: '', description: '', from: '', to: '', transportType: null});
-    this.showModal.set(false);
+    const nuovoTour: Tour = {
+      id: Date.now(), // temporary ID
+      name: name,
+      description: desc,
+      from: from,
+      to: to,
+      transportType: type as TransportType
+    };
+
+    this.tourAdded.emit(nuovoTour);
+
+    this.vm.showModal.set(false);
   }
 }

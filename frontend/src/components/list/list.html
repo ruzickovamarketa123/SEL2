@@ -2,24 +2,27 @@
   <h2 class="list-title">Available Tours</h2>
   
   <div class="scroll-area">
-    <div
-      *ngFor="let tour of filteredTours"
-      (click)="select(tour)"
-      class="tour-card"
-      [class.selected]="selectedId === tour.id"
-    >
-      <div class="card-header">
-        <h3 class="tour-name">{{ tour.name }}</h3>
-        <span class="type-badge">{{ tour.transportType }}</span>
-      </div>
+    @for (tour of vm.filteredTours(); track tour.id) {
+      <div
+        class="tour-card"
+        [class.selected]="vm.selectedId() === tour.id"
+        (click)="select(tour)"
+      >
+        <div class="card-header">
+          <h3 class="tour-name">{{ tour.name }}</h3>
+          <span class="type-badge">{{ tour.transportType }}</span>
+        </div>
 
-      <div class="card-details">
-        <div class="route">
-          <span class="route-point">{{ tour.from }}</span>
-          <span class="route-arrow">→</span>
-          <span class="route-point">{{ tour.to }}</span>
+        <div class="card-details">
+          <div class="route">
+            <span class="route-point">{{ tour.from }}</span>
+            <span class="route-arrow">→</span>
+            <span class="route-point">{{ tour.to }}</span>
+          </div>
         </div>
       </div>
-    </div>
+    } @empty {
+      <p>No tours found matching your search.</p>
+    }
   </div>
 </div>
