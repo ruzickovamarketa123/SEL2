@@ -1,11 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Tour } from '../tour_details/tour_details.model';
 
 @Component({
   selector: 'list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './list.html',
   styleUrls: ['./list.css'],
 })
@@ -16,6 +17,11 @@ export class List {
   @Output() tourSelected = new EventEmitter<Tour>();
 
   selectedId: number | null = null;
+
+  showAddModal = signal(false);
+  newTour = signal<{ name: string; description: string; from: string; to: string; transportType: any }>({
+    name: '', description: '', from: '', to: '', transportType: null
+  });
 
   allTours: Tour[] = [
     { id: 1, name: 'Paris City Tour', description: 'A beautiful tour of Paris.', from: 'Eiffel Tower', to: 'Louvre', transportType: 'Hike' },
@@ -30,6 +36,13 @@ export class List {
     this.tourSelected.emit(tour);
   }
 
+  addTour() {
+    const t = this.newTour();
+    this.allTours = [...this.allTours, { ...t, id: Date.now() }];
+    this.newTour.set({ name: '', description: '', from: '', to: '', transportType: null });
+    this.showAddModal.set(false);
+  }
+  
   get filteredTours(): Tour[] {
     return [...this.allTours, ...this.tours].filter(t =>
       t.name.toLowerCase().includes(this.searchTerm.toLowerCase())
