@@ -1,0 +1,89 @@
+<button type="button" (click)="vm.open()" style="
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: rgb(239, 125, 184);
+  color: #000000;
+  border: 1.5px solid #000000;
+">login</button>
+
+<div *ngIf="vm.isVisible()" style="
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200;
+">
+  <div style="
+    background: white;
+    padding: 28px 32px;
+    border-radius: 16px;
+    width: 380px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  " (click)="$event.stopPropagation()">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h3 style="margin: 0; font-size: 20px; font-weight: 600;">login</h3>
+      <button type="button" (click)="vm.close()" style="background: none; border: none; font-size: 16px; cursor: pointer; color: #999;">✕</button>
+    </div>
+
+    <div *ngIf="vm.errorMessage()" style="
+      background: #fff0f0;
+      color: #d32f2f;
+      border: 1px solid #ffcdd2;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-bottom: 16px;
+    ">{{ vm.errorMessage() }}</div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">email</label>
+        <input
+          type="email"
+          [ngModel]="vm.form().email"
+          (ngModelChange)="vm.updateEmail($event)"
+          placeholder="your@email.com"
+          [disabled]="vm.isLoading()"
+          style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;"
+        />
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">password</label>
+        <input
+          type="password"
+          [ngModel]="vm.form().password"
+          (ngModelChange)="vm.updatePassword($event)"
+          placeholder="••••••••"
+          [disabled]="vm.isLoading()"
+          (keydown.enter)="vm.login()"
+          style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;"
+        />
+      </div>
+
+    </div>
+
+    <p style="font-size: 12px; color: #999; margin: 0 0 20px 0;">
+      don't have an account yet? please register first.
+    </p>
+
+    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+      <button type="button" (click)="vm.close()" [disabled]="vm.isLoading()" style="
+        padding: 9px 18px; border-radius: 8px;
+        border: 1.5px solid #ddd; background: white;
+        color: #555; font-size: 14px; cursor: pointer;
+      ">Cancel</button>
+
+      <button type="button" (click)="vm.login()" [disabled]="vm.isLoading() || !vm.isFormValid()" style="
+        padding: 9px 22px; border-radius: 8px;
+        border: none; background: #bb73a7;
+        color: white; font-size: 14px; font-weight: 500; cursor: pointer;
+      ">{{ vm.isLoading() ? 'logging in...' : 'login' }}</button>
+    </div>
+
+  </div>
+</div>

@@ -1,10 +1,19 @@
 <div style="display: flex; flex-direction: column; height: 100vh; overflow: hidden; background-color: #f5f5f5;">
 
-  <div style="padding: 16px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 10;">
-    <search-input
-      (searchChanged)="currentSearch = $event"
-      (tourAdded)="onTourAdded($event)">
-    </search-input>
+  <div style="display: flex; align-items: center; padding: 12px 16px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 10; gap: 12px;">
+    
+    <div style="flex: 0 0 66%;">
+      <search-input
+        (searchChanged)="currentSearch = $event"
+        (tourAdded)="onTourAdded($event)">
+      </search-input>
+    </div>
+
+    <div style="margin-left: auto; display: flex; gap: 8px; flex-shrink: 0;">
+      <app-login></app-login>
+      <app-register></app-register>
+    </div>
+
   </div>
 
   <div style="display: flex; flex: 1; overflow: hidden;">
@@ -12,7 +21,6 @@
     <div style="width: 350px; overflow-y: auto; background: white; border-right: 1px solid #ddd; padding: 16px; flex-shrink: 0;">
       <list
         [searchTerm]="currentSearch"
-        [tours]="tours"
         (tourSelected)="selectedTour = $event">
       </list>
     </div>
@@ -21,7 +29,7 @@
 
       <div style="flex: 1; min-height: 0; padding: 16px 16px 0 16px;">
         <div style="height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
-          <!--app-map [selectedTour]="selectedTour"></app-map-->
+          <!--<app-map [selectedTour]="selectedTour"></app-map>-->
         </div>
       </div>
 
@@ -36,4 +44,5 @@
 
     </div>
   </div>
+
 </div>
