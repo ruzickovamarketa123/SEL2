@@ -2,7 +2,7 @@
 
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
     <h2 class="list-title">Available Tours</h2>
-    <button type="button" (click)="showAddModal.set(true)" style="
+    <button type="button" (click)="vm.showAddModal.set(true)" style="
       padding: 7px 14px;
       background: #5c6bc0;
       color: white;
@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<div *ngIf="showAddModal()" style="
+<div *ngIf="vm.showAddModal()" style="
   position: fixed; top: 0; left: 0;
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.4);
@@ -52,32 +52,32 @@
 
     <div style="display: flex; flex-direction: column; gap: 12px;">
       <input type="text"
-        [ngModel]="newTour().name"
-        (ngModelChange)="newTour.set({...newTour(), name: $event})"
+        [ngModel]="vm.newTour().name"
+        (ngModelChange)="vm.newTour.set({...vm.newTour(), name: $event})"
         placeholder="Name"
         style="padding: 8px; border-radius: 8px; border: 1px solid #eee;">
 
       <input type="text"
-        [ngModel]="newTour().description"
-        (ngModelChange)="newTour.set({...newTour(), description: $event})"
+        [ngModel]="vm.newTour().description"
+        (ngModelChange)="vm.newTour.set({...vm.newTour(), description: $event})"
         placeholder="Description"
         style="padding: 8px; border-radius: 8px; border: 1px solid #eee;">
 
       <input type="text"
-        [ngModel]="newTour().from"
-        (ngModelChange)="newTour.set({...newTour(), from: $event})"
+        [ngModel]="vm.newTour().from"
+        (ngModelChange)="vm.newTour.set({...vm.newTour(), from: $event})"
         placeholder="From"
         style="padding: 8px; border-radius: 8px; border: 1px solid #eee;">
 
       <input type="text"
-        [ngModel]="newTour().to"
-        (ngModelChange)="newTour.set({...newTour(), to: $event})"
+        [ngModel]="vm.newTour().to"
+        (ngModelChange)="vm.newTour.set({...vm.newTour(), to: $event})"
         placeholder="To"
         style="padding: 8px; border-radius: 8px; border: 1px solid #eee;">
 
       <select
-        [ngModel]="newTour().transportType"
-        (ngModelChange)="newTour.set({...newTour(), transportType: $event})"
+        [ngModel]="vm.newTour().transportType"
+        (ngModelChange)="vm.newTour.set({...vm.newTour(), transportType: $event})"
         style="padding: 8px; border-radius: 8px; border: 1px solid #eee;">
         <option value="" disabled>Select transport type</option>
         <option value="Hike">Hike</option>
@@ -88,8 +88,8 @@
     </div>
 
     <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px;">
-      <button type="button" (click)="showAddModal.set(false)">Cancel</button>
-      <button type="button" (click)="addTour()">Add</button>
+      <button type="button" (click)="vm.showAddModal.set(false)">Cancel</button>
+      <button type="button" (click)="vm.addTour()">Add</button>
     </div>
   </div>
 </div>

@@ -1,0 +1,147 @@
+<!-- Tlačítko -->
+<button type="button" (click)="vm.open()" style="
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: #5c6bc0;
+  color: white;
+  border: none;
+">Register</button>
+
+<!-- Modal -->
+<div *ngIf="vm.isVisible()" style="
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200;
+">
+  <div style="
+    background: white;
+    padding: 28px 32px;
+    border-radius: 16px;
+    width: 420px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  " (click)="$event.stopPropagation()">
+
+    <!-- Hlavička -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h3 style="margin: 0; font-size: 20px; font-weight: 600;">Create Account</h3>
+      <button type="button" (click)="vm.close()" style="background: none; border: none; font-size: 16px; cursor: pointer; color: #999;">✕</button>
+    </div>
+
+    <!-- Chybová hláška -->
+    <div *ngIf="vm.errorMessage()" style="
+      background: #fff0f0;
+      color: #d32f2f;
+      border: 1px solid #ffcdd2;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-bottom: 16px;
+    ">{{ vm.errorMessage() }}</div>
+
+    <!-- Success zpráva -->
+    <div *ngIf="vm.successMessage()" style="
+      background: #f0fff4;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 16px;
+    ">
+      {{ vm.successMessage() }}
+      <br><br>
+      <button type="button" (click)="vm.close()" style="
+        padding: 8px 22px;
+        border-radius: 8px;
+        border: none;
+        background: #5c6bc0;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+      ">Close</button>
+    </div>
+
+    <!-- Formulář – skrytý po úspěchu -->
+    <div *ngIf="!vm.successMessage()">
+
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+
+        <!-- First name + Last name vedle sebe -->
+        <div style="display: flex; gap: 12px;">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 13px; font-weight: 500; color: #555;">First Name</label>
+            <input
+              type="text"
+              [ngModel]="vm.form().firstName"
+              (ngModelChange)="vm.updateFirstName($event)"
+              placeholder="John"
+              [disabled]="vm.isLoading()"
+              style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; width: 100%;"
+            />
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 13px; font-weight: 500; color: #555;">Last Name</label>
+            <input
+              type="text"
+              [ngModel]="vm.form().lastName"
+              (ngModelChange)="vm.updateLastName($event)"
+              placeholder="Doe"
+              [disabled]="vm.isLoading()"
+              style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; width: 100%;"
+            />
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 13px; font-weight: 500; color: #555;">Email</label>
+          <input
+            type="email"
+            [ngModel]="vm.form().email"
+            (ngModelChange)="vm.updateEmail($event)"
+            placeholder="your@email.com"
+            [disabled]="vm.isLoading()"
+            style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;"
+          />
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 13px; font-weight: 500; color: #555;">
+            Password <span style="font-weight: 400; color: #999;">(min. 6 characters)</span>
+          </label>
+          <input
+            type="password"
+            [ngModel]="vm.form().password"
+            (ngModelChange)="vm.updatePassword($event)"
+            placeholder="••••••••"
+            [disabled]="vm.isLoading()"
+            (keydown.enter)="vm.register()"
+            style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;"
+          />
+        </div>
+
+      </div>
+
+      <!-- Tlačítka -->
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" (click)="vm.close()" [disabled]="vm.isLoading()" style="
+          padding: 9px 18px; border-radius: 8px;
+          border: 1.5px solid #ddd; background: white;
+          color: #555; font-size: 14px; cursor: pointer;
+        ">Cancel</button>
+
+        <button type="button" (click)="vm.register()" [disabled]="vm.isLoading() || !vm.isFormValid()" style="
+          padding: 9px 22px; border-radius: 8px;
+          border: none; background: #5c6bc0;
+          color: white; font-size: 14px; font-weight: 500; cursor: pointer;
+        ">{{ vm.isLoading() ? 'Registering...' : 'Register' }}</button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -11,7 +11,7 @@
 
     <div style="margin-left: auto; display: flex; gap: 8px; flex-shrink: 0;">
       <app-login></app-login>
-      <!-- <app-register></app-register> -->
+      <app-register></app-register>
     </div>
 
   </div>
@@ -21,7 +21,6 @@
     <div style="width: 350px; overflow-y: auto; background: white; border-right: 1px solid #ddd; padding: 16px; flex-shrink: 0;">
       <list
         [searchTerm]="currentSearch"
-        [tours]="tours"
         (tourSelected)="selectedTour = $event">
       </list>
     </div>
