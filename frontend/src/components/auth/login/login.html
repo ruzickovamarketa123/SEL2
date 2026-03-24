@@ -24,7 +24,7 @@
   " (click)="$event.stopPropagation()">
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-      <h3 style="margin: 0; font-size: 20px; font-weight: 600;">Login</h3>
+      <h3 style="margin: 0; font-size: 20px; font-weight: 600;">login</h3>
       <button type="button" (click)="vm.close()" style="background: none; border: none; font-size: 16px; cursor: pointer; color: #999;">✕</button>
     </div>
 
@@ -41,7 +41,7 @@
     <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
 
       <div style="display: flex; flex-direction: column; gap: 5px;">
-        <label style="font-size: 13px; font-weight: 500; color: #555;">Email</label>
+        <label style="font-size: 13px; font-weight: 500; color: #555;">email</label>
         <input
           type="email"
           [ngModel]="vm.form().email"
@@ -53,7 +53,7 @@
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 5px;">
-        <label style="font-size: 13px; font-weight: 500; color: #555;">Password</label>
+        <label style="font-size: 13px; font-weight: 500; color: #555;">password</label>
         <input
           type="password"
           [ngModel]="vm.form().password"
@@ -68,7 +68,7 @@
     </div>
 
     <p style="font-size: 12px; color: #999; margin: 0 0 20px 0;">
-      Don't have an account yet? Please register first.
+      don't have an account yet? please register first.
     </p>
 
     <div style="display: flex; justify-content: flex-end; gap: 10px;">
@@ -80,9 +80,9 @@
 
       <button type="button" (click)="vm.login()" [disabled]="vm.isLoading() || !vm.isFormValid()" style="
         padding: 9px 22px; border-radius: 8px;
-        border: none; background: #5c6bc0;
+        border: none; background: #bb73a7;
         color: white; font-size: 14px; font-weight: 500; cursor: pointer;
-      ">{{ vm.isLoading() ? 'Logging in...' : 'Login' }}</button>
+      ">{{ vm.isLoading() ? 'logging in...' : 'login' }}</button>
     </div>
 
   </div>
