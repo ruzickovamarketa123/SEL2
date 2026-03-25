@@ -1,3 +1,5 @@
+import { TourLog } from "../tourlog_details/tourlog.model";
+
 export interface Tour {
     id: number;
     name: string;
@@ -15,15 +17,6 @@ export interface Tour {
 
     //(Leaflet)
     routeInformation?: any;
-}
-
-export interface TourLog {
-    dateTime: Date;
-    comment: string;
-    difficulty: number; // 1-5
-    totalDistance: number;
-    totalTime: number; //minutes
-    rating: number;
 }
 
 export type TransportType = 'Hike' | 'Bike' | 'Running' | 'Vacation' | null;

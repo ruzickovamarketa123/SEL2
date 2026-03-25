@@ -1,0 +1,38 @@
+<div class="log-details-container" style="height: 100%;">
+  @if (log) {
+    <div style="background: #fcfcfc; border: 1px solid #f0f0f0; border-radius: 12px; padding: 16px; height: 100%;">
+      <h4 style="margin-top: 0; color: #333; border-bottom: 1px solid #eee; padding-bottom: 8px;">Log Details</h4>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+        <div>
+          <label style="display: block; font-size: 11px; color: #999; text-transform: uppercase;">Duration</label>
+          <span style="font-weight: 500;">{{ log.totalTime }} h</span>
+        </div>
+        <div>
+          <label style="display: block; font-size: 11px; color: #999; text-transform: uppercase;">Difficulty</label>
+          <span style="font-weight: 500;">{{ log.difficulty }}</span>
+        </div>
+        <div>
+          <label style="display: block; font-size: 11px; color: #999; text-transform: uppercase;">Distance</label>
+          <span style="font-weight: 500;">{{ log.totalDistance }} km</span>
+        </div>
+        <div>
+          <label style="display: block; font-size: 11px; color: #999; text-transform: uppercase;">Rating</label>
+          <span style="color: #ffc107;">{{ log.rating }}/5 Stars</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <label style="display: block; font-size: 11px; color: #999; text-transform: uppercase;">User Comment</label>
+        <p style="margin: 5px 0; font-size: 14px; color: #555; line-height: 1.5; background: white; padding: 10px; border-radius: 6px; border: 1px solid #f0f0f0;">
+          {{ log.comment }}
+        </p>
+      </div>
+    </div>
+  } @else {
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #bbb; border: 2px dashed #f0f0f0; border-radius: 12px;">
+      <span style="font-size: 30px; margin-bottom: 10px;">📋</span>
+      <p style="margin: 0; font-size: 13px;">Select a log from the list to see full details</p>
+    </div>
+  }
+</div>

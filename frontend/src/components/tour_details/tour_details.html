@@ -1,68 +1,57 @@
 @if (vm.tour(); as tour) {
-<div class="tour-details-container">
-  <div class="details-header">
-    <div class="header-left">
-      <h1 class="tour-title">{{ tour.name }}</h1>
-      <div class="header-actions">
-        <button class="action-btn edit" (click)="vm.onEdit()" title="Edit Tour">✎ Edit</button>
-        <button class="action-btn delete" (click)="vm.onDelete()" title="Delete Tour">🗑 Delete</button>
-      </div>
+<div class="tour-details-inner">
+  
+  <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+    <button (click)="vm.onEdit()" 
+            style="background: #e7f3ff; color: #007bff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+      ✎ Edit Tour
+    </button>
+    <button (click)="vm.onDelete()" 
+            style="background: #fff0f0; color: #dc3545; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+      🗑 Delete Tour
+    </button>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px;">
+    <div class="info-item">
+      <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">from</div>
+      <div style="font-weight: 600; color: #333;">{{ tour.from }}</div>
     </div>
-    
-    <div class="header-right">
-       <div class="tabs-nav">
-        <button [class.active]="vm.activeTab() === 'details'" (click)="vm.setTab('details')">Details</button>
-        <button [class.active]="vm.activeTab() === 'logs'" (click)="vm.setTab('logs')">Logs</button>
-      </div>
-      <button class="close-btn" (click)="onClose()">×</button>
+    <div class="info-item">
+      <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">to</div>
+      <div style="font-weight: 600; color: #333;">{{ tour.to }}</div>
+    </div>
+    <div class="info-item">
+      <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">type</div>
+      <div style="font-weight: 600; color: #333;">{{ tour.transportType }}</div>
+    </div>
+    <div class="info-item">
+      <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">distance</div>
+      <div style="font-weight: 600; color: #333;">{{ tour.distance }} km</div>
+    </div>
+    <div class="info-item">
+      <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">duration</div>
+      <div style="font-weight: 600; color: #333;">{{ tour.estimatedTime }} min</div>
     </div>
   </div>
 
-  <div class="details-content">
-    @if (vm.activeTab() === 'details') {
-      <div class="info-grid">
-        <div class="info-item">
-          <span class="label">from: </span>
-          <span class="value">{{ tour.from }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">to: </span>
-          <span class="value">{{ tour.to }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">type: </span>
-          <span class="value">{{ tour.transportType }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">distance: </span>
-          <span class="value">{{ tour.distance }} km</span>
-        </div>
-        <div class="info-item">
-          <span class="label">duration: </span>
-          <span class="value">{{ tour.estimatedTime }} min</span>
-        </div>
-      </div>
-
-      <div class="ratings-section">
-        <div class="info-item">
-          <span class="label">popularity:</span>
-          <span class="value stars">{{ vm.getPopularityStars(tour) }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">child-friendly:</span>
-          <span class="value stars">{{ vm.getChildFriendlyStars(tour) }}</span>
-        </div>
-      </div>
-
-      <div class="description-section">
-        <h3>description</h3>
-        <p>{{ tour.description || 'no description available for this tour.' }}</p>
-      </div>
-    } @else {
-      <div class="logs-section">
-        <p style="color: #666; font-style: italic;">Tour logs list component will be here...</p>
-      </div>
-    }
+  <div style="display: flex; gap: 40px; padding: 16px; background: #f9f9f9; border-radius: 10px; margin-bottom: 24px;">
+    <div class="rating-item">
+      <span style="color: #666; font-size: 13px; margin-right: 8px;">Popularity:</span>
+      <span style="color: #ffc107; font-weight: bold;">{{ vm.getPopularityStars(tour) }}</span>
+    </div>
+    <div class="rating-item">
+      <span style="color: #666; font-size: 13px; margin-right: 8px;">Child-friendly:</span>
+      <span style="color: #ffc107; font-weight: bold;">{{ vm.getChildFriendlyStars(tour) }}</span>
+    </div>
   </div>
+
+  <div style="border-top: 1px solid #eee; padding-top: 16px;">
+    <h4 style="margin: 0 0 8px 0; color: #333; font-size: 15px;">Description</h4>
+    <p style="margin: 0; color: #555; line-height: 1.6; font-size: 14px;">
+      {{ tour.description || 'No description available for this tour.' }}
+    </p>
+  </div>
+
 </div>
 }

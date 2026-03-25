@@ -19,6 +19,14 @@ export class ListViewModel {
     return this.allToursData().filter(t => t.name.toLowerCase().includes(term));
   });
 
+  //comoputed signals for presentation
+  resultsCount = computed(() => this.filteredTours().length);
+
+  searchStatusMessage = computed(() => {
+    if (this.searchTerm() === '') return 'Showing all tours';
+    return `Found ${this.resultsCount()} tours for "${this.searchTerm()}"`;
+  });
+
   selectedId = signal<number | null>(null);
 
   selectTour(id: number) {
@@ -28,7 +36,7 @@ export class ListViewModel {
   showAddModal = signal(false);
 
   newTour = signal({
-    name: '', description: '', from: '', to: '', transportType: null as any
+    name: '', description: '', from: '', to: '', transportType: null
   });
 
   openAddModal() {
