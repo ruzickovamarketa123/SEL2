@@ -26,16 +26,15 @@ export class List {
     this.tourSelected.emit(tour);
   }
 
-  // Chiamato dal tasto "Add Tour" nella modale
   confirmAdd() {
     const data = this.vm.newTour();
-    this.tourAdded.emit(data); // Invia i dati al Mediatore
+    this.tourAdded.emit(data); // send datas to the Mediator (App)
     this.vm.closeAddModal();
   }
 
   addTour() {
   const data = this.vm.newTour();
-  this.tourAdded.emit(data); // Il Mediatore (App) riceve e salva
+  this.tourAdded.emit(data); // The mediator receives the new tour data and saves
   this.vm.closeAddModal();
   }
 }

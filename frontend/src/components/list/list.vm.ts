@@ -8,7 +8,7 @@ export class ListViewModel {
   selectedId = signal<number | null>(null);
   showAddModal = signal(false);
 
-  // Inizialmente vuoto, verrà popolato dal @Input() di list.ts
+  // Initially empty, it will be populated by the Input() of list.ts
   allToursData = signal<Tour[]>([]);
 
   //observer 1: reacts to changes in searchTerm and allToursData
