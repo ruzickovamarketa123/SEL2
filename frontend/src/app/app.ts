@@ -30,10 +30,10 @@ export class App {
     { id: 5, name: 'Safari Adventure', description: 'Wildlife vacation in Kenya.', from: 'Nairobi', to: 'Maasai Mara', transportType: 'Vacation' },
   ]);
 
-  onTourAdded(newTourData: any) {
-  const tourWithId: Tour = { ...newTourData, id: Date.now()};
+  onTourAdded(newTourData: Tour) {
+    const tourWithId: Tour = { ...newTourData, id: Date.now()};
 
-  this.tours.update((current: Tour[]) => [...current, tourWithId]);
+    this.tours.update((current: Tour[]) => [...current, tourWithId]);
 }
 
   onSearchChanged(term: string) {
