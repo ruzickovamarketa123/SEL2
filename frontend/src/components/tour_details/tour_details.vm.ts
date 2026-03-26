@@ -30,14 +30,12 @@ export class TourDetailsViewModel {
         this.activeTab.set(tab);
     }
 
-    // must be implemented
-    getPopularityStars(tour: any): string {
+    getPopularityStars(): string {
         const rating = 4;
         return '★'.repeat(rating) + '☆'.repeat(5 - rating);
     }
 
-    // must be implemented
-    getChildFriendlyStars(tour: any): string {
+    getChildFriendlyStars(): string {
         const rating = 3;
         return '★'.repeat(rating) + '☆'.repeat(5 - rating);
     }

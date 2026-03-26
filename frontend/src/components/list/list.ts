@@ -15,12 +15,27 @@ import { ListViewModel } from './list.vm';
 export class List {
   readonly vm = inject(ListViewModel);
 
+  @Input() set tours(value: Tour[]) { this.vm.allToursData.set(value); }
   @Input() set searchTerm(value: string) { this.vm.searchTerm.set(value); }
 
   @Output() tourSelected = new EventEmitter<Tour>();
+  @Output() tourAdded = new EventEmitter<any>()
 
   select(tour: Tour) {
-    this.vm.selectTour(tour.id);
+    this.vm.selectedId.set(tour.id);
     this.tourSelected.emit(tour);
+  }
+
+  // Chiamato dal tasto "Add Tour" nella modale
+  confirmAdd() {
+    const data = this.vm.newTour();
+    this.tourAdded.emit(data); // Invia i dati al Mediatore
+    this.vm.closeAddModal();
+  }
+
+  addTour() {
+  const data = this.vm.newTour();
+  this.tourAdded.emit(data); // Il Mediatore (App) riceve e salva
+  this.vm.closeAddModal();
   }
 }
