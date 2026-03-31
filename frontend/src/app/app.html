@@ -42,20 +42,20 @@
           
           <div style="display: flex; align-items: center; padding: 0 16px; background: #f8f9fa; border-bottom: 1px solid #eee;">
             <h3 style="margin: 0; font-size: 16px; margin-right: 20px;">{{selectedTour.name}}</h3>
-            <button (click)="activeTab = 'details'" [style.border-bottom]="activeTab === 'details' ? '3px solid #007bff' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; font-weight:bold;">Details</button>
-            <button (click)="activeTab = 'logs'" [style.border-bottom]="activeTab === 'logs' ? '3px solid #007bff' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; font-weight:bold;">Logs</button>
+            <button (click)="activeTab.set('details')" [style.border-bottom]="activeTab() === 'details' ? '3px solid #007bff' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; font-weight:bold;">Details</button>
+            <button (click)="activeTab.set('logs')" [style.border-bottom]="activeTab() === 'logs' ? '3px solid #007bff' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; font-weight:bold;">Logs</button>
             <button (click)="selectedTour = null" style="margin-left: auto; border:none; background:none; cursor:pointer; font-size: 24px;">×</button>
           </div>
 
           <div style="flex: 1; overflow-y: auto; padding: 20px;">
             
-            @if (activeTab =='details') {
+            @if (activeTab() =='details') {
               <div>
-              <tour_details [tour]="selectedTour"></tour_details>
+              <tour_details [tour]="selectedTour" (edit)="onEditTour($event)" (delete)="onDeleteTour($event)"></tour_details>
             </div>
             }
 
-            @if (activeTab === 'logs') {
+            @if (activeTab() === 'logs') {
             <div style="display: flex; gap: 20px; height: 100%;">
               <div style="flex: 1; border-right: 1px solid #eee; overflow-y: auto;">
                 <tourlogs_list [tourId]="selectedTour.id" (logSelected)="selectedLog = $event"></tourlogs_list>

@@ -2,11 +2,12 @@ import { Component, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TourDetailsViewModel } from './tour_details.vm';
 import { Tour } from './tour_details.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'tour_details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   providers: [TourDetailsViewModel],
   templateUrl: './tour_details.html',
   styleUrls: ['./tour_details.css']

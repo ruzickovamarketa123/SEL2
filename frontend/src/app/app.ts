@@ -17,10 +17,11 @@ import { TourLog } from '../components/tourlog_details/tourlog.model';
   templateUrl: './app.html',
 })
 export class App {
+  //shared state as signals
   currentSearch = '';
   selectedTour: Tour | null = null;
-  activeTab: 'details' | 'logs' = 'details';
   selectedLog: TourLog | null = null;
+  activeTab = signal<'details' | 'logs'>('details');
 
   tours = signal<Tour[]>([ 
     { id: 1, name: 'Paris City Tour', description: 'A beautiful tour of Paris.', from: 'Eiffel Tower', to: 'Louvre', transportType: 'Hike' },
@@ -43,7 +44,23 @@ export class App {
   //When the tour is changed, the tab and the selected log are reset
   selectTour(tour: Tour) {
     this.selectedTour = tour;
-    this.activeTab = 'details';
+    this.activeTab.set('details');
     this.selectedLog = null;
+  }
+
+  onEditTour(updatedTour: Tour) {
+    this.tours.update(list => list.map(t => t.id === updatedTour.id ? updatedTour : t));
+    //This updates the details you are looking at
+    this.selectedTour = { ...updatedTour };
+  }
+
+  onDeleteTour(tourId: number) {
+    // Removes the tour from the list by filtering by ID
+    this.tours.update(currentTours => currentTours.filter(t => t.id !== tourId));
+
+    //close the details if the cancelled tour was displayed
+    if (this.selectedTour?.id === tourId) {
+      this.selectedTour = null;
+    }
   }
 }
