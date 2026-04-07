@@ -4,7 +4,7 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  background: rgb(236, 86, 164);
+  background: rgb(236, 86, 164, 0.8);
   color: rgb(0, 0, 0);
   border: 1.5px solid #000000;
 ">register</button>
@@ -129,7 +129,7 @@
 
         <button type="button" (click)="vm.register()" [disabled]="vm.isLoading() || !vm.isFormValid()" style="
           padding: 9px 22px; border-radius: 8px;
-          border: none; background: #c176b7;
+          border: none; background: rgb(236, 86, 164, 0.8);
           color: white; font-size: 14px; font-weight: 500; cursor: pointer;
         ">{{ vm.isLoading() ? 'registering...' : 'register' }}</button>
       </div>

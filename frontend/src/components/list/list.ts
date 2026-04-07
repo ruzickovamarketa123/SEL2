@@ -33,6 +33,10 @@ export class List {
   }
 
   addTour() {
+     if (!this.vm.isFormValid()) {
+    this.vm.errorMessage.set('Please fill in all required fields.');
+    return;
+  }
   const data = this.vm.newTour();
   this.tourAdded.emit(data); // The mediator receives the new tour data and saves
   this.vm.closeAddModal();

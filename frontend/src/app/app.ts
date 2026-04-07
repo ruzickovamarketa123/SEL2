@@ -9,11 +9,12 @@ import { TourLogList } from '../components/tourlogs_list/tourlog_list';
 import { TourLogDetails } from '../components/tourlog_details/tourlog';
 import { Tour } from '../components/tour_details/tour_details.model';
 import { TourLog } from '../components/tourlog_details/tourlog.model';
+import { MapComponent } from '../components/map/map-component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, SearchInput, List, Tour_Details, LoginComponent, RegisterComponent, TourLogList, TourLogDetails],  
+  imports: [CommonModule, SearchInput, List, Tour_Details, LoginComponent, RegisterComponent, TourLogList, TourLogDetails, MapComponent],  
   templateUrl: './app.html',
 })
 export class App {

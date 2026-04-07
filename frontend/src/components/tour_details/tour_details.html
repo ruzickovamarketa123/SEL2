@@ -4,12 +4,12 @@
   @if (!vm.isEditing()) {
   <div style="display: flex; gap: 10px; margin-bottom: 20px;">
     <button (click)="vm.onEdit()" 
-            style="background: #e7f3ff; color: #007bff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-      ✎ Edit Tour
+            style="font-size: 14px;background: rgba(77, 163, 255, 0.8); color: #000000; border: 1.5px solid #000000; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+      edit tour
     </button>
     <button (click)="vm.onDelete()" 
-            style="background: #fff0f0; color: #dc3545; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-      🗑 Delete Tour
+             style="font-size: 14px;background: #ff5858cc; color: #000000; border: 1.5px solid #000000; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+      delete tour
     </button>
   </div>
 
@@ -38,80 +38,66 @@
 
   <div style="display: flex; gap: 40px; padding: 16px; background: #f9f9f9; border-radius: 10px; margin-bottom: 24px;">
     <div class="rating-item">
-      <span style="color: #666; font-size: 13px; margin-right: 8px;">Popularity:</span>
+      <span style="color: #666; font-size: 13px; margin-right: 8px;">popularity:</span>
       <span style="color: #ffc107; font-weight: bold;">{{ vm.getPopularityStars() }}</span>
     </div>
     <div class="rating-item">
-      <span style="color: #666; font-size: 13px; margin-right: 8px;">Child-friendly:</span>
+      <span style="color: #666; font-size: 13px; margin-right: 8px;">child-friendliness:</span>
       <span style="color: #ffc107; font-weight: bold;">{{ vm.getChildFriendlyStars() }}</span>
     </div>
   </div>
 
   <div style="border-top: 1px solid #eee; padding-top: 16px;">
-    <h4 style="margin: 0 0 8px 0; color: #333; font-size: 15px;">Description</h4>
+    <h4 style="margin: 0 0 8px 0; color: #888; font-size: 11px;letter-spacing: 0.5px;">DESCRIPTION</h4>
     <p style="margin: 0; color: #555; line-height: 1.6; font-size: 14px;">
-      {{ tour.description || 'No description available for this tour.' }}
+      {{ tour.description || 'no description available for this tour.' }}
     </p>
-  </div>}
+  </div>
+}
 
-  @else {
-    <h3 style="margin-bottom: 20px; color: #333;">✎ Editing: {{tour.name}}</h3>
-    
-    <div style="display: flex; flex-direction: column; gap: 15px;">
-      
-      <div style="position: relative;">
-        <label style="font-size: 12px; color: #888">Tour Name</label>
-        <input type="text" 
-          [ngModel]="vm.editTourData()?.name" 
-          (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, name: $event})" 
-          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid; padding-right: 35px;">
+@else {
+    <h3 style="margin-bottom: 20px; color: #333; font-size: 20px; font-weight: 600;">editing "{{tour.name}}"</h3>
+
+    <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">tour name</label>
+        <input type="text" [ngModel]="vm.editTourData()?.name" (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, name: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
       </div>
 
-      <div style="display: flex; gap: 10px;">
-        <div style="flex: 1; position: relative;">
-          <label style="font-size: 12px; color: #888;">From</label>
-          <input type="text" 
-            [ngModel]="vm.editTourData()?.from" 
-            (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, from: $event})"
-            style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+      <div style="display: flex; gap: 12px;">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 13px; font-weight: 500; color: #555;">from</label>
+          <input type="text" [ngModel]="vm.editTourData()?.from" (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, from: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
         </div>
-        <div style="flex: 1; position: relative;">
-          <label style="font-size: 12px; color: #888;">To</label>
-          <input type="text" 
-            [ngModel]="vm.editTourData()?.to" 
-            (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, to: $event})"
-            style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 13px; font-weight: 500; color: #555;">to</label>
+          <input type="text" [ngModel]="vm.editTourData()?.to" (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, to: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
         </div>
       </div>
 
-      <div style="position: relative;">
-        <label style="font-size: 12px; color: #888;">Transport Type</label>
-        <select 
-          [ngModel]="vm.editTourData()?.transportType" 
-          (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, transportType: $event})"
-          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
-          <option value="Hike">Hike</option>
-          <option value="Bike">Bike</option>
-          <option value="Running">Running</option>
-          <option value="Vacation">Vacation</option>
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">transport type</label>
+        <select [ngModel]="vm.editTourData()?.transportType" (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, transportType: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; background: white;">
+          <option value="Hike">hike</option>
+          <option value="Bike">bike</option>
+          <option value="Running">running</option>
+          <option value="Vacation">vacation</option>
         </select>
       </div>
 
-      <div style="position: relative;">
-        <label style="font-size: 12px; color: #888;">Description</label>
-        <textarea 
-          [ngModel]="vm.editTourData()?.description" 
-          (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, description: $event})"
-          rows="3" 
-          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-family: inherit;"></textarea>
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">description <span style="font-weight: 400; color: #999;">(optional)</span></label>
+        <textarea [ngModel]="vm.editTourData()?.description" (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, description: $event})" rows="3" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; font-family: inherit; resize: vertical;"></textarea>
       </div>
 
-      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
-        <button (click)="vm.cancelEdit()" style="padding: 8px 16px; border: none; background: #eee; border-radius: 6px; cursor: pointer;">Cancel</button>
-        <button (click)="vm.saveEdit()" style="padding: 8px 16px; border: none; background: #007bff; color: white; border-radius: 6px; cursor: pointer; font-weight: bold;">Save Changes</button>
-      </div>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+      <button type="button" (click)="vm.cancelEdit()" style="padding: 9px 18px; border-radius: 8px; border: 1.5px solid #ddd; background: white; color: #555; font-size: 14px; cursor: pointer;">cancel</button>
+      <button type="button" (click)="vm.saveEdit()" style="padding: 9px 22px; border-radius: 8px; border: none; background:rgba(77, 163, 255, 0.8); color: white; font-size: 14px; font-weight: 500; cursor: pointer;">save changes</button>
     </div>
   }
 
-</div>
+  </div>
 }

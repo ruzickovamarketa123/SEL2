@@ -4,7 +4,7 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  background: rgb(239, 125, 184);
+  background: rgb(239, 125, 184, 0.8);
   color: #000000;
   border: 1.5px solid #000000;
 ">login</button>
@@ -76,11 +76,11 @@
         padding: 9px 18px; border-radius: 8px;
         border: 1.5px solid #ddd; background: white;
         color: #555; font-size: 14px; cursor: pointer;
-      ">Cancel</button>
+      ">cancel</button>
 
       <button type="button" (click)="vm.login()" [disabled]="vm.isLoading() || !vm.isFormValid()" style="
         padding: 9px 22px; border-radius: 8px;
-        border: none; background: #bb73a7;
+        border: none; background: rgb(239, 125, 184, 0.8);
         color: white; font-size: 14px; font-weight: 500; cursor: pointer;
       ">{{ vm.isLoading() ? 'logging in...' : 'login' }}</button>
     </div>

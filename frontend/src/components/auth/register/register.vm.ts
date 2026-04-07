@@ -38,10 +38,7 @@ export class RegisterViewModel {
 
   isFormValid(): boolean {
     const { firstName, lastName, email, password } = this.form();
-    return firstName.trim().length > 0
-      && lastName.trim().length > 0
-      && email.trim().length > 0
-      && password.length >= 6;
+    return firstName.trim().length > 0 && lastName.trim().length > 0 && email.trim().length > 0 && email.includes('@') && password.length >= 6;
   }
 
   async register(): Promise<void> {

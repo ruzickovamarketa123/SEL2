@@ -32,7 +32,7 @@ export class LoginViewModel {
 
   isFormValid(): boolean {
     const { email, password } = this.form();
-    return email.trim().length > 0 && password.length > 0;
+    return email.trim().length > 0 && email.includes('@') && password.length > 0;
   }
 
   async login(): Promise<void> {

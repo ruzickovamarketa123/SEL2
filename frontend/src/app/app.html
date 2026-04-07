@@ -26,24 +26,24 @@
     <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
 
       <div style="flex: 1; min-height: 0; padding: 16px 16px 0 16px;">
-        <div style="height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
-          <!--<app-map [selectedTour]="selectedTour"></app-map>-->
+        <div style="height: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12); isolation: isolate;">
+          <app-map></app-map>
         </div>
       </div>
 
       <div style="flex-shrink: 0; padding: 12px 16px 16px 16px;">
         @if (!selectedTour) {
-        <div style="background: white; border-radius: 12px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); color: #aaa; text-align: center;">
-          <p style="margin: 0; font-size: 14px;">Select a tour from the list to see details here.</p>
+        <div style="background: white; border-radius: 12px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07); color: #aaa; text-align: center;">
+          <p style="margin: 0; font-size: 14px;">SELECT A TOUR FROM THE LIST TO SEE DETAILS HERE</p>
         </div>
         }
         @else{
-        <div style="background: white; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; height: 350px;">
+        <div style="background: white; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; height: 430px;">
           
-          <div style="display: flex; align-items: center; padding: 0 16px; background: #f8f9fa; border-bottom: 1px solid #eee;">
-            <h3 style="margin: 0; font-size: 16px; margin-right: 20px;">{{selectedTour.name}}</h3>
-            <button (click)="activeTab.set('details')" [style.border-bottom]="activeTab() === 'details' ? '3px solid #007bff' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; font-weight:bold;">Details</button>
-            <button (click)="activeTab.set('logs')" [style.border-bottom]="activeTab() === 'logs' ? '3px solid #007bff' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; font-weight:bold;">Logs</button>
+          <div style="display: flex; align-items: center; padding: 0 16px; background: rgba(239, 125, 184, 0.25); border-radius: 14px; border: 1px solid rgba(239, 125, 184)">
+            <h3 style="margin: 0; font-size: 16px; margin-right: 20px;text-transform: uppercase; letter-spacing: 0.5px;font-weight: bold; color: #000000">{{selectedTour.name}}</h3>
+            <button (click)="activeTab.set('details')" [style.border-bottom]="activeTab() === 'details' ? '3px solid rgb(236, 86, 164)' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; letter-spacing: 0.5px">details</button>
+            <button (click)="activeTab.set('logs')" [style.border-bottom]="activeTab() === 'logs' ? '3px solid rgb(236, 86, 164)' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; letter-spacing: 0.5px">logs</button>
             <button (click)="selectedTour = null" style="margin-left: auto; border:none; background:none; cursor:pointer; font-size: 24px;">×</button>
           </div>
 

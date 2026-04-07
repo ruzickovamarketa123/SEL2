@@ -7,6 +7,7 @@ export class ListViewModel {
   searchTerm = signal('');
   selectedId = signal<number | null>(null);
   showAddModal = signal(false);
+  errorMessage = signal<string | null>(null);
 
   // Initially empty, it will be populated by the Input() of list.ts
   allToursData = signal<Tour[]>([]);
@@ -33,11 +34,18 @@ export class ListViewModel {
 
   openAddModal() {
     this.newTour.set({ name: '', description: '', from: '', to: '', transportType: null });
+    this.errorMessage.set(null);
     this.showAddModal.set(true);
   }
 
   closeAddModal() {
     this.showAddModal.set(false);
+    this.errorMessage.set(null);
+  }
+
+  isFormValid(): boolean {         
+    const { name, from, to, transportType } = this.newTour();
+    return name.trim().length > 0 && from.trim().length > 0 && to.trim().length > 0 && transportType !== null;
   }
 
   resetForm() {
