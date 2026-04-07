@@ -34,7 +34,7 @@ export class List {
 
   addTour() {
      if (!this.vm.isFormValid()) {
-    this.vm.errorMessage.set('Please fill in all required fields.');
+    this.vm.errorMessage.set('please fill in all required fields.');
     return;
   }
   const data = this.vm.newTour();
