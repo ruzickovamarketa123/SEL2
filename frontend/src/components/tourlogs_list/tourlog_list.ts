@@ -78,12 +78,7 @@ export class TourLogList {
   isNewLogValid = computed(() => {
   const log = this.newLog();
   return (
-    log.dateTime.trim() !== '' &&
-    log.totalDistance > 0 &&
-    log.totalTime > 0 &&
-    log.difficulty !== null &&
-    log.rating >= 1 && log.rating <= 5 &&
-    log.comment.trim() !== ''
+    log.dateTime.trim() !== '' && log.totalDistance > 0 && log.totalTime > 0 && log.difficulty !== null && log.rating >= 1 && log.rating <= 5 && log.comment.trim() !== ''
   );
 });
 }
