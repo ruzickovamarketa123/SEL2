@@ -43,7 +43,7 @@
           <div style="display: flex; align-items: center; padding: 0 16px; background: rgba(239, 125, 184, 0.25); border-radius: 14px; border: 1px solid rgba(239, 125, 184)">
             <h3 style="margin: 0; font-size: 16px; margin-right: 20px;text-transform: uppercase; letter-spacing: 0.5px;font-weight: bold; color: #000000">{{selectedTour.name}}</h3>
             <button (click)="activeTab.set('details')" [style.border-bottom]="activeTab() === 'details' ? '3px solid rgb(236, 86, 164)' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; letter-spacing: 0.5px">details</button>
-            <button (click)="activeTab.set('logs')" [style.border-bottom]="activeTab() === 'logs' ? '3px solid rgb(236, 86, 164)' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; letter-spacing: 0.5px">logs</button>
+            <button (click)="activeTab.set('logs')" [style.border-bottom]="activeTab() === 'logs' ? '3px solid rgb(236, 86, 164)' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; letter-spacing: 0.5px">tour logs</button>
             <button (click)="selectedTour = null" style="margin-left: auto; border:none; background:none; cursor:pointer; font-size: 24px;">×</button>
           </div>
 
@@ -55,16 +55,25 @@
             </div>
             }
 
-            @if (activeTab() === 'logs') {
+           @if (activeTab() === 'logs') {
             <div style="display: flex; gap: 20px; height: 100%;">
               <div style="flex: 1; border-right: 1px solid #eee; overflow-y: auto;">
-                <tourlogs_list [tourId]="selectedTour.id" (logSelected)="selectedLog = $event"></tourlogs_list>
+                <tourlogs_list
+                  [tourId]="selectedTour.id"
+                  [allLogs]="tourLogs()"
+                  (logSelected)="selectedLog = $event"
+                  (logAdded)="onLogAdded($event)">
+                </tourlogs_list>
               </div>
               <div style="flex: 1.5; overflow-y: auto;">
-                <tourlog_details [log]="selectedLog"></tourlog_details>
+                <tourlog_details
+                  [log]="selectedLog"
+                  (edit)="onEditLog($event)"
+                  (delete)="onDeleteLog($event)">
+                </tourlog_details>
               </div>
             </div>
-            }
+          }
       </div>
 
     </div>}

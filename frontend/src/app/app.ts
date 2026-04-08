@@ -32,6 +32,31 @@ export class App {
     { id: 5, name: 'Safari Adventure', description: 'Wildlife vacation in Kenya.', from: 'Nairobi', to: 'Maasai Mara', transportType: 'Vacation' },
   ]);
 
+  tourLogs = signal<TourLog[]>([
+    { id: 1, tourId: 1, dateTime: '2023-10-01', totalDistance: 12.5, rating: 4, comment: 'First TourLog', difficulty: 'Medium', totalTime: 90 },
+    { id: 2, tourId: 1, dateTime: '2023-10-05', totalDistance: 5.0, rating: 3, comment: 'Second TourLog', difficulty: 'Easy', totalTime: 60 },
+    { id: 3, tourId: 2, dateTime: '2023-10-10', totalDistance: 20.2, rating: 5, comment: 'First TourLog', difficulty: 'Hard', totalTime: 120 },
+  ]);
+
+  onLogAdded(newLog: TourLog) {
+    const logWithId: TourLog = { ...newLog, id: Date.now() };
+    this.tourLogs.update(list => [...list, logWithId]);
+  }
+
+  onEditLog(updated: TourLog) {
+    this.tourLogs.update(list => list.map(l => l.id === updated.id ? updated : l));
+    if (this.selectedLog?.id === updated.id) {
+      this.selectedLog = { ...updated };
+    }
+  }
+
+  onDeleteLog(id: number) {
+    this.tourLogs.update(list => list.filter(l => l.id !== id));
+    if (this.selectedLog?.id === id) {
+      this.selectedLog = null;
+    }
+  }
+
   onTourAdded(newTourData: Tour) {
     const tourWithId: Tour = { ...newTourData, id: Date.now()};
 

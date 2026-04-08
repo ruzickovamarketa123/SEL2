@@ -1,26 +1,29 @@
 import { Component, Input, Output, EventEmitter, inject, computed, SimpleChanges, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TourLog } from '../tourlog_details/tourlog.model';
+import { FormsModule } from '@angular/forms';
+import { TourLog, difficultyType } from '../tourlog_details/tourlog.model';
 
 @Component({
   selector: 'tourlogs_list',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './tourlog_list.html'
+  imports: [CommonModule, FormsModule],
+  templateUrl: './tourlog_list.html',
+  styleUrl: './tourlog_list.css'
 })
 export class TourLogList {
   @Input() tourId!: number;
-  @Output() logSelected = new EventEmitter<any>();
 
-  private allLogs = signal<TourLog[]>([
-    { id: 1, tourId: 1, dateTime: '2023-10-01', totalDistance: 12.5, rating: 4, comment: 'First TourLog' , difficulty: 'Medium', totalTime: 90},
-    { id: 2, tourId: 1, dateTime: '2023-10-05', totalDistance: 5.0, rating: 3, comment: 'Second TourLog' , difficulty: 'Easy', totalTime: 60},
-    { id: 3, tourId: 2, dateTime: '2023-10-10', totalDistance: 20.2, rating: 5, comment: 'First TourLog' , difficulty: 'Hard', totalTime: 120},
-  ]);
+  private _allLogs = signal<TourLog[]>([]);
+  @Input() set allLogs(value: TourLog[]) {
+    this._allLogs.set(value);
+  }
+
+  @Output() logSelected = new EventEmitter<TourLog | null>();
+  @Output() logAdded = new EventEmitter<TourLog>();  
 
   // Filter logs based on the selected tour
   filteredLogs = computed(() => {
-    return this.allLogs().filter(log => log.tourId === this.tourId);
+    return this._allLogs().filter(log => log.tourId === this.tourId);
   });
 
   // based on number of logs
@@ -37,13 +40,50 @@ export class TourLogList {
     });
 
   // This is to "react" when the tourId changes from outside
+  showAddModal = signal(false);
+  newLog = signal<Omit<TourLog, 'id'>>({
+    tourId: 0, dateTime: '', comment: '',
+    difficulty: null, totalDistance: 0, totalTime: 0, rating: 0,
+  });
+
+  openAddModal() {
+    this.newLog.set({
+      tourId: this.tourId,
+      dateTime: new Date().toISOString().split('T')[0],
+      comment: '', difficulty: null,
+      totalDistance: 0, totalTime: 0, rating: 0,
+    });
+    this.showAddModal.set(true);
+  }
+
+  closeAddModal() {
+    this.showAddModal.set(false);
+  }
+
+  confirmAdd() {
+    this.logAdded.emit(this.newLog() as TourLog);
+    this.closeAddModal();
+  }
+
+  selectLog(log: TourLog) {
+    this.logSelected.emit(log);
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tourId']) {
-      this.logSelected.emit(null); // Reset the selected log when the tour changes
+      this.logSelected.emit(null);
     }
   }
 
-  selectLog(log: any) {
-    this.logSelected.emit(log);
-  }
+  isNewLogValid = computed(() => {
+  const log = this.newLog();
+  return (
+    log.dateTime.trim() !== '' &&
+    log.totalDistance > 0 &&
+    log.totalTime > 0 &&
+    log.difficulty !== null &&
+    log.rating >= 1 && log.rating <= 5 &&
+    log.comment.trim() !== ''
+  );
+});
 }
