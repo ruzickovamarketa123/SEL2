@@ -35,6 +35,7 @@ export class LoginViewModel {
     return email.trim().length > 0 && email.includes('@') && password.length > 0;
   }
 
+  // calls authservice - fuiture SpringBoot integration at lkocalhost:8080/api
   async login(): Promise<void> {
     if (!this.isFormValid()) {
       this.errorMessage.set('Please fill in all fields.');
