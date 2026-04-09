@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { LoginRequest, LoginResponse } from '../components/auth/login/login.model';
 import { RegisterRequest } from '../components/auth/register/register.model';
 
+// authentification serrvice for future SpringBoot backend integration
+// currently throws errors on failed requests so VMs can dfisplay feedback
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly API_URL = 'http://localhost:8080/api';

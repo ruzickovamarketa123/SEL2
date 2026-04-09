@@ -21,12 +21,12 @@ export class TourLogList {
   @Output() logSelected = new EventEmitter<TourLog | null>();
   @Output() logAdded = new EventEmitter<TourLog>();  
 
-  // Filter logs based on the selected tour
+  // filter logs based on the selected tour
   filteredLogs = computed(() => {
     return this._allLogs().filter(log => log.tourId === this.tourId);
   });
 
-  // based on number of logs
+  // derived from number of logs, will be replaced from actual rating average from backend in the future
     popularity = computed(() => {
     const count = this.filteredLogs().length;
     if (count >= 5) return 5;
@@ -39,7 +39,7 @@ export class TourLogList {
     return 1
     });
 
-  // This is to "react" when the tourId changes from outside
+  // this is to "react" when the tourId changes from outside
   showAddModal = signal(false);
   newLog = signal<Omit<TourLog, 'id'>>({
     tourId: 0, dateTime: '', comment: '',

@@ -41,6 +41,7 @@ export class RegisterViewModel {
     return firstName.trim().length > 0 && lastName.trim().length > 0 && email.trim().length > 0 && email.includes('@') && password.length >= 6;
   }
 
+  // calls authservice - fuiture SpringBoot integration at lkocalhost:8080/api
   async register(): Promise<void> {
     if (!this.isFormValid()) {
       this.errorMessage.set('Please fill in all fields. Password must be at least 6 characters.');

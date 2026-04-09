@@ -9,7 +9,7 @@ export class ListViewModel {
   showAddModal = signal(false);
   errorMessage = signal<string | null>(null);
 
-  // Initially empty, it will be populated by the Input() of list.ts
+  // initially empty, it will be populated by the Input() of list.ts
   allToursData = signal<Tour[]>([]);
 
   //observer 1: reacts to changes in searchTerm and allToursData
@@ -18,10 +18,10 @@ export class ListViewModel {
     return this.allToursData().filter(t => t.name.toLowerCase().includes(term));
   });
 
-  //observer 2: Reacts to filteredTours (and indirectly to searchTerm)
+  //observer 2: Reacts to filteredTours (and indirectly to searchTerm) - derived signal
   resultsCount = computed(() => this.filteredTours().length);
 
-  //Observer 3: Reacts to both searchTerm and resultsCount
+  //observer 3: Reacts to both searchTerm and resultsCount
   searchStatusMessage = computed(() => {
     if (this.searchTerm() === '') return 'Showing all tours';
     return `Found ${this.resultsCount()} tours for "${this.searchTerm()}"`;

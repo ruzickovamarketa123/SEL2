@@ -15,6 +15,7 @@ import { ListViewModel } from './list.vm';
 export class List {
   readonly vm = inject(ListViewModel);
 
+  // bridge
   @Input() set tours(value: Tour[]) { this.vm.allToursData.set(value); }
   @Input() set searchTerm(value: string) { this.vm.searchTerm.set(value); }
 
@@ -32,13 +33,14 @@ export class List {
     this.vm.closeAddModal();
   }
 
+  // delegates validation to viewmodel, then notifies mediator
   addTour() {
      if (!this.vm.isFormValid()) {
     this.vm.errorMessage.set('please fill in all required fields.');
     return;
   }
   const data = this.vm.newTour();
-  this.tourAdded.emit(data); // The mediator receives the new tour data and saves
+  this.tourAdded.emit(data); // the mediator receives the new tour data and saves
   this.vm.closeAddModal();
   }
 }

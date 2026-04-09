@@ -24,6 +24,7 @@ export class App {
   selectedLog: TourLog | null = null;
   activeTab = signal<'details' | 'logs'>('details');
 
+  // shared reactive state managed here so all components stay in sync
   tours = signal<Tour[]>([ 
     { id: 1, name: 'Paris City Tour', description: 'A beautiful tour of Paris.', from: 'Eiffel Tower', to: 'Louvre', transportType: 'Hike' },
     { id: 2, name: 'Tokyo Explorer', description: 'Explore the streets of Tokyo.', from: 'Shinjuku', to: 'Shibuya', transportType: 'Bike' },
@@ -32,12 +33,14 @@ export class App {
     { id: 5, name: 'Safari Adventure', description: 'Wildlife vacation in Kenya.', from: 'Nairobi', to: 'Maasai Mara', transportType: 'Vacation' },
   ]);
 
+    // shared reactive state managed here so all components stay in sync
   tourLogs = signal<TourLog[]>([
     { id: 1, tourId: 1, dateTime: '2023-10-01', totalDistance: 12.5, rating: 4, comment: 'First TourLog', difficulty: 'Medium', totalTime: 90 },
     { id: 2, tourId: 1, dateTime: '2023-10-05', totalDistance: 5.0, rating: 3, comment: 'Second TourLog', difficulty: 'Easy', totalTime: 60 },
     { id: 3, tourId: 2, dateTime: '2023-10-10', totalDistance: 20.2, rating: 5, comment: 'First TourLog', difficulty: 'Hard', totalTime: 120 },
   ]);
 
+  // mediator method 
   onLogAdded(newLog: TourLog) {
     const logWithId: TourLog = { ...newLog, id: Date.now() };
     this.tourLogs.update(list => [...list, logWithId]);
@@ -57,6 +60,7 @@ export class App {
     }
   }
 
+  // mediator method - recieves new tour from ListComponent, assigns unique ID, updates the shared signal
   onTourAdded(newTourData: Tour) {
     const tourWithId: Tour = { ...newTourData, id: Date.now()};
 
@@ -67,7 +71,7 @@ export class App {
     this.currentSearch = term;
   }
 
-  //When the tour is changed, the tab and the selected log are reset
+  //when the tour is changed, the tab and the selected log are reset
   selectTour(tour: Tour) {
     this.selectedTour = tour;
     this.activeTab.set('details');
@@ -76,12 +80,12 @@ export class App {
 
   onEditTour(updatedTour: Tour) {
     this.tours.update(list => list.map(t => t.id === updatedTour.id ? updatedTour : t));
-    //This updates the details you are looking at
+    //this updates the details you are looking at
     this.selectedTour = { ...updatedTour };
   }
 
   onDeleteTour(tourId: number) {
-    // Removes the tour from the list by filtering by ID
+    // removes the tour from the list by filtering by ID
     this.tours.update(currentTours => currentTours.filter(t => t.id !== tourId));
 
     //close the details if the cancelled tour was displayed
