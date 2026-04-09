@@ -26,19 +26,6 @@ export class TourLogList {
     return this._allLogs().filter(log => log.tourId === this.tourId);
   });
 
-  // derived from number of logs, will be replaced from actual rating average from backend in the future
-    popularity = computed(() => {
-    const count = this.filteredLogs().length;
-    if (count >= 5) return 5;
-    else return count;
-    });
-
-    child_friendliness = computed(() => {
-    const count = this.filteredLogs().length;
-    if(count === 0) return 0; // No logs, can't determine child-friendliness
-    return 1
-    });
-
   // this is to "react" when the tourId changes from outside
   showAddModal = signal(false);
   newLog = signal<Omit<TourLog, 'id'>>({
