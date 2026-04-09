@@ -1,0 +1,133 @@
+<div class="tour-list-container">
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+    <h2 class="list-title">available Tours</h2>
+    <button type="button" (click)="vm.openAddModal()" style="
+      padding: 8px 18px;
+      background: rgba(110, 219, 80, 0.8);
+      color: rgb(0, 0, 0);
+      border: 1.5px solid #000000;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    ">+ add tour</button>
+  </div>
+
+  <div class="scroll-area">
+    @for (tour of vm.filteredTours(); track tour.id) {
+      <div
+        class="tour-card"
+        [class.selected]="vm.selectedId() === tour.id"
+        (click)="select(tour)"
+      >
+        <div class="card-header">
+          <h3 class="tour-name">{{ tour.name }}</h3>
+          <span class="type-badge">{{ tour.transportType }}</span>
+        </div>
+
+        <div class="card-details">
+          <div class="route">
+            <span class="route-point">{{ tour.from }}</span>
+            <span class="route-arrow">→</span>
+            <span class="route-point">{{ tour.to }}</span>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <p style="color: #aaa;">NO TOURS MATCHING YOUR SEARCH</p>
+    }
+  </div>
+</div>
+
+@if (vm.showAddModal()) {
+<div style="position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 200;">
+  <div style="background: white; padding: 28px 32px; border-radius: 16px; width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.2);" (click)="$event.stopPropagation()">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h3 style="margin: 0; font-size: 20px; font-weight: 600;">add new tour</h3>
+      <button type="button" (click)="vm.closeAddModal()" style="background: none; border: none; font-size: 16px; cursor: pointer; color: #999;">✕</button>
+    </div>
+
+    <div *ngIf="vm.errorMessage()" style="background: #fff0f0; color: #d32f2f; border: 1px solid #ffcdd2; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 16px;">{{ vm.errorMessage() }}</div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">tour name</label>
+        <input type="text"
+          [ngModel]="vm.newTour().name"
+          (ngModelChange)="vm.newTour.set({...vm.newTour(), name: $event})"
+          placeholder="e.g. Paris City Tour"
+          style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;"
+        />
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 13px; font-weight: 500; color: #555;">from</label>
+          <input type="text"
+            [ngModel]="vm.newTour().from"
+            (ngModelChange)="vm.newTour.set({...vm.newTour(), from: $event})"
+            placeholder="departure"
+            style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; width: 100%;"
+          />
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 13px; font-weight: 500; color: #555;">to</label>
+          <input type="text"
+            [ngModel]="vm.newTour().to"
+            (ngModelChange)="vm.newTour.set({...vm.newTour(), to: $event})"
+            placeholder="destination"
+            style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; width: 100%;"
+          />
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">
+          description <span style="font-weight: 400; color: #999;">(optional)</span>
+        </label>
+        <textarea
+          [ngModel]="vm.newTour().description"
+          (ngModelChange)="vm.newTour.set({...vm.newTour(), description: $event})"
+          placeholder="describe the tour..."
+          rows="3"
+          style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; font-family: inherit; resize: vertical;"
+        ></textarea>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">transport type</label>
+        <select
+          [ngModel]="vm.newTour().transportType"
+          (ngModelChange)="vm.newTour.set({...vm.newTour(), transportType: $event})"
+          style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; background: white;"
+        >
+          <option [value]="null" disabled selected>select type...</option>
+          <option value="Hike">hike</option>
+          <option value="Bike">bike</option>
+          <option value="Running">running</option>
+          <option value="Vacation">vacation</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+      <button type="button" (click)="vm.closeAddModal()" style="
+        padding: 9px 18px; border-radius: 8px;
+        border: 1.5px solid #ddd; background: white;
+        color: #555; font-size: 14px; cursor: pointer;
+      ">cancel</button>
+
+      <button type="button" (click)="addTour()" [disabled]="!vm.isFormValid()" style="
+        padding: 9px 22px; border-radius: 8px;
+        border: none; background: rgba(110, 219, 80);
+        color: white; font-size: 14px; font-weight: 500; cursor: pointer;
+        ">add tour</button>
+    </div>
+
+  </div>
+</div>
+}

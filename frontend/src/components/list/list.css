@@ -1,0 +1,92 @@
+.tour-list-container {
+  max-width: 400px;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  color: #333;
+}
+
+.list-title {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #000000;
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+
+.scroll-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tour-card {
+  background: white;
+  border: 1px solid #eee;
+  padding: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.tour-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-color: #ffdbe2;
+}
+
+.tour-card.selected {
+  background-color: rgba(239, 125, 184, 0.25);
+  border-color: rgba(239, 125, 184);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.tour-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.type-badge {
+  font-size: 0.7rem;
+  background: #f0f2f5;
+  padding: 4px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #7f8c8d;
+}
+
+.tour-card.selected .type-badge {
+  background: rgba(239, 125, 184, 0.5);
+  color: #4a4a4a;
+}
+
+.route {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #5d6d7e;
+}
+
+.route-arrow {
+  color: #bdc3c7;
+  font-weight: bold;
+}
+
+.route-point {
+  font-weight: 400;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

@@ -1,0 +1,103 @@
+@if (vm.tour(); as tour) {
+<div class="tour-details-inner">
+  
+  @if (!vm.isEditing()) {
+  <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+    <button (click)="vm.onEdit()" 
+            style="font-size: 14px;background: rgba(77, 163, 255, 0.8); color: #000000; border: 1.5px solid #000000; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+      edit tour
+    </button>
+    <button (click)="vm.onDelete()" 
+             style="font-size: 14px;background: #ff5858cc; color: #000000; border: 1.5px solid #000000; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+      delete tour
+    </button>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px;">
+    <div class="info-item">
+      <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">from</div>
+      <div style="font-weight: 600; color: #333;">{{ tour.from }}</div>
+    </div>
+    <div class="info-item">
+      <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">to</div>
+      <div style="font-weight: 600; color: #333;">{{ tour.to }}</div>
+    </div>
+    <div class="info-item">
+      <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">type</div>
+      <div style="font-weight: 600; color: #333;">{{ tour.transportType }}</div>
+    </div>
+    <div class="info-item">
+      <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">distance</div>
+      <div style="font-weight: 600; color: #333;">{{ tour.distance }} km</div>
+    </div>
+    <div class="info-item">
+      <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">duration</div>
+      <div style="font-weight: 600; color: #333;">{{ tour.estimatedTime }} min</div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 40px; padding: 16px; background: #f9f9f9; border-radius: 10px; margin-bottom: 24px;">
+    <div class="rating-item">
+      <span style="color: #666; font-size: 13px; margin-right: 8px;">popularity:</span>
+      <span style="color: #ffc107; font-weight: bold;">{{ vm.getPopularityStars() }}</span>
+    </div>
+    <div class="rating-item">
+      <span style="color: #666; font-size: 13px; margin-right: 8px;">child-friendliness:</span>
+      <span style="color: #ffc107; font-weight: bold;">{{ vm.getChildFriendlyStars() }}</span>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid #eee; padding-top: 16px;">
+    <h4 style="margin: 0 0 8px 0; color: #888; font-size: 11px;letter-spacing: 0.5px;">DESCRIPTION</h4>
+    <p style="margin: 0; color: #555; line-height: 1.6; font-size: 14px;">
+      {{ tour.description || 'no description available for this tour.' }}
+    </p>
+  </div>
+}
+
+@else {
+    <h3 style="margin-bottom: 20px; color: #333; font-size: 20px; font-weight: 600;">editing "{{tour.name}}"</h3>
+
+    <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">tour name</label>
+        <input type="text" [ngModel]="vm.editTourData()?.name" (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, name: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 13px; font-weight: 500; color: #555;">from</label>
+          <input type="text" [ngModel]="vm.editTourData()?.from" (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, from: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 13px; font-weight: 500; color: #555;">to</label>
+          <input type="text" [ngModel]="vm.editTourData()?.to" (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, to: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">transport type</label>
+        <select [ngModel]="vm.editTourData()?.transportType" (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, transportType: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; background: white;">
+          <option value="Hike">hike</option>
+          <option value="Bike">bike</option>
+          <option value="Running">running</option>
+          <option value="Vacation">vacation</option>
+        </select>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">description <span style="font-weight: 400; color: #999;">(optional)</span></label>
+        <textarea [ngModel]="vm.editTourData()?.description" (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, description: $event})" rows="3" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; font-family: inherit; resize: vertical;"></textarea>
+      </div>
+
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+      <button type="button" (click)="vm.cancelEdit()" style="padding: 9px 18px; border-radius: 8px; border: 1.5px solid #ddd; background: white; color: #555; font-size: 14px; cursor: pointer;">cancel</button>
+      <button type="button" (click)="vm.saveEdit()" style="padding: 9px 22px; border-radius: 8px; border: none; background:rgba(77, 163, 255, 0.8); color: white; font-size: 14px; font-weight: 500; cursor: pointer;">save changes</button>
+    </div>
+  }
+
+  </div>
+}

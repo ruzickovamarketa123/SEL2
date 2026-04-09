@@ -1,0 +1,72 @@
+<div class="log-details-container" style="height: 100%;">
+  @if (vm.selectedLog(); as log) {
+    <div style="background: #fcfcfc; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px; height: 100%;">
+      
+      @if (!vm.isEditing()) {
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 12px;">
+          <h4 style="margin: 0; color: #333;">TOUR LOG DETAILS</h4>
+          <div style="display: flex; gap: 8px;">
+            <button (click)="vm.startEdit()" 
+                   style="font-size: 14px;background: rgba(77, 163, 255, 0.8); color: #000000; border: 1.5px solid #000000; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+              edit tour log
+            </button>
+            <button (click)="onDelete()" 
+                     style="font-size: 14px;background: #ff5858cc; color: #000000; border: 1.5px solid #000000; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+              delete tour log
+            </button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+          <div>
+            <label style="display: block; font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Duration</label>
+            <span style="font-weight: 600;">{{ log.totalTime }} min</span>
+          </div>
+          <div>
+            <label style="display: block; font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Difficulty</label>
+            <span style="font-weight: 600;">{{ log.difficulty }}</span>
+          </div>
+          <div>
+            <label style="display: block; font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Distance</label>
+            <span style="font-weight: 600;">{{ log.totalDistance }} km</span>
+          </div>
+          <div>
+            <label style="display: block; font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Rating</label>
+            <span style="color: #ffc107; font-weight: bold;">{{ log.rating }}/5 ★</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 10px;">
+          <label style="display: block; font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">User Comment</label>
+          <p style="margin: 5px 0; font-size: 14px; color: #555; line-height: 1.5; background: white; padding: 12px; border-radius: 8px; border: 1px solid #f0f0f0;">
+            {{ log.comment }}
+          </p>
+        </div>
+      } 
+      
+      @else {
+        <h4 style="margin-top: 0; color: #000000; border-bottom: 1.5px solid #e0e0e0; padding-bottom: 8px; font-size: 20px; font-weight: 600;">edit tour log</h4>
+
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 15px;">
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 13px; font-weight: 500; color: #555;">distance (km)</label>
+            <input type="number" [ngModel]="vm.editData()?.totalDistance" (ngModelChange)="vm.editData.set({...vm.editData()!, totalDistance: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 13px; font-weight: 500; color: #555;">comment</label>
+            <textarea [ngModel]="vm.editData()?.comment" (ngModelChange)="vm.editData.set({...vm.editData()!, comment: $event})" rows="3" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; font-family: inherit; resize: vertical;"></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 5px;">
+            <button type="button" (click)="vm.cancelEdit()" style="padding: 9px 18px; border-radius: 8px; border: 1.5px solid #ddd; background: white; color: #555; font-size: 14px; cursor: pointer;">cancel</button>
+            <button type="button" (click)="onSave()" style="padding: 9px 22px; border-radius: 8px; border: none; background: rgba(77, 163, 255, 0.8); color: white; font-size: 14px; font-weight: 500; cursor: pointer;">save changes</button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #bbb; border: 2px dashed #f0f0f0; border-radius: 12px;">
+      <p style="margin: 0; font-size: 14px; color: #aaa;">SELECT A TOUR LOG FROM THE LIST TO SEE DETAILS HERE</p>
+    </div>
+  }
+</div>

@@ -1,0 +1,30 @@
+<!-- src/components/search-input/search-input.html -->
+
+<div style="display: flex; align-items: center; gap: 8px; width: 100%;">
+  <input
+    type="text"
+    [ngModel]="searchTerm()"
+    (ngModelChange)="searchTerm.set($event)"
+    placeholder="search for your dream tour..."
+    style="
+      flex: 1;
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1.5px solid #000000;
+      font-size: 14px;
+      outline: none;
+    "
+  />
+  <button
+    type="button"
+    (click)="onSearch()"
+    style="
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1.5px solid #000000;
+      background: white;
+      cursor: pointer;
+      font-size: 16px;
+    "
+  >🔍</button>
+</div>
