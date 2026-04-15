@@ -35,9 +35,9 @@ export class App {
 
     // shared reactive state managed here so all components stay in sync
   tourLogs = signal<TourLog[]>([
-    { id: 1, tourId: 1, dateTime: '2023-10-01', totalDistance: 12.5, rating: 4, comment: 'First TourLog', difficulty: 'Medium', totalTime: 90 },
-    { id: 2, tourId: 1, dateTime: '2023-10-05', totalDistance: 5.0, rating: 3, comment: 'Second TourLog', difficulty: 'Easy', totalTime: 60 },
-    { id: 3, tourId: 2, dateTime: '2023-10-10', totalDistance: 20.2, rating: 5, comment: 'First TourLog', difficulty: 'Hard', totalTime: 120 },
+    { id: 1, tourId: 1, dateTime: '2023-10-01', totalDistance: 5.5, rating: 4, comment: 'first TourLog', difficulty: 'Easy', totalTime: 70 },
+    { id: 2, tourId: 1, dateTime: '2023-10-05', totalDistance: 5.0, rating: 3, comment: 'second TourLog', difficulty: 'Easy', totalTime: 60 },
+    { id: 3, tourId: 2, dateTime: '2023-10-10', totalDistance: 20.2, rating: 5, comment: 'first TourLog', difficulty: 'Hard', totalTime: 120 },
   ]);
 
   // mediator method 
