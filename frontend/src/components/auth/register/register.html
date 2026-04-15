@@ -49,17 +49,6 @@
       margin-bottom: 16px;
     ">
       {{ vm.successMessage() }}
-      <br><br>
-      <button type="button" (click)="vm.close()" style="
-        padding: 8px 22px;
-        border-radius: 8px;
-        border: none;
-        background: #ed7bc4;
-        color: white;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-      ">close</button>
     </div>
 
     <div *ngIf="!vm.successMessage()">

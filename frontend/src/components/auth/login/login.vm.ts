@@ -35,21 +35,13 @@ export class LoginViewModel {
     return email.trim().length > 0 && email.includes('@') && password.length > 0;
   }
 
-  // calls authservice - fuiture SpringBoot integration at lkocalhost:8080/api
+  // calls authservice - future SpringBoot integration at localhost:8080/api
   async login(): Promise<void> {
     if (!this.isFormValid()) {
-      this.errorMessage.set('Please fill in all fields.');
+      this.errorMessage.set('please fill in all fields.');
       return;
     }
-    this.isLoading.set(true);
-    this.errorMessage.set(null);
-    try {
-      await this.authService.login(this.form());
-      this.close();
-    } catch (err: any) {
-      this.errorMessage.set(err.message ?? 'Login failed. Please try again.');
-    } finally {
-      this.isLoading.set(false);
-    }
+    await this.authService.login(this.form());
+    this.close();
   }
 }
