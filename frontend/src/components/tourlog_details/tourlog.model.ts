@@ -1,7 +1,8 @@
 export interface TourLog {
     id: number;
     tourId: number; // link to the tour
-    dateTime: string;
+    date: string;
+    time: string;
     comment: string;
     difficulty: difficultyType;
     totalDistance: number;  //km

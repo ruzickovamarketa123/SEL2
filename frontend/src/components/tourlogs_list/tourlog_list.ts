@@ -29,16 +29,22 @@ export class TourLogList {
   // this is to "react" when the tourId changes from outside
   showAddModal = signal(false);
   newLog = signal<Omit<TourLog, 'id'>>({
-    tourId: 0, dateTime: '', comment: '',
+    tourId: 0, date: '', time: '', comment: '',
     difficulty: null, totalDistance: 0, totalTime: 0, rating: 0,
   });
 
   openAddModal() {
+    const now = new Date();
+    const timeString = now.toTimeString().slice(0, 5);
     this.newLog.set({
       tourId: this.tourId,
-      dateTime: new Date().toISOString().split('T')[0],
-      comment: '', difficulty: null,
-      totalDistance: 0, totalTime: 0, rating: 0,
+      date: now.toISOString().split('T')[0], //YYYY-MM-DD
+      time: timeString,    
+      comment: '', 
+      difficulty: null,
+      totalDistance: 0, 
+      totalTime: 0, 
+      rating: 0,
     });
     this.showAddModal.set(true);
   }
@@ -65,7 +71,7 @@ export class TourLogList {
   isNewLogValid = computed(() => {
   const log = this.newLog();
   return (
-    log.dateTime.trim() !== '' && log.totalDistance > 0 && log.totalTime > 0 && log.difficulty !== null && log.rating >= 1 && log.rating <= 5 && log.comment.trim() !== ''
+    log.date.trim() !== '' && log.time.trim() !== '' && log.totalDistance > 0 && log.totalTime > 0 && log.difficulty !== null && log.rating >= 1 && log.rating <= 5 && log.comment.trim() !== ''
   );
 });
 }

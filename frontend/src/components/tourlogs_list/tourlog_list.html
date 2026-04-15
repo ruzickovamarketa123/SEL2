@@ -13,7 +13,7 @@
            onmouseover="this.style.backgroundColor='#f8f9fa'" 
            onmouseout="this.style.backgroundColor='transparent'">
         <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
-          <span>{{ log.dateTime | date:'dd MMM yyyy' }}</span>
+          <span>{{ log.date | date:'dd MMM yyyy' }} - {{ log.time }}</span>
           <span style="color: #ffc107;">{{ log.rating }} ★</span>
         </div>
         <div style="font-size: 12px; color: #777; margin-top: 4px;">
@@ -32,13 +32,21 @@
       <h3 style="margin: 0 0 20px 0; font-size: 20px; font-weight: 600;">add tour log</h3>
 
       <div style="display: flex; flex-direction: column; gap: 12px;">
-        <div>
+        <div style="flex: 1;">
           <label style="font-size: 13px; font-weight: 500; color: #555;">date</label>
           <input type="date"
-            [ngModel]="newLog().dateTime"
-            (ngModelChange)="newLog.set({...newLog(), dateTime: $event})"
+            [ngModel]="newLog().date"
+            (ngModelChange)="newLog.set({...newLog(), date: $event})"
             style="width: 100%; padding: 8px 12px; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 14px;" />
         </div>
+
+        <div style="flex: 1;">
+            <label style="font-size: 13px; font-weight: 500; color: #555;">time</label>
+            <input type="time"
+              [ngModel]="newLog().time"
+              (ngModelChange)="newLog.set({...newLog(), time: $event})"
+              style="width: 100%; padding: 8px 12px; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 14px;" />
+          </div>
 
         <div>
           <label style="font-size: 13px; font-weight: 500; color: #555;">distance (km)</label>

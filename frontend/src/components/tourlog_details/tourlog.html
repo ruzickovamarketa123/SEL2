@@ -47,20 +47,53 @@
       @else {
         <h4 style="margin-top: 0; color: #000000; border-bottom: 1.5px solid #e0e0e0; padding-bottom: 8px; font-size: 20px; font-weight: 600;">edit tour log</h4>
 
-        <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 15px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 15px;">
+          
           <div style="display: flex; flex-direction: column; gap: 5px;">
-            <label style="font-size: 13px; font-weight: 500; color: #555;">distance (km)</label>
-            <input type="number" [ngModel]="vm.editData()?.totalDistance" (ngModelChange)="vm.editData.set({...vm.editData()!, totalDistance: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 5px;">
-            <label style="font-size: 13px; font-weight: 500; color: #555;">comment</label>
-            <textarea [ngModel]="vm.editData()?.comment" (ngModelChange)="vm.editData.set({...vm.editData()!, comment: $event})" rows="3" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; font-family: inherit; resize: vertical;"></textarea>
+            <label style="font-size: 13px; font-weight: 500; color: #555;">date</label>
+            <input type="date" [ngModel]="vm.editData()?.date" (ngModelChange)="vm.editData.set({...vm.editData()!, date: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
           </div>
 
-          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 5px;">
-            <button type="button" (click)="vm.cancelEdit()" style="padding: 9px 18px; border-radius: 8px; border: 1.5px solid #ddd; background: white; color: #555; font-size: 14px; cursor: pointer;">cancel</button>
-            <button type="button" (click)="onSave()" style="padding: 9px 22px; border-radius: 8px; border: none; background: rgba(77, 163, 255, 0.8); color: white; font-size: 14px; font-weight: 500; cursor: pointer;">save changes</button>
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 13px; font-weight: 500; color: #555;">time</label>
+            <input type="time" [ngModel]="vm.editData()?.time" (ngModelChange)="vm.editData.set({...vm.editData()!, time: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
           </div>
+
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 13px; font-weight: 500; color: #555;">distance (km)</label>
+            <input type="number" min="0" [ngModel]="vm.editData()?.totalDistance" (ngModelChange)="vm.editData.set({...vm.editData()!, totalDistance: +$event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 13px; font-weight: 500; color: #555;">duration (min)</label>
+            <input type="number" min="0" [ngModel]="vm.editData()?.totalTime" (ngModelChange)="vm.editData.set({...vm.editData()!, totalTime: +$event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 13px; font-weight: 500; color: #555;">difficulty</label>
+            <select [ngModel]="vm.editData()?.difficulty" (ngModelChange)="vm.editData.set({...vm.editData()!, difficulty: $event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; background: white;">
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+              <option value="Expert">Expert</option>
+            </select>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 13px; font-weight: 500; color: #555;">rating (1-5)</label>
+            <input type="number" min="1" max="5" [ngModel]="vm.editData()?.rating" (ngModelChange)="vm.editData.set({...vm.editData()!, rating: +$event})" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
+          </div>
+
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 14px;">
+          <label style="font-size: 13px; font-weight: 500; color: #555;">comment</label>
+          <textarea [ngModel]="vm.editData()?.comment" (ngModelChange)="vm.editData.set({...vm.editData()!, comment: $event})" rows="3" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; font-family: inherit; resize: vertical;"></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+          <button type="button" (click)="vm.cancelEdit()" style="padding: 9px 18px; border-radius: 8px; border: 1.5px solid #ddd; background: white; color: #555; font-size: 14px; cursor: pointer;">cancel</button>
+          <button type="button" (click)="onSave()" style="padding: 9px 22px; border-radius: 8px; border: none; background: rgba(77, 163, 255, 0.8); color: white; font-size: 14px; font-weight: 500; cursor: pointer;">save changes</button>
         </div>
       }
     </div>

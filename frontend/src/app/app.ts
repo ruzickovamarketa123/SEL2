@@ -35,9 +35,9 @@ export class App {
 
     // shared reactive state managed here so all components stay in sync
   tourLogs = signal<TourLog[]>([
-    { id: 1, tourId: 1, dateTime: '2023-10-01T12:00:00', totalDistance: 5.5, rating: 4, comment: 'first TourLog', difficulty: 'Easy', totalTime: 70 },
-    { id: 2, tourId: 1, dateTime: '2023-10-05T14:30:00', totalDistance: 5.0, rating: 3, comment: 'second TourLog', difficulty: 'Easy', totalTime: 60 },
-    { id: 3, tourId: 2, dateTime: '2023-10-10T09:15:00', totalDistance: 20.2, rating: 5, comment: 'first TourLog', difficulty: 'Hard', totalTime: 120 },
+    { id: 1, tourId: 1, date: '2023-10-01', time: '12:00:00', totalDistance: 5.5, rating: 4, comment: 'first TourLog', difficulty: 'Easy', totalTime: 70 },
+    { id: 2, tourId: 1, date: '2023-10-05', time: '14:30:00', totalDistance: 5.0, rating: 3, comment: 'second TourLog', difficulty: 'Easy', totalTime: 60 },
+    { id: 3, tourId: 2, date: '2023-10-10', time: '09:15:00', totalDistance: 20.2, rating: 5, comment: 'first TourLog', difficulty: 'Hard', totalTime: 120 },
   ]);
 
   // computed signal for the currently selected tour
