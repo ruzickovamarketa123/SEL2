@@ -37,15 +37,27 @@
   </div>
 
   <div style="display: flex; gap: 40px; padding: 16px; background: #f9f9f9; border-radius: 10px; margin-bottom: 24px;">
-    <div class="rating-item">
-      <span style="color: #666; font-size: 13px; margin-right: 8px;">popularity:</span>
-      <span style="color: #ffc107; font-weight: bold;">{{ vm.getPopularityStars() }}</span>
-    </div>
-    <div class="rating-item">
-      <span style="color: #666; font-size: 13px; margin-right: 8px;">child-friendliness:</span>
-      <span style="color: #ffc107; font-weight: bold;">{{ vm.getChildFriendlyStars() }}</span>
-    </div>
+  <div class="rating-item">
+    <span style="color: #666; font-size: 13px; margin-right: 8px;">popularity:</span>
+    <span style="color: #ffc107; font-weight: bold;">
+      @if (tour.popularity && tour.popularity > 0) {
+        {{ '★'.repeat(tour.popularity) }}{{ '☆'.repeat(5 - tour.popularity) }}
+      } @else {
+        <span style="color: #aaa; font-style: italic; font-weight: normal;">No logs yet</span>
+      }
+    </span>
   </div>
+  <div class="rating-item">
+    <span style="color: #666; font-size: 13px; margin-right: 8px;">child-friendliness:</span>
+    <span style="color: #ffc107; font-weight: bold;">
+      @if (tour.childFriendliness && tour.childFriendliness > 0) {
+        {{ '★'.repeat(tour.childFriendliness) }}{{ '☆'.repeat(5 - tour.childFriendliness) }}
+      } @else {
+        <span style="color: #aaa; font-style: italic; font-weight: normal;">No logs yet</span>
+      }
+    </span>
+  </div>
+</div>
 
   <div style="border-top: 1px solid #eee; padding-top: 16px;">
     <h4 style="margin: 0 0 8px 0; color: #888; font-size: 11px;letter-spacing: 0.5px;">DESCRIPTION</h4>

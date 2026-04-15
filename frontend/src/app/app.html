@@ -19,7 +19,7 @@
 
     <div style="width: 350px; overflow-y: auto; background: white; border-right: 1px solid #ddd; padding: 16px; flex-shrink: 0;">
       <list
-        [tours]="tours()" [searchTerm]="currentSearch" (tourSelected)="selectTour($event)" (tourAdded)="onTourAdded($event)">>
+        [tours]="enrichedTours()" [searchTerm]="currentSearch" (tourSelected)="selectTour($event)" (tourAdded)="onTourAdded($event)">
       </list>
     </div>
 

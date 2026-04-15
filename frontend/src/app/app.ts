@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchInput } from '../components/search-input/search-input';
 import { List } from '../components/list/list';
@@ -39,6 +39,18 @@ export class App {
     { id: 2, tourId: 1, dateTime: '2023-10-05', totalDistance: 5.0, rating: 3, comment: 'second TourLog', difficulty: 'Easy', totalTime: 60 },
     { id: 3, tourId: 2, dateTime: '2023-10-10', totalDistance: 20.2, rating: 5, comment: 'first TourLog', difficulty: 'Hard', totalTime: 120 },
   ]);
+
+  //computed signal
+  enrichedTours = computed(() => {
+    const currentLogs = this.tourLogs();
+    const currentTours = this.tours();
+
+    return currentTours.map(tour => ({
+      ...tour,
+      popularity: this.calculatePopularity(tour.id, currentLogs),
+      childFriendliness: this.calculateChildFriendliness(tour.id, currentLogs)
+    }));
+  });
 
   // mediator method 
   onLogAdded(newLog: TourLog) {
@@ -92,5 +104,44 @@ export class App {
     if (this.selectedTour?.id === tourId) {
       this.selectedTour = null;
     }
+  }
+
+  calculatePopularity(tourId: number, allLogs: TourLog[]): number {
+    const tourLogs = allLogs.filter(log => log.tourId === tourId);
+    if (tourLogs.length === 0) return 0; // no data
+    
+    // 1 star per log, max 5 stars
+    return Math.min(5, tourLogs.length);
+  }
+
+  calculateChildFriendliness(tourId: number, allLogs: TourLog[]): number {
+    const tourLogs = allLogs.filter(log => log.tourId === tourId);
+    if (tourLogs.length === 0) return 0; // no data
+
+    let score = 5; // we start from the maximum score
+
+    // 1. penalties for difficulty levels
+    // if there's at least one Expert log, it's not child-friendly
+    // If there's at least one Hard log, it's less child-friendly, etc.
+    const hasExpert = tourLogs.some(l => l.difficulty === 'Expert');
+    const hasHard = tourLogs.some(l => l.difficulty === 'Hard');
+    const hasMedium = tourLogs.some(l => l.difficulty === 'Medium');
+
+    if (hasExpert) score -= 3;
+    else if (hasHard) score -= 2;
+    else if (hasMedium) score -= 1;
+
+    // 2. penalties for average distance 
+    const avgDistance = tourLogs.reduce((sum, log) => sum + log.totalDistance, 0) / tourLogs.length;
+    if (avgDistance > 15) score -= 2; // more than 15km is quite long for kids
+    else if (avgDistance > 8) score -= 1;
+
+    // 3. penalties for average time
+    const avgTime = tourLogs.reduce((sum, log) => sum + log.totalTime, 0) / tourLogs.length;
+    if (avgTime > 240) score -= 2; // more than 4 hours
+    else if (avgTime > 120) score -= 1; // more than 2 hours
+
+    // Ensure the score never goes below 1 star
+    return Math.max(1, score);
   }
 }
