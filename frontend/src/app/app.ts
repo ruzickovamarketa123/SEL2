@@ -20,7 +20,7 @@ import { MapComponent } from '../components/map/map-component';
 export class App {
   //shared state as signals
   currentSearch = '';
-  selectedTour: Tour | null = null;
+  selectedTourId = signal<number | null>(null);
   selectedLog: TourLog | null = null;
   activeTab = signal<'details' | 'logs'>('details');
 
@@ -35,10 +35,18 @@ export class App {
 
     // shared reactive state managed here so all components stay in sync
   tourLogs = signal<TourLog[]>([
-    { id: 1, tourId: 1, dateTime: '2023-10-01', totalDistance: 5.5, rating: 4, comment: 'first TourLog', difficulty: 'Easy', totalTime: 70 },
-    { id: 2, tourId: 1, dateTime: '2023-10-05', totalDistance: 5.0, rating: 3, comment: 'second TourLog', difficulty: 'Easy', totalTime: 60 },
-    { id: 3, tourId: 2, dateTime: '2023-10-10', totalDistance: 20.2, rating: 5, comment: 'first TourLog', difficulty: 'Hard', totalTime: 120 },
+    { id: 1, tourId: 1, dateTime: '2023-10-01T12:00:00', totalDistance: 5.5, rating: 4, comment: 'first TourLog', difficulty: 'Easy', totalTime: 70 },
+    { id: 2, tourId: 1, dateTime: '2023-10-05T14:30:00', totalDistance: 5.0, rating: 3, comment: 'second TourLog', difficulty: 'Easy', totalTime: 60 },
+    { id: 3, tourId: 2, dateTime: '2023-10-10T09:15:00', totalDistance: 20.2, rating: 5, comment: 'first TourLog', difficulty: 'Hard', totalTime: 120 },
   ]);
+
+  // computed signal for the currently selected tour
+  // it updates when either the selectedTourId or the tours list changes
+  selectedTour = computed(() => {
+    const id = this.selectedTourId();
+    if (id === null) return null;
+    return this.enrichedTours().find(t => t.id === id) || null;
+  });
 
   //computed signal
   enrichedTours = computed(() => {
@@ -85,15 +93,13 @@ export class App {
 
   //when the tour is changed, the tab and the selected log are reset
   selectTour(tour: Tour) {
-    this.selectedTour = tour;
+    this.selectedTourId.set(tour.id);
     this.activeTab.set('details');
     this.selectedLog = null;
   }
 
   onEditTour(updatedTour: Tour) {
     this.tours.update(list => list.map(t => t.id === updatedTour.id ? updatedTour : t));
-    //this updates the details you are looking at
-    this.selectedTour = { ...updatedTour };
   }
 
   onDeleteTour(tourId: number) {
@@ -101,8 +107,8 @@ export class App {
     this.tours.update(currentTours => currentTours.filter(t => t.id !== tourId));
 
     //close the details if the cancelled tour was displayed
-    if (this.selectedTour?.id === tourId) {
-      this.selectedTour = null;
+    if (this.selectedTourId() === tourId) {
+      this.selectedTourId.set(null);
     }
   }
 
