@@ -18,7 +18,6 @@ import { MapComponent } from '../components/map/map-component';
   templateUrl: './app.html',
 })
 export class App {
-  //shared state as signals
   currentSearch = '';
   selectedTourId = signal<number | null>(null);
   selectedLog: TourLog | null = null;
@@ -50,8 +49,8 @@ export class App {
 
   //computed signal
   enrichedTours = computed(() => {
-    const currentLogs = this.tourLogs();
-    const currentTours = this.tours();
+    const currentLogs = this.tourLogs(); //obeserves the tour logs signal
+    const currentTours = this.tours(); //observes the tours signal
 
     return currentTours.map(tour => ({
       ...tour,

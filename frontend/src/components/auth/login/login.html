@@ -9,7 +9,8 @@
   border: 1.5px solid #000000;
 ">login</button>
 
-<div *ngIf="vm.isVisible()" style="
+@if(vm.isVisible()){
+<div style="
   position: fixed; inset: 0;
   background: rgba(0,0,0,0.45);
   display: flex; align-items: center; justify-content: center;
@@ -28,7 +29,8 @@
       <button type="button" (click)="vm.close()" style="background: none; border: none; font-size: 16px; cursor: pointer; color: #999;">✕</button>
     </div>
 
-    <div *ngIf="vm.errorMessage()" style="
+    @if(vm.errorMessage()){
+    <div style="
       background: #fff0f0;
       color: #d32f2f;
       border: 1px solid #ffcdd2;
@@ -37,6 +39,7 @@
       font-size: 13px;
       margin-bottom: 16px;
     ">{{ vm.errorMessage() }}</div>
+    }
 
     <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
 
@@ -87,3 +90,4 @@
 
   </div>
 </div>
+}
