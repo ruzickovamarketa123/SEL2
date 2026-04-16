@@ -3,18 +3,13 @@ import { Tour } from './tour_details.model';
 
 @Injectable()
 export class TourDetailsViewModel {
-    tour = signal<Tour | null>(null); // plain property → signal
+    tour = signal<Tour | null>(null);
     activeTab = signal<'details' | 'logs'>('details');
     isEditing = signal(false);
     editTourData = signal<Tour | null>(null);
 
-    close = new EventEmitter<void>();
     edit = new EventEmitter<Tour>();
     delete = new EventEmitter<number>();
-
-    onClose() {
-        this.close.emit();
-    }
 
     onEdit() {
         const currentTour = this.tour();
