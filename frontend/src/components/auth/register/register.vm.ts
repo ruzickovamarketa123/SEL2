@@ -44,19 +44,11 @@ export class RegisterViewModel {
   // calls authservice - fuiture SpringBoot integration at lkocalhost:8080/api
   async register(): Promise<void> {
     if (!this.isFormValid()) {
-      this.errorMessage.set('Please fill in all fields. Password must be at least 6 characters.');
+      this.errorMessage.set('please fill in all fields. password must be at least 6 characters.');
       return;
     }
-    this.isLoading.set(true);
-    this.errorMessage.set(null);
-    try {
-      await this.authService.register(this.form());
-      this.successMessage.set('Registration successful! You can now log in.');
-      this.form.set({ firstName: '', lastName: '', email: '', password: '' });
-    } catch (err: any) {
-      this.errorMessage.set(err.message ?? 'Registration failed. Please try again.');
-    } finally {
-      this.isLoading.set(false);
-    }
+    await this.authService.register(this.form());
+    this.successMessage.set('registration successful! you can now log in.');
+    this.form.set({ firstName: '', lastName: '', email: '', password: '' });
   }
 }

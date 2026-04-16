@@ -3,8 +3,8 @@
 <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
   <input
     type="text"
-    [ngModel]="searchTerm()"
-    (ngModelChange)="searchTerm.set($event)"
+    [ngModel]="vm.searchTerm()"
+    (ngModelChange)="vm.searchTerm.set($event)"
     placeholder="search for your dream tour..."
     style="
       flex: 1;

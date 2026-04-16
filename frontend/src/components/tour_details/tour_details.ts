@@ -21,5 +21,4 @@ export class Tour_Details {
 
   @Output() edit = this.vm.edit;
   @Output() delete = this.vm.delete;
-
 }

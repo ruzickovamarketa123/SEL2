@@ -27,20 +27,14 @@ export class List {
     this.tourSelected.emit(tour);
   }
 
-  confirmAdd() {
-    const data = this.vm.newTour();
-    this.tourAdded.emit(data); // send datas to the Mediator (App)
-    this.vm.closeAddModal();
-  }
-
   // delegates validation to viewmodel, then notifies mediator
   addTour() {
      if (!this.vm.isFormValid()) {
     this.vm.errorMessage.set('please fill in all required fields.');
     return;
-  }
-  const data = this.vm.newTour();
-  this.tourAdded.emit(data); // the mediator receives the new tour data and saves
-  this.vm.closeAddModal();
+    }
+    const data = this.vm.newTour();
+    this.tourAdded.emit(data); // the mediator receives the new tour data and saves
+    this.vm.closeAddModal();
   }
 }
