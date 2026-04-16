@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/logs")
@@ -20,18 +19,16 @@ public class TourLogController {
 
     // specific tour log shown by tourlog id
     @GetMapping("/{id}")
-    public TourLogDto read(@PathVariable int tourId, @PathVariable int id) {
+    public TourLogDto read(@PathVariable int id) {
         return tourLogs.stream()
-                .filter(l -> l.getTourId() == tourId && l.getId() == id)
+                .filter(l -> l.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     @GetMapping
-    public List<TourLogDto> readAll(@PathVariable int tourId) {
-        return tourLogs.stream()
-                .filter(l -> l.getTourId() == tourId)
-                .collect(Collectors.toList());
+    public List<TourLogDto> readAll() {
+        return tourLogs;
     }
 
     @PostMapping
