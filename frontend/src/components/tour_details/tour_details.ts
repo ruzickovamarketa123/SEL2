@@ -17,14 +17,9 @@ export class Tour_Details {
 
   @Input() set tour(value: Tour | null) {
     this.vm.tour.set(value);
-    this.vm.setTab('details'); //reset to the details tab every time you change tours
   }
 
-  @Output() close = this.vm.close;
   @Output() edit = this.vm.edit;
   @Output() delete = this.vm.delete;
 
-  onClose() {
-    this.vm.onClose();
-  }
 }

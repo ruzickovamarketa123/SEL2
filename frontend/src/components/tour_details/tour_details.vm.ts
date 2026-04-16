@@ -3,18 +3,12 @@ import { Tour } from './tour_details.model';
 
 @Injectable()
 export class TourDetailsViewModel {
-    tour = signal<Tour | null>(null); // plain property → signal
-    activeTab = signal<'details' | 'logs'>('details');
+    tour = signal<Tour | null>(null);
     isEditing = signal(false);
     editTourData = signal<Tour | null>(null);
 
-    close = new EventEmitter<void>();
     edit = new EventEmitter<Tour>();
     delete = new EventEmitter<number>();
-
-    onClose() {
-        this.close.emit();
-    }
 
     onEdit() {
         const currentTour = this.tour();
@@ -44,10 +38,6 @@ export class TourDetailsViewModel {
         if (currentTour && confirm(`Are you sure you want to delete "${currentTour.name}"?`)) {
             this.delete.emit(currentTour.id);
         }
-    }
-
-    setTab(tab: 'details' | 'logs') {
-        this.activeTab.set(tab);
     }
 
 }
