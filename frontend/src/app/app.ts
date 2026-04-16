@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, signal, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchInput } from '../components/search-input/search-input';
 import { List } from '../components/list/list';
@@ -10,6 +10,7 @@ import { TourLogDetails } from '../components/tourlog_details/tourlog';
 import { Tour } from '../components/tour_details/tour_details.model';
 import { TourLog } from '../components/tourlog_details/tourlog.model';
 import { MapComponent } from '../components/map/map-component';
+import { TourService } from '../services/tour.service';
 
 @Component({
   selector: 'app-root',
@@ -17,20 +18,16 @@ import { MapComponent } from '../components/map/map-component';
   imports: [CommonModule, SearchInput, List, Tour_Details, LoginComponent, RegisterComponent, TourLogList, TourLogDetails, MapComponent],  
   templateUrl: './app.html',
 })
-export class App {
+export class App implements OnInit{
+
+  constructor(private tourService: TourService) {}
+
   currentSearch = '';
   selectedTourId = signal<number | null>(null);
   selectedLog = signal<TourLog | null>(null);
   activeTab = signal<'details' | 'logs'>('details');
 
-  // shared reactive state managed here so all components stay in sync
-  tours = signal<Tour[]>([ 
-    { id: 1, name: 'Paris City Tour', description: 'A beautiful tour of Paris.', from: 'Eiffel Tower', to: 'Louvre', transportType: 'Hike' },
-    { id: 2, name: 'Tokyo Explorer', description: 'Explore the streets of Tokyo.', from: 'Shinjuku', to: 'Shibuya', transportType: 'Bike' },
-    { id: 3, name: 'New York Highlights', description: 'Run through NYC landmarks.', from: 'Central Park', to: 'Times Square', transportType: 'Running' },
-    { id: 4, name: 'Rome Historical Walk', description: 'Walk through ancient Rome.', from: 'Colosseum', to: 'Vatican', transportType: 'Hike' },
-    { id: 5, name: 'Safari Adventure', description: 'Wildlife vacation in Kenya.', from: 'Nairobi', to: 'Maasai Mara', transportType: 'Vacation' },
-  ]);
+  tours = signal<Tour[]>([]);
 
     // shared reactive state managed here so all components stay in sync
   tourLogs = signal<TourLog[]>([
@@ -39,6 +36,10 @@ export class App {
     { id: 3, tourId: 2, date: '2023-10-10', time: '09:15:00', totalDistance: 20.2, rating: 5, comment: 'first TourLog', difficulty: 'Hard', totalTime: 120 },
   ]);
 
+    async ngOnInit() {
+    const data = await this.tourService.findAll();
+    this.tours.set(data);
+  }
   // computed signal for the currently selected tour
   // it updates when either the selectedTourId or the tours list changes
   selectedTour = computed(() => {
