@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/tours/{tourId}/logs")
+@RequestMapping("/logs")
 public class TourLogController {
 
     // static list for now > to be implemented
