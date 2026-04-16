@@ -20,7 +20,7 @@ import { MapComponent } from '../components/map/map-component';
 export class App {
   currentSearch = '';
   selectedTourId = signal<number | null>(null);
-  selectedLog: TourLog | null = null;
+  selectedLog = signal<TourLog | null>(null);
   activeTab = signal<'details' | 'logs'>('details');
 
   // shared reactive state managed here so all components stay in sync
@@ -67,15 +67,15 @@ export class App {
 
   onEditLog(updated: TourLog) {
     this.tourLogs.update(list => list.map(l => l.id === updated.id ? updated : l));
-    if (this.selectedLog?.id === updated.id) {
-      this.selectedLog = { ...updated };
+    if (this.selectedLog()?.id === updated.id) {
+      this.selectedLog.set({ ...updated });
     }
   }
 
   onDeleteLog(id: number) {
     this.tourLogs.update(list => list.filter(l => l.id !== id));
-    if (this.selectedLog?.id === id) {
-      this.selectedLog = null;
+    if (this.selectedLog()?.id === id) {
+      this.selectedLog.set(null);
     }
   }
 
@@ -94,7 +94,7 @@ export class App {
   selectTour(tour: Tour) {
     this.selectedTourId.set(tour.id);
     this.activeTab.set('details');
-    this.selectedLog = null;
+    this.selectedLog.set(null);
   }
 
   onEditTour(updatedTour: Tour) {

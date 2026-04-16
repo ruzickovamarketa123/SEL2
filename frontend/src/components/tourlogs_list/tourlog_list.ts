@@ -13,9 +13,9 @@ import { TourLog, difficultyType } from '../tourlog_details/tourlog.model';
 export class TourLogList {
   @Input() tourId!: number;
 
-  private _allLogs = signal<TourLog[]>([]);
+  allLogsSignal = signal<TourLog[]>([]);
   @Input() set allLogs(value: TourLog[]) {
-    this._allLogs.set(value);
+    this.allLogsSignal.set(value);
   }
 
   @Output() logSelected = new EventEmitter<TourLog | null>();
@@ -23,11 +23,13 @@ export class TourLogList {
 
   // filter logs based on the selected tour
   filteredLogs = computed(() => {
-    return this._allLogs().filter(log => log.tourId === this.tourId);
+    return this.allLogsSignal().filter(log => log.tourId === this.tourId);
   });
 
-  // this is to "react" when the tourId changes from outside
+
   showAddModal = signal(false);
+
+  //use all the properties of TourLog except id, which will be generated from the parent
   newLog = signal<Omit<TourLog, 'id'>>({
     tourId: 0, date: '', time: '', comment: '',
     difficulty: null, totalDistance: 0, totalTime: 0, rating: 0,
@@ -35,7 +37,7 @@ export class TourLogList {
 
   openAddModal() {
     const now = new Date();
-    const timeString = now.toTimeString().slice(0, 5);
+    const timeString = now.toTimeString().slice(0, 5); //HH:MM
     this.newLog.set({
       tourId: this.tourId,
       date: now.toISOString().split('T')[0], //YYYY-MM-DD
@@ -62,6 +64,8 @@ export class TourLogList {
     this.logSelected.emit(log);
   }
 
+  // Resets the selected log whenever the tourId input changes to ensure 
+  // that details from a previous tour are not displayed.
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tourId']) {
       this.logSelected.emit(null);

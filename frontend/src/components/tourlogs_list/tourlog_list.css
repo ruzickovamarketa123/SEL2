@@ -2,3 +2,15 @@ button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
+.log-item {
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* L'effetto hover gestito solo dai CSS */
+.log-item:hover {
+  background-color: #f8f9fa;
+}

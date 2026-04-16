@@ -22,7 +22,7 @@ export class TourLogsViewModel {
   startEdit() {
     const current = this.selectedLog();
     if (current) {
-      this.editData.set({ ...current }); // Copia per il form
+      this.editData.set({ ...current }); // copy for the form
       this.isEditing.set(true);
     }
   }

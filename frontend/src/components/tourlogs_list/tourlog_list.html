@@ -8,10 +8,7 @@
 
   <div style="display: flex; flex-direction: column; gap: 8px;">
     @for (log of filteredLogs(); track log.id) {
-      <div (click)="selectLog(log)" 
-           style="padding: 10px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: all 0.2s;"
-           onmouseover="this.style.backgroundColor='#f8f9fa'" 
-           onmouseout="this.style.backgroundColor='transparent'">
+      <div class="log-item" (click)="selectLog(log)">
         <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
           <span>{{ log.date | date:'dd MMM yyyy' }} - {{ log.time }}</span>
           <span style="color: #ffc107;">{{ log.rating }} ★</span>
