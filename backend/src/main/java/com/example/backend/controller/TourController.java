@@ -6,6 +6,7 @@ import com.example.backend.repository.TourRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/tours")
@@ -20,7 +21,7 @@ public class TourController {
 
     // specific tour shown by tour id
     @GetMapping("/{id}")
-    public Tour read(@PathVariable long id) {
+    public Tour read(@PathVariable UUID id) {
         return tourRepository.findById(id).orElse(null);
     }
 
@@ -35,13 +36,13 @@ public class TourController {
     }
 
     @PutMapping("/{id}")
-    public Tour update(@PathVariable long id, @RequestBody Tour tour) {
+    public Tour update(@PathVariable UUID id, @RequestBody Tour tour) {
         tour.setId(id);
         return tourRepository.save(tour);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable UUID id) {
         tourRepository.deleteById(id);
     }
 }

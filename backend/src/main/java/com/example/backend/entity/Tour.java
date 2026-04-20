@@ -19,9 +19,7 @@ public class Tour {
 
     public Tour() {}
 
-
-    public Tour(UUID id, String name, String description, String fromLocation, String toLocation, String transportType) {
-        this.id = id;
+    public Tour(String name, String description, String fromLocation, String toLocation, String transportType) {
         this.name = name;
         this.description = description;
         this.fromLocation = fromLocation;
@@ -50,11 +48,11 @@ public class Tour {
         return fromLocation;
     }
     public void setFrom(String from) {
-        this.fromLocation = fromLocation;
+        this.fromLocation = from;
     }
 
     public String getTo() {return toLocation;}
-    public void setTo(String to) {this.toLocation = toLocation;}
+    public void setTo(String to) {this.toLocation = to;}
 
     public String getTransportType() {return transportType;}
     public void setTransportType(String transportType) {this.transportType = transportType;}
