@@ -2,13 +2,15 @@ package com.example.backend.entity;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "tours")
 public class Tour {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id = 0;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String name;
     private String description;
     private String fromLocation;
@@ -18,7 +20,8 @@ public class Tour {
     public Tour() {}
 
 
-    public Tour(String name, String description, String fromLocation, String toLocation, String transportType) {
+    public Tour(UUID id, String name, String description, String fromLocation, String toLocation, String transportType) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.fromLocation = fromLocation;
@@ -26,10 +29,10 @@ public class Tour {
         this.transportType = transportType;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
