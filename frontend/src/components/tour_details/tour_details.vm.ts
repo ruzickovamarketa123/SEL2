@@ -8,7 +8,7 @@ export class TourDetailsViewModel {
     editTourData = signal<Tour | null>(null);
 
     edit = new EventEmitter<Tour>();
-    delete = new EventEmitter<number>();
+    delete = new EventEmitter<string>();
 
     onEdit() {
         const currentTour = this.tour();

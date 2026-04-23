@@ -1,49 +1,50 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.TourLogDto;
+import com.example.backend.entity.TourLog;
+import com.example.backend.repository.TourLogRepository;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/logs")
 public class TourLogController {
 
-    // static list for now > to be implemented
-    private final List<TourLogDto> tourLogs = List.of(
-            new TourLogDto(1, 1, LocalDateTime.of(2023, 10, 1, 12, 0, 0), 5.5, 4, "first TourLog", "Easy", 70),
-            new TourLogDto(2, 1, LocalDateTime.of(2023, 10, 5, 14, 30, 0), 5.0, 3, "second TourLog", "Easy", 60),
-            new TourLogDto(3, 2, LocalDateTime.of(2023, 10, 10, 9, 15, 0), 20.2, 5, "first TourLog", "Hard", 120)
-    );
+    private final TourLogRepository tourLogRepository;
 
-    // specific tour log shown by tourlog id
-    @GetMapping("/{id}")
-    public TourLogDto read(@PathVariable int id) {
-        return tourLogs.stream()
-                .filter(l -> l.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public TourLogController(TourLogRepository tourLogRepository) {
+        this.tourLogRepository = tourLogRepository;
     }
 
     @GetMapping
     public List<TourLogDto> readAll() {
-        return tourLogs;
+        return tourLogRepository.findAll()
+                .stream()
+                .map(TourLogDto::new)
+                .toList();
+    }
+
+    @GetMapping("/{id}")
+    public TourLogDto read(@PathVariable UUID id) {
+        return tourLogRepository.findById(id)
+                .map(TourLogDto::new)
+                .orElse(null);
     }
 
     @PostMapping
-    public TourLogDto create(){
-        return null;
+    public TourLog create(@RequestBody TourLog tourLog) {
+        return tourLogRepository.save(tourLog);
     }
 
     @PutMapping("/{id}")
-    public TourLogDto update(){
-        return null;
+    public TourLog update(@PathVariable UUID id, @RequestBody TourLog tourLog) {
+        tourLog.setId(id);
+        return tourLogRepository.save(tourLog);
     }
 
     @DeleteMapping("/{id}")
-    public TourLogDto delete(){
-        return null;
+    public void delete(@PathVariable UUID id) {
+        tourLogRepository.deleteById(id);
     }
 }
-

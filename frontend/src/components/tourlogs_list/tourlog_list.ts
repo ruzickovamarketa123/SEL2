@@ -11,7 +11,7 @@ import { TourLog, difficultyType } from '../tourlog_details/tourlog.model';
   styleUrl: './tourlog_list.css'
 })
 export class TourLogList {
-  @Input() tourId!: number;
+  @Input() tourId!: string;
 
   allLogsSignal = signal<TourLog[]>([]);
   @Input() set allLogs(value: TourLog[]) {
@@ -31,7 +31,7 @@ export class TourLogList {
 
   //use all the properties of TourLog except id, which will be generated from the parent
   newLog = signal<Omit<TourLog, 'id'>>({
-    tourId: 0, date: '', time: '', comment: '',
+    tourId: '', date: '', time: '', comment: '',
     difficulty: null, totalDistance: 0, totalTime: 0, rating: 0,
   });
 

@@ -11,6 +11,7 @@ import { Tour } from '../components/tour_details/tour_details.model';
 import { TourLog } from '../components/tourlog_details/tourlog.model';
 import { MapComponent } from '../components/map/map-component';
 import { TourService } from '../services/tour.service';
+import { TourLogService } from '../services/tourlog.service';
 
 @Component({
   selector: 'app-root',
@@ -20,25 +21,24 @@ import { TourService } from '../services/tour.service';
 })
 export class App implements OnInit{
 
-  constructor(private tourService: TourService) {}
+  constructor(private tourService: TourService, private tourLogService: TourLogService) {}
 
   currentSearch = '';
-  selectedTourId = signal<number | null>(null);
+  selectedTourId = signal<string | null>(null);
   selectedLog = signal<TourLog | null>(null);
   activeTab = signal<'details' | 'logs'>('details');
 
   tours = signal<Tour[]>([]);
 
-    // shared reactive state managed here so all components stay in sync
-  tourLogs = signal<TourLog[]>([
-    { id: 1, tourId: 1, date: '2023-10-01', time: '12:00:00', totalDistance: 5.5, rating: 4, comment: 'first TourLog', difficulty: 'Easy', totalTime: 70 },
-    { id: 2, tourId: 1, date: '2023-10-05', time: '14:30:00', totalDistance: 5.0, rating: 3, comment: 'second TourLog', difficulty: 'Easy', totalTime: 60 },
-    { id: 3, tourId: 2, date: '2023-10-10', time: '09:15:00', totalDistance: 20.2, rating: 5, comment: 'first TourLog', difficulty: 'Hard', totalTime: 120 },
-  ]);
+  tourLogs = signal<TourLog[]>([]);
 
-    async ngOnInit() {
-    const data = await this.tourService.findAll();
-    this.tours.set(data);
+  async ngOnInit() {
+    const [tours, logs] = await Promise.all([
+      this.tourService.findAll(),
+      this.tourLogService.findAll()
+    ]);
+    this.tours.set(tours);
+    this.tourLogs.set(logs);
   }
   // computed signal for the currently selected tour
   // it updates when either the selectedTourId or the tours list changes
@@ -62,7 +62,7 @@ export class App implements OnInit{
 
   // mediator method 
   onLogAdded(newLog: TourLog) {
-    const logWithId: TourLog = { ...newLog, id: Date.now() };
+    const logWithId: TourLog = { ...newLog, id: crypto.randomUUID() };
     this.tourLogs.update(list => [...list, logWithId]);
   }
 
@@ -73,7 +73,7 @@ export class App implements OnInit{
     }
   }
 
-  onDeleteLog(id: number) {
+  onDeleteLog(id: string) {
     this.tourLogs.update(list => list.filter(l => l.id !== id));
     if (this.selectedLog()?.id === id) {
       this.selectedLog.set(null);
@@ -82,7 +82,7 @@ export class App implements OnInit{
 
   // mediator method - recieves new tour from ListComponent, assigns unique ID, updates the shared signal
   onTourAdded(newTourData: Tour) {
-    const tourWithId: Tour = { ...newTourData, id: Date.now()};
+    const tourWithId: Tour = { ...newTourData, id: crypto.randomUUID()};
 
     this.tours.update((current: Tour[]) => [...current, tourWithId]);
 }
@@ -102,17 +102,14 @@ export class App implements OnInit{
     this.tours.update(list => list.map(t => t.id === updatedTour.id ? updatedTour : t));
   }
 
-  onDeleteTour(tourId: number) {
-    // removes the tour from the list by filtering by ID
+  onDeleteTour(tourId: string) {
     this.tours.update(currentTours => currentTours.filter(t => t.id !== tourId));
-
-    //close the details if the cancelled tour was displayed
     if (this.selectedTourId() === tourId) {
-      this.selectedTourId.set(null);
+        this.selectedTourId.set(null);
     }
   }
 
-  calculatePopularity(tourId: number, allLogs: TourLog[]): number {
+  calculatePopularity(tourId: string, allLogs: TourLog[]): number {
     const tourLogs = allLogs.filter(log => log.tourId === tourId);
     if (tourLogs.length === 0) return 0; // no data
     
@@ -120,7 +117,7 @@ export class App implements OnInit{
     return Math.min(5, tourLogs.length);
   }
 
-  calculateChildFriendliness(tourId: number, allLogs: TourLog[]): number {
+  calculateChildFriendliness(tourId: string, allLogs: TourLog[]): number {
     const tourLogs = allLogs.filter(log => log.tourId === tourId);
     if (tourLogs.length === 0) return 0; // no data
 

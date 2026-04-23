@@ -5,7 +5,7 @@ import { Tour } from '../tour_details/tour_details.model';
 export class ListViewModel {
   
   searchTerm = signal('');
-  selectedId = signal<number | null>(null);
+  selectedId = signal<string | null>(null);
   showAddModal = signal(false);
   errorMessage = signal<string | null>(null);
 

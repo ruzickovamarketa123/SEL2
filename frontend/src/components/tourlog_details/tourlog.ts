@@ -20,7 +20,7 @@ export class TourLogDetails {
     }
   }
 
-  @Output() delete = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<string>();
   @Output() edit = new EventEmitter<TourLog>();
 
   onDelete() {

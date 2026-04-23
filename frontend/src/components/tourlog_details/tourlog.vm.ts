@@ -5,7 +5,7 @@ import { TourLog } from './tourlog.model';
 export class TourLogsViewModel {
   
   allLogs = signal<TourLog[]>([]);
-  selectedLogId = signal<number | null>(null);
+  selectedLogId = signal<string | null>(null);
   isEditing = signal(false);
   editData = signal<TourLog | null>(null);
 
