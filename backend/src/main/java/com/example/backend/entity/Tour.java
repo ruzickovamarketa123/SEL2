@@ -1,8 +1,8 @@
 package com.example.backend.entity;
 
 import jakarta.persistence.*;
-
 import java.util.UUID;
+import com.example.backend.entity.User;
 
 @Entity
 @Table(name = "tours")
@@ -16,6 +16,10 @@ public class Tour {
     private String fromLocation;
     private String toLocation;
     private String transportType;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Tour() {}
 
@@ -56,6 +60,9 @@ public class Tour {
 
     public String getTransportType() {return transportType;}
     public void setTransportType(String transportType) {this.transportType = transportType;}
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 }
 
 

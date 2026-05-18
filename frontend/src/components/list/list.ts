@@ -18,6 +18,7 @@ export class List {
   // bridge
   @Input() set tours(value: Tour[]) { this.vm.allToursData.set(value); }
   @Input() set searchTerm(value: string) { this.vm.searchTerm.set(value); }
+  @Input() set selectedTourId(value: string | null) {this.vm.selectedId.set(value);}
 
   @Output() tourSelected = new EventEmitter<Tour>();
   @Output() tourAdded = new EventEmitter<any>()

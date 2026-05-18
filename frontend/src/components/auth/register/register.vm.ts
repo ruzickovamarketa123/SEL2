@@ -10,11 +10,10 @@ export class RegisterViewModel {
   readonly successMessage = signal<string | null>(null);
 
   readonly form = signal<RegisterRequest>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  });
+  username: '',
+  email: '',
+  password: '',
+});
 
   constructor(private authService: AuthService) {}
 
@@ -26,19 +25,18 @@ export class RegisterViewModel {
 
   close(): void {
     this.isVisible.set(false);
-    this.form.set({ firstName: '', lastName: '', email: '', password: '' });
+    this.form.set({ username: '', email: '', password: '' });
     this.errorMessage.set(null);
     this.successMessage.set(null);
   }
 
-  updateFirstName(value: string): void { this.form.set({ ...this.form(), firstName: value }); }
-  updateLastName(value: string): void { this.form.set({ ...this.form(), lastName: value }); }
+  updateUsername(value: string): void { this.form.set({ ...this.form(), username: value }); }
   updateEmail(value: string): void { this.form.set({ ...this.form(), email: value }); }
   updatePassword(value: string): void { this.form.set({ ...this.form(), password: value }); }
 
   isFormValid(): boolean {
-    const { firstName, lastName, email, password } = this.form();
-    return firstName.trim().length > 0 && lastName.trim().length > 0 && email.trim().length > 0 && email.includes('@') && password.length >= 6;
+    const { username, email, password } = this.form();
+    return username.trim().length > 0 && email.trim().length > 0 && email.includes('@') && password.length >= 6;
   }
 
   // calls authservice - fuiture SpringBoot integration at lkocalhost:8080/api
@@ -49,6 +47,6 @@ export class RegisterViewModel {
     }
     await this.authService.register(this.form());
     this.successMessage.set('registration successful! you can now log in.');
-    this.form.set({ firstName: '', lastName: '', email: '', password: '' });
+    this.form.set({ username: '', email: '', password: '' });
   }
 }

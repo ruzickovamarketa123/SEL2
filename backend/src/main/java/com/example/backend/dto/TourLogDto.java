@@ -26,6 +26,8 @@ public class TourLogDto {
         this.totalTime = log.getTotalTime();
     }
 
+    public TourLogDto() {}
+
     public UUID getId() { return id; }
     public UUID getTourId() { return tourId; }
     public String getDate() { return date; }
@@ -35,4 +37,15 @@ public class TourLogDto {
     public String getComment() { return comment; }
     public String getDifficulty() { return difficulty; }
     public double getTotalTime() { return totalTime; }
+
+    public void setId(UUID id) { this.id = id; }
+    public void setTourId(UUID tourId) { this.tourId = tourId; }
+    public void setDate(String date) { this.date = date; }
+    public void setTime(String time) { this.time = time; }
+    public void setTotalDistance(double totalDistance) { this.totalDistance = totalDistance; }
+    public void setRating(int rating) { this.rating = rating; }
+    public void setComment(String comment) { this.comment = comment; }
+    public void setDifficulty(String difficulty) { this.difficulty = difficulty; }
+    public void setTotalTime(double totalTime) { this.totalTime = totalTime; }
+
 }

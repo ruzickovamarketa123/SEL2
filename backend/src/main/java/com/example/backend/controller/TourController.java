@@ -1,8 +1,9 @@
 package com.example.backend.controller;
-
-import com.example.backend.dto.TourDto;
 import com.example.backend.entity.Tour;
+import com.example.backend.entity.User;
 import com.example.backend.repository.TourRepository;
+import com.example.backend.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.UUID;
 public class TourController {
 
     private final TourRepository tourRepository;
+    private final UserRepository userRepository;
 
-    public TourController(TourRepository tourRepository) {
+    public TourController(TourRepository tourRepository, UserRepository userRepository) {
         this.tourRepository = tourRepository;
+        this.userRepository = userRepository;
     }
 
     // specific tour shown by tour id
@@ -26,12 +29,16 @@ public class TourController {
     }
 
     @GetMapping
-    public List<Tour> readAll(){
-        return (List<Tour>) tourRepository.findAll();
+    public List<Tour> readAll(HttpServletRequest request) {
+        UUID userId = (UUID) request.getAttribute("userId");
+        return tourRepository.findByUserId(userId);
     }
 
     @PostMapping
-    public Tour create(@RequestBody Tour tour) {
+    public Tour create(@RequestBody Tour tour, HttpServletRequest request) {
+        UUID userId = (UUID) request.getAttribute("userId");
+        User user = userRepository.findById(userId).orElseThrow();
+        tour.setUser(user);
         return tourRepository.save(tour);
     }
 

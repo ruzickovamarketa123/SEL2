@@ -60,31 +60,31 @@ export class App implements OnInit{
     }));
   });
 
-  // mediator method 
-  onLogAdded(newLog: TourLog) {
-    const logWithId: TourLog = { ...newLog, id: crypto.randomUUID() };
-    this.tourLogs.update(list => [...list, logWithId]);
-  }
+  async onLogAdded(newLog: TourLog) {
+    const created = await this.tourLogService.create(newLog);
+    this.tourLogs.update(list => [...list, created]);
+}
 
-  onEditLog(updated: TourLog) {
-    this.tourLogs.update(list => list.map(l => l.id === updated.id ? updated : l));
-    if (this.selectedLog()?.id === updated.id) {
-      this.selectedLog.set({ ...updated });
+async onEditLog(updated: TourLog) {
+    const saved = await this.tourLogService.update(updated);
+    this.tourLogs.update(list => list.map(l => l.id === saved.id ? saved : l));
+    if (this.selectedLog()?.id === saved.id) {
+        this.selectedLog.set({ ...saved });
     }
-  }
+}
 
-  onDeleteLog(id: string) {
+async onDeleteLog(id: string) {
+    await this.tourLogService.delete(id);
     this.tourLogs.update(list => list.filter(l => l.id !== id));
     if (this.selectedLog()?.id === id) {
-      this.selectedLog.set(null);
+        this.selectedLog.set(null);
     }
-  }
+}
 
   // mediator method - recieves new tour from ListComponent, assigns unique ID, updates the shared signal
-  onTourAdded(newTourData: Tour) {
-    const tourWithId: Tour = { ...newTourData, id: crypto.randomUUID()};
-
-    this.tours.update((current: Tour[]) => [...current, tourWithId]);
+  async onTourAdded(newTourData: Tour) {
+    const created = await this.tourService.create(newTourData);
+    this.tours.update((current: Tour[]) => [...current, created]);
 }
 
   onSearchChanged(term: string) {
@@ -98,16 +98,18 @@ export class App implements OnInit{
     this.selectedLog.set(null);
   }
 
-  onEditTour(updatedTour: Tour) {
-    this.tours.update(list => list.map(t => t.id === updatedTour.id ? updatedTour : t));
-  }
+  async onEditTour(updatedTour: Tour) {
+    const updated = await this.tourService.update(updatedTour);
+    this.tours.update(list => list.map(t => t.id === updated.id ? updated : t));
+}
 
-  onDeleteTour(tourId: string) {
+  async onDeleteTour(tourId: string) {
+    await this.tourService.delete(tourId);
     this.tours.update(currentTours => currentTours.filter(t => t.id !== tourId));
     if (this.selectedTourId() === tourId) {
         this.selectedTourId.set(null);
     }
-  }
+}
 
   calculatePopularity(tourId: string, allLogs: TourLog[]): number {
     const tourLogs = allLogs.filter(log => log.tourId === tourId);

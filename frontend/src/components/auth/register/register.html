@@ -41,7 +41,7 @@
     ">{{ vm.errorMessage() }}</div>
     }
 
-    @if (vm.successMessage()) {
+    @if(vm.successMessage()){
     <div style="
       background: #f0fff4;
       color: #2e7d32;
@@ -51,68 +51,49 @@
       font-size: 14px;
       text-align: center;
       margin-bottom: 16px;
-    ">
-      {{ vm.successMessage() }}
-    </div>
+    ">{{ vm.successMessage() }}</div>
     }
 
     @if(!vm.successMessage()){
-    <div>
+    <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
 
-      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">username</label>
+        <input
+          type="text"
+          [ngModel]="vm.form().username"
+          (ngModelChange)="vm.updateUsername($event)"
+          placeholder="john123"
+          [disabled]="vm.isLoading()"
+          style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; width: 100%;"
+        />
+      </div>
 
-        <div style="display: flex; gap: 12px;">
-          <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
-            <label style="font-size: 13px; font-weight: 500; color: #555;">first name</label>
-            <input
-              type="text"
-              [ngModel]="vm.form().firstName"
-              (ngModelChange)="vm.updateFirstName($event)"
-              placeholder="john"
-              [disabled]="vm.isLoading()"
-              style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; width: 100%;"
-            />
-          </div>
-          <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
-            <label style="font-size: 13px; font-weight: 500; color: #555;">last name</label>
-            <input
-              type="text"
-              [ngModel]="vm.form().lastName"
-              (ngModelChange)="vm.updateLastName($event)"
-              placeholder="doe"
-              [disabled]="vm.isLoading()"
-              style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; width: 100%;"
-            />
-          </div>
-        </div>
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">email</label>
+        <input
+          type="email"
+          [ngModel]="vm.form().email"
+          (ngModelChange)="vm.updateEmail($event)"
+          placeholder="your@email.com"
+          [disabled]="vm.isLoading()"
+          style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; width: 100%;"
+        />
+      </div>
 
-        <div style="display: flex; flex-direction: column; gap: 5px;">
-          <label style="font-size: 13px; font-weight: 500; color: #555;">email</label>
-          <input
-            type="email"
-            [ngModel]="vm.form().email"
-            (ngModelChange)="vm.updateEmail($event)"
-            placeholder="your@email.com"
-            [disabled]="vm.isLoading()"
-            style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;"
-          />
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 5px;">
-          <label style="font-size: 13px; font-weight: 500; color: #555;">
-            password <span style="font-weight: 400; color: #999;">(min. 6 characters)</span>
-          </label>
-          <input
-            type="password"
-            [ngModel]="vm.form().password"
-            (ngModelChange)="vm.updatePassword($event)"
-            placeholder="••••••••"
-            [disabled]="vm.isLoading()"
-            (keydown.enter)="vm.register()"
-            style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;"
-          />
-        </div>
-
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 13px; font-weight: 500; color: #555;">
+          password <span style="font-weight: 400; color: #999;">(min. 6 characters)</span>
+        </label>
+        <input
+          type="password"
+          [ngModel]="vm.form().password"
+          (ngModelChange)="vm.updatePassword($event)"
+          placeholder="••••••••"
+          [disabled]="vm.isLoading()"
+          (keydown.enter)="vm.register()"
+          style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; width: 100%;"
+        />
       </div>
 
       <div style="display: flex; justify-content: flex-end; gap: 10px;">
@@ -130,7 +111,8 @@
       </div>
 
     </div>
-  }
+    }
+
   </div>
 </div>
 }
