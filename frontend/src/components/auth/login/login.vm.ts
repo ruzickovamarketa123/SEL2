@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { EventEmitter, Injectable, signal } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { LoginRequest } from './login.model';
 
@@ -8,6 +8,9 @@ export class LoginViewModel {
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly form = signal<LoginRequest>({ username: '', password: '' });
+
+  // Notifies parent (App) that login was successful so it can load data
+  loginSuccess = new EventEmitter<void>();
 
   constructor(private authService: AuthService) {}
 
@@ -35,13 +38,17 @@ export class LoginViewModel {
     return username.trim().length > 0 && password.length > 0;
   }
 
-  // calls authservice - future SpringBoot integration at localhost:8080/api
   async login(): Promise<void> {
     if (!this.isFormValid()) {
       this.errorMessage.set('please fill in all fields.');
       return;
     }
-    await this.authService.login(this.form());
-    this.close();
+    try {
+      await this.authService.login(this.form());
+      this.loginSuccess.emit();
+      this.close();
+    } catch (e) {
+      this.errorMessage.set('invalid username or password.');
+    }
   }
 }

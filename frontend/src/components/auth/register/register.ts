@@ -10,7 +10,7 @@ import { AuthService } from '../../../services/auth.service';
   imports: [CommonModule, FormsModule],
   templateUrl: './register.html',
   styleUrls: ['./register.css'],
-  providers: [RegisterViewModel, AuthService],
+  providers: [RegisterViewModel],
 })
 export class RegisterComponent {
   constructor(public vm: RegisterViewModel) {}

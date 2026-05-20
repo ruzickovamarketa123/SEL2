@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoginViewModel } from './login.vm';
-import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +9,7 @@ import { AuthService } from '../../../services/auth.service';
   imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
-  providers: [LoginViewModel, AuthService],
+  providers: [LoginViewModel],
 })
 export class LoginComponent {
   constructor(public vm: LoginViewModel) {}

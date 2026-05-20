@@ -8,10 +8,33 @@
       </search-input>
     </div>
 
-    <div style="margin-left: auto; display: flex; gap: 8px; flex-shrink: 0;">
-      <app-login></app-login>
-      <app-register></app-register>
-    </div>
+   <div style="margin-left: auto; display: flex; gap: 8px; flex-shrink: 0;">
+  @if (authService.isLoggedIn()) {
+    <button style="
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      background: rgb(236, 86, 164, 0.8);
+      color: #000;
+      border: 1.5px solid #000;
+    ">👤 {{ authService.getUsername() }}</button>
+    <button (click)="authService.logout(); clearData()" style="
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      background: white;
+      color: #555;
+      border: 1.5px solid #ddd;
+    ">logout</button>
+  } @else {
+    <app-login (vm.loginSuccess)="loadData()"></app-login>
+    <app-register></app-register>
+  }
+</div>
 
   </div>
 

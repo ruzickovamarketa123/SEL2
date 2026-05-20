@@ -1,42 +1,53 @@
 import { Injectable, signal, computed } from '@angular/core';
-import { LoginRequest, LoginResponse } from '../components/auth/login/login.model';
-import { RegisterRequest } from '../components/auth/register/register.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
   private token = signal<string | null>(localStorage.getItem('token'));
+  private username = signal<string | null>(localStorage.getItem('username'));
 
   isLoggedIn = computed(() => this.token() !== null);
 
   async login(data: { username: string; password: string }) {
     const res = await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
     });
+    if (!res.ok) throw new Error('Login failed');
     const result = await res.json();
     localStorage.setItem('token', result.token);
+    localStorage.setItem('username', result.username);
     this.token.set(result.token);
-}
+    this.username.set(result.username);
+  }
 
   async register(data: { username: string; email: string; password: string }) {
     const res = await fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
     });
+    if (!res.ok) throw new Error('Registration failed');
     const result = await res.json();
     localStorage.setItem('token', result.token);
+    localStorage.setItem('username', result.username);
     this.token.set(result.token);
-}
+    this.username.set(result.username);
+  }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     this.token.set(null);
+    this.username.set(null);
   }
 
-  getToken() {
+  getToken(): string | null {
     return this.token();
+  }
+
+  getUsername(): string | null {
+    return this.username();
   }
 }

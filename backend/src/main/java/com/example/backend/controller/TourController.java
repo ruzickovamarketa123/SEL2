@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/tours")
-@CrossOrigin(origins = "http://localhost:4200")
 public class TourController {
 
     private final TourRepository tourRepository;
@@ -43,8 +42,11 @@ public class TourController {
     }
 
     @PutMapping("/{id}")
-    public Tour update(@PathVariable UUID id, @RequestBody Tour tour) {
+    public Tour update(@PathVariable UUID id, @RequestBody Tour tour, HttpServletRequest request) {
+        UUID userId = (UUID) request.getAttribute("userId");
+        User user = userRepository.findById(userId).orElseThrow();
         tour.setId(id);
+        tour.setUser(user);
         return tourRepository.save(tour);
     }
 

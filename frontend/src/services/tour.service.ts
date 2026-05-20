@@ -11,10 +11,11 @@ export class TourService {
 
   private headers() {
     return {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.authService.getToken()}`
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.getToken()}`
     };
-  }
+
+}
 
   async findAll(): Promise<Tour[]> {
     const res = await fetch(this.API_URL, { headers: this.headers() });
