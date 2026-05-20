@@ -13,11 +13,12 @@ import { MapComponent } from '../components/map/map-component';
 import { TourService } from '../services/tour.service';
 import { TourLogService } from '../services/tourlog.service';
 import { AuthService } from '../services/auth.service';
+import { ProfileComponent } from '../components/auth/profile/profile';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, SearchInput, List, Tour_Details, LoginComponent, RegisterComponent, TourLogList, TourLogDetails, MapComponent],
+  imports: [CommonModule, SearchInput, List, Tour_Details, LoginComponent, ProfileComponent,  RegisterComponent, TourLogList, TourLogDetails, MapComponent],
   templateUrl: './app.html',
 })
 export class App {

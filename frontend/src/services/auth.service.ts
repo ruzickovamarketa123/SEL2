@@ -36,6 +36,23 @@ export class AuthService {
     this.username.set(result.username);
   }
 
+  async updateProfile(data: { username: string; email: string; password: string }) {
+    const res = await fetch('http://localhost:8080/api/users/me', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token()}`
+        },
+        body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Update failed');
+}
+
+updateUsername(newUsername: string) {
+    localStorage.setItem('username', newUsername);
+    this.username.set(newUsername);
+}
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
