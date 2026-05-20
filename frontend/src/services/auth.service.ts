@@ -9,16 +9,16 @@ export class AuthService {
 
   isLoggedIn = computed(() => this.token() !== null);
 
-  async login(username: string, password: string) {
+  async login(data: { username: string; password: string }) {
     const res = await fetch('http://localhost:8080/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
     });
-    const data = await res.json();
-    localStorage.setItem('token', data.token);
-    this.token.set(data.token);
-  }
+    const result = await res.json();
+    localStorage.setItem('token', result.token);
+    this.token.set(result.token);
+}
 
   async register(data: { username: string; email: string; password: string }) {
     const res = await fetch('http://localhost:8080/api/auth/register', {

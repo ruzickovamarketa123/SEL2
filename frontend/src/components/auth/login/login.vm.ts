@@ -7,7 +7,7 @@ export class LoginViewModel {
   readonly isVisible = signal(false);
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
-  readonly form = signal<LoginRequest>({ email: '', password: '' });
+  readonly form = signal<LoginRequest>({ username: '', password: '' });
 
   constructor(private authService: AuthService) {}
 
@@ -18,12 +18,12 @@ export class LoginViewModel {
 
   close(): void {
     this.isVisible.set(false);
-    this.form.set({ email: '', password: '' });
+    this.form.set({ username: '', password: '' });
     this.errorMessage.set(null);
   }
 
-  updateEmail(email: string): void {
-    this.form.set({ ...this.form(), email });
+  updateUsername(username: string): void {
+    this.form.set({ ...this.form(), username });
   }
 
   updatePassword(password: string): void {
@@ -31,8 +31,8 @@ export class LoginViewModel {
   }
 
   isFormValid(): boolean {
-    const { email, password } = this.form();
-    return email.trim().length > 0 && email.includes('@') && password.length > 0;
+    const { username, password } = this.form();
+    return username.trim().length > 0 && password.length > 0;
   }
 
   // calls authservice - future SpringBoot integration at localhost:8080/api

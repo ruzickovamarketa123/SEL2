@@ -44,12 +44,12 @@
     <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
 
       <div style="display: flex; flex-direction: column; gap: 5px;">
-        <label style="font-size: 13px; font-weight: 500; color: #555;">email</label>
+        <label style="font-size: 13px; font-weight: 500; color: #555;">username</label>
         <input
-          type="email"
-          [ngModel]="vm.form().email"
-          (ngModelChange)="vm.updateEmail($event)"
-          placeholder="your@email.com"
+          type="text"
+          [ngModel]="vm.form().username"
+          (ngModelChange)="vm.updateUsername($event)"
+          placeholder="john123"
           [disabled]="vm.isLoading()"
           style="padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;"
         />
