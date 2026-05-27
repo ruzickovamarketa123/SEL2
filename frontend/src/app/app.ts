@@ -34,6 +34,7 @@ export class App {
     });
   }
 
+  readonly ORS_API_KEY = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6Ijg0ODE5ZTI1ZTFmMjA3OTIxMTYxZmYyYWM5MTllMTEwMzUzNzE4ODE4Zjk0MDFhNTFjZmJhYjE1IiwiaCI6Im11cm11cjY0In0=';
   currentSearch = '';
   selectedTourId = signal<string | null>(null);
   selectedLog = signal<TourLog | null>(null);
