@@ -1,49 +1,44 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { Tour } from '../components/tour_details/tour_details.model';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class TourService {
 
-  private readonly API_URL = 'http://localhost:8080/tours';
+  private readonly API_URL = 'http://localhost:8080/api/tours';
 
-  constructor(private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  private headers() {
-    return {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authService.getToken()}`
-    };
-
-}
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    });
+  }
 
   async findAll(): Promise<Tour[]> {
-    const res = await fetch(this.API_URL, { headers: this.headers() });
-    return res.json();
+    return firstValueFrom(
+      this.http.get<Tour[]>(this.API_URL, { headers: this.getHeaders() })
+    );
   }
 
   async create(tour: Tour): Promise<Tour> {
-    const res = await fetch(this.API_URL, {
-      method: 'POST',
-      headers: this.headers(),
-      body: JSON.stringify(tour)
-    });
-    return res.json();
+    return firstValueFrom(
+      this.http.post<Tour>(this.API_URL, tour, { headers: this.getHeaders() })
+    );
   }
 
   async update(tour: Tour): Promise<Tour> {
-    const res = await fetch(`${this.API_URL}/${tour.id}`, {
-      method: 'PUT',
-      headers: this.headers(),
-      body: JSON.stringify(tour)
-    });
-    return res.json();
+    return firstValueFrom(
+      this.http.put<Tour>(`${this.API_URL}/${tour.id}`, tour, { headers: this.getHeaders() })
+    );
   }
 
   async delete(id: string): Promise<void> {
-    await fetch(`${this.API_URL}/${id}`, {
-      method: 'DELETE',
-      headers: this.headers()
-    });
+    await firstValueFrom(
+      this.http.delete<void>(`${this.API_URL}/${id}`, { headers: this.getHeaders() })
+    );
   }
 }

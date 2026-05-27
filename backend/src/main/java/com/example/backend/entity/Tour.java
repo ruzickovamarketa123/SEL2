@@ -16,6 +16,9 @@ public class Tour {
     private String fromLocation;
     private String toLocation;
     private String transportType;
+    private Double distance;
+    private Double estimatedTime;
+    private String routeInformation;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -23,12 +26,15 @@ public class Tour {
 
     public Tour() {}
 
-    public Tour(String name, String description, String fromLocation, String toLocation, String transportType) {
+    public Tour(String name, String description, String fromLocation, String toLocation, String transportType, Double distance, Double estimatedTime, String routeInformation) {
         this.name = name;
         this.description = description;
         this.fromLocation = fromLocation;
         this.toLocation = toLocation;
         this.transportType = transportType;
+        this.distance = distance;
+        this.estimatedTime = estimatedTime;
+        this.routeInformation = routeInformation;
     }
 
     public UUID getId() {
@@ -63,6 +69,15 @@ public class Tour {
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
+
+    public Double getDistance() { return distance; }
+    public void setDistance(Double distance) { this.distance = distance; }
+
+    public Double getEstimatedTime() { return estimatedTime; }
+    public void setEstimatedTime(Double estimatedTime) { this.estimatedTime = estimatedTime; }
+
+    public String getRouteInformation() { return routeInformation; }
+    public void setRouteInformation(String routeInformation) { this.routeInformation = routeInformation; }
 }
 
 

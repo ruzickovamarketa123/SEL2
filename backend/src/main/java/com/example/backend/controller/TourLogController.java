@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/logs")
+@RequestMapping("/api/logs")
 public class TourLogController {
 
     private final TourLogRepository tourLogRepository;
