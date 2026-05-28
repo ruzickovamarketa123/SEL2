@@ -7,6 +7,7 @@ import { Tour } from '../tour_details/tour_details.model';
 const EUROPE_CENTER: [number, number] = [54, 15];
 const EUROPE_ZOOM = 4;
 
+// ORS profile mapping (mirrors backend logic)
 const ORS_PROFILE: Record<string, string> = {
   Bike:     'cycling-regular',
   Hike:     'foot-walking',
@@ -21,6 +22,7 @@ const ORS_PROFILE: Record<string, string> = {
     <div style="position: relative; width: 100%; height: 100%;">
       <div id="tour-map" style="width: 100%; height: 100%;"></div>
 
+      <!-- Loading overlay -->
       @if (isLoading) {
         <div style="
           position: absolute; inset: 0;
@@ -33,10 +35,11 @@ const ORS_PROFILE: Record<string, string> = {
         </div>
       }
 
+      <!-- Error message -->
       @if (routeError) {
         <div style="
           position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
-          background: rgba(255,88,88,0.9); color: white;
+          background: rgba(255, 88, 88, 0.9); color: white;
           padding: 8px 16px; border-radius: 8px; font-size: 13px; z-index: 1000;
         ">
           ⚠️ {{ routeError }}
@@ -44,7 +47,9 @@ const ORS_PROFILE: Record<string, string> = {
       }
     </div>
   `,
-  styles: [`:host { display: block; width: 100%; height: 100%; }`]
+  styles: [`
+    :host { display: block; width: 100%; height: 100%; }
+  `]
 })
 export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
 
@@ -52,9 +57,6 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() apiKey: string = '';
 
   private map!: L.Map;
-  private mapReady = false;
-  private pendingTour: Tour | null = null;
-
   private routeLayer: L.GeoJSON | null = null;
   private markersLayer: L.LayerGroup | null = null;
 
@@ -72,48 +74,37 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
       }).addTo(this.map);
 
       this.map.invalidateSize();
-      this.mapReady = true;
 
-      // Se nel frattempo era arrivato un tour via ngOnChanges, lo renderizziamo ora
-      if (this.pendingTour) {
-        this.renderTour(this.pendingTour);
-        this.pendingTour = null;
+      // If a tour was set before the map was ready, render it now
+      if (this.tour) {
+        this.renderTour(this.tour);
       }
     }, 100);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['tour']) return;
-
-    const tour = changes['tour'].currentValue as Tour | null;
-
-    if (!this.mapReady) {
-      // Mappa non ancora pronta: salviamo il tour e lo renderizziamo in ngAfterViewInit
-      this.pendingTour = tour;
-      return;
-    }
-
-    this.clearRoute();
-
-    if (tour) {
-      this.renderTour(tour);
-    } else {
-      // Nessun tour selezionato: torna alla vista Europa
-      this.map.setView(EUROPE_CENTER, EUROPE_ZOOM);
+    if (changes['tour'] && this.map) {
+      const tour = changes['tour'].currentValue as Tour | null;
+      this.clearRoute();
+      if (tour) {
+        this.renderTour(tour);
+      } else {
+        this.map.setView(EUROPE_CENTER, EUROPE_ZOOM);
+      }
     }
   }
 
+  // Parses "lon,lat" string into [lat, lon] for Leaflet
   private parseCoords(raw: string): [number, number] | null {
     const parts = raw.trim().split(',').map(Number);
     if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
-      return [parts[1], parts[0]]; // Leaflet vuole [lat, lon], ORS salva [lon, lat]
+      return [parts[1], parts[0]]; // Leaflet wants [lat, lon]
     }
     return null;
   }
 
   private clearRoute(): void {
     this.routeError = null;
-    this.isLoading = false;
     if (this.routeLayer) { this.routeLayer.remove(); this.routeLayer = null; }
     if (this.markersLayer) { this.markersLayer.remove(); this.markersLayer = null; }
   }
@@ -127,7 +118,7 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
       return;
     }
 
-    // Marker start/end subito visibili
+    // Place start/end markers immediately
     this.markersLayer = L.layerGroup().addTo(this.map);
 
     const startIcon = L.divIcon({
@@ -146,30 +137,40 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
       .bindPopup(`<b>End</b><br>${tour.to}`)
       .addTo(this.markersLayer);
 
-    this.map.fitBounds(L.latLngBounds([fromCoords, toCoords]), { padding: [60, 60] });
+    // Fit map to markers right away
+    const bounds = L.latLngBounds([fromCoords, toCoords]);
+    this.map.fitBounds(bounds, { padding: [60, 60] });
 
-    // Fetch route
+    // Fetch route from ORS
     this.isLoading = true;
     this.routeError = null;
 
     try {
       const profile = ORS_PROFILE[tour.transportType ?? ''] ?? 'driving-car';
+      // ORS expects "lon,lat" — our stored format is already "lon,lat"
       const url = `https://api.openrouteservice.org/v2/directions/${profile}?api_key=${this.apiKey}&start=${tour.from}&end=${tour.to}`;
 
       const res = await fetch(url);
-      if (!res.ok) throw new Error(`ORS ${res.status}`);
+      if (!res.ok) throw new Error(`ORS error: ${res.status}`);
 
       const data = await res.json();
       const geometry = data?.features?.[0]?.geometry;
-      if (!geometry) throw new Error('No geometry');
 
+      if (!geometry) throw new Error('No route geometry in response');
+
+      // Draw the route polyline
       this.routeLayer = L.geoJSON(geometry, {
-        style: { color: '#4da3ff', weight: 4, opacity: 0.85 }
+        style: {
+          color: '#4da3ff',
+          weight: 4,
+          opacity: 0.85,
+        }
       }).addTo(this.map);
 
+      // Fit to full route bounds
       this.map.fitBounds(this.routeLayer.getBounds(), { padding: [50, 50] });
 
-    } catch (err) {
+    } catch (err: any) {
       console.error('Map route error:', err);
       this.routeError = 'Could not load route. Showing markers only.';
     } finally {

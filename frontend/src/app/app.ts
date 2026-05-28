@@ -1,4 +1,4 @@
-import { Component, computed, signal, effect } from '@angular/core';
+import { Component, computed, signal, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchInput } from '../components/search-input/search-input';
 import { List } from '../components/list/list';
@@ -14,11 +14,13 @@ import { TourService } from '../services/tour.service';
 import { TourLogService } from '../services/tourlog.service';
 import { AuthService } from '../services/auth.service';
 import { ProfileComponent } from '../components/auth/profile/profile';
+import { ImportExportService } from '../services/import-export.service';
+import { ImportExportButton } from '../components/import-export/import-export-button';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, SearchInput, List, Tour_Details, LoginComponent, ProfileComponent,  RegisterComponent, TourLogList, TourLogDetails, MapComponent],
+  imports: [CommonModule, SearchInput, List, Tour_Details, LoginComponent, ProfileComponent,  RegisterComponent, TourLogList, TourLogDetails, MapComponent, ImportExportButton],
   templateUrl: './app.html',
 })
 export class App {
@@ -41,6 +43,7 @@ export class App {
   activeTab = signal<'details' | 'logs'>('details');
   tours = signal<Tour[]>([]);
   tourLogs = signal<TourLog[]>([]);
+  private importExportService = inject(ImportExportService);
 
   async loadData() {
     const [tours, logs] = await Promise.all([
@@ -157,4 +160,36 @@ export class App {
 
     return Math.max(1, score);
   }
+
+  async onExport(): Promise<void> {
+    const allLogs = await this.tourLogService.findAll();
+    await this.importExportService.exportAllTours(this.tours(), allLogs);
+  }
+ 
+  async onImport(btn: ImportExportButton): Promise<void> {
+  const file = await this.importExportService.openFilePicker();
+  if (!file) return;
+
+  btn.setImporting(true);
+  try {
+    const result = await this.importExportService.importTours(file);
+
+    const [tours, logs] = await Promise.all([
+      this.tourService.findAll(),
+      this.tourLogService.findAll()
+    ]);
+    this.tours.set(tours);
+    this.tourLogs.set(logs);
+
+    const msg = result.errors.length > 0
+      ? `Imported ${result.imported} tour(s). ${result.errors.length} error(s).`
+      : `✓ Imported ${result.imported} tour(s) successfully!`;
+    btn.showFeedback(result.errors.length > 0 ? 'error' : 'success', msg);
+
+  } catch (err: any) {
+    btn.showFeedback('error', err.message ?? 'Import failed.');
+  } finally {
+    btn.setImporting(false);
+  }
+}
 }

@@ -19,6 +19,9 @@ export class Tour_Details {
     this.vm.tour.set(value);
   }
 
+  // orsApiKey mantenuto per compatibilità con app.html ma non più usato qui
+  @Input() orsApiKey: string = '';
+
   @Output() edit = this.vm.edit;
   @Output() delete = this.vm.delete;
 }
