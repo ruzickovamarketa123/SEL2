@@ -2,11 +2,8 @@ import { Component, computed, signal, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchInput } from '../components/search-input/search-input';
 import { List } from '../components/list/list';
-import { Tour_Details } from '../components/tour_details/tour_details';
 import { LoginComponent } from '../components/auth/login/login';
 import { RegisterComponent } from '../components/auth/register/register';
-import { TourLogList } from '../components/tourlogs_list/tourlog_list';
-import { TourLogDetails } from '../components/tourlog_details/tourlog';
 import { Tour } from '../components/tour_details/tour_details.model';
 import { TourLog } from '../components/tourlog_details/tourlog.model';
 import { MapComponent } from '../components/map/map-component';
@@ -20,7 +17,7 @@ import { ImportExportButton } from '../components/import-export/import-export-bu
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, SearchInput, List, Tour_Details, LoginComponent, ProfileComponent,  RegisterComponent, TourLogList, TourLogDetails, MapComponent, ImportExportButton],
+  imports: [CommonModule, SearchInput, List, LoginComponent, ProfileComponent,  RegisterComponent, MapComponent, ImportExportButton],
   templateUrl: './app.html',
 })
 export class App {

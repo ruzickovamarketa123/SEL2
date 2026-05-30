@@ -2,11 +2,12 @@ import { Component, Input, Output, EventEmitter, inject, computed, SimpleChanges
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TourLog, difficultyType } from '../tourlog_details/tourlog.model';
+import { TourLogDetails } from '../tourlog_details/tourlog';
 
 @Component({
   selector: 'tourlogs_list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TourLogDetails],
   templateUrl: './tourlog_list.html',
   styleUrl: './tourlog_list.css'
 })
@@ -19,17 +20,18 @@ export class TourLogList {
   }
 
   @Output() logSelected = new EventEmitter<TourLog | null>();
-  @Output() logAdded = new EventEmitter<TourLog>();  
+  @Output() logAdded = new EventEmitter<TourLog>();
+  @Output() logEditRequested = new EventEmitter<any>();
+  @Output() logDeleteRequested = new EventEmitter<any>();
 
-  // filter logs based on the selected tour
+  selectedLogId = signal<string | null>(null);
+
   filteredLogs = computed(() => {
     return this.allLogsSignal().filter(log => log.tourId === this.tourId);
   });
 
-
   showAddModal = signal(false);
 
-  //use all the properties of TourLog except id, which will be generated from the parent
   newLog = signal<Omit<TourLog, 'id'>>({
     tourId: '', date: '', time: '', comment: '',
     difficulty: null, totalDistance: 0, totalTime: 0, rating: 0,
@@ -37,15 +39,15 @@ export class TourLogList {
 
   openAddModal() {
     const now = new Date();
-    const timeString = now.toTimeString().slice(0, 5); //HH:MM
+    const timeString = now.toTimeString().slice(0, 5);
     this.newLog.set({
       tourId: this.tourId,
-      date: now.toISOString().split('T')[0], //YYYY-MM-DD
-      time: timeString,    
-      comment: '', 
+      date: now.toISOString().split('T')[0],
+      time: timeString,
+      comment: '',
       difficulty: null,
-      totalDistance: 0, 
-      totalTime: 0, 
+      totalDistance: 0,
+      totalTime: 0,
       rating: 0,
     });
     this.showAddModal.set(true);
@@ -61,21 +63,32 @@ export class TourLogList {
   }
 
   selectLog(log: TourLog) {
-    this.logSelected.emit(log);
+    if (this.selectedLogId() === log.id) {
+      this.selectedLogId.set(null);
+      this.logSelected.emit(null);
+    } else {
+      this.selectedLogId.set(log.id);
+      this.logSelected.emit(log);
+    }
   }
 
-  // Resets the selected log whenever the tourId input changes to ensure 
-  // that details from a previous tour are not displayed.
+  onLogEdit(event: any) { this.logEditRequested.emit(event); }
+  onLogDelete(event: any) { this.logDeleteRequested.emit(event); }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tourId']) {
+      this.selectedLogId.set(null);
       this.logSelected.emit(null);
     }
   }
 
   isNewLogValid = computed(() => {
-  const log = this.newLog();
-  return (
-    log.date.trim() !== '' && log.time.trim() !== '' && log.totalDistance > 0 && log.totalTime > 0 && log.difficulty !== null && log.rating >= 1 && log.rating <= 5 && log.comment.trim() !== ''
-  );
-});
+    const log = this.newLog();
+    return (
+      log.date.trim() !== '' && log.time.trim() !== '' &&
+      log.totalDistance > 0 && log.totalTime > 0 &&
+      log.difficulty !== null && log.rating >= 1 &&
+      log.rating <= 5 && log.comment.trim() !== ''
+    );
+  });
 }

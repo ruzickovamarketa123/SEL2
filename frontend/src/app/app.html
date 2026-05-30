@@ -15,7 +15,7 @@
               (exportClicked)="onExport()"
               (importClicked)="onImport(importExportBtn)">
         </app-import-export>
-         <app-profile></app-profile>
+        <app-profile></app-profile>
         <button (click)="authService.logout(); clearData()" style="
           padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 500;
           cursor: pointer; background: rgb(236, 86, 164, 0.8); color: #000000; border: 1.5px solid #000000;
@@ -31,17 +31,30 @@
   <div style="display: flex; flex: 1; overflow: hidden;">
 
     @if(authService.isLoggedIn()) {
-    <div style="width: 350px; overflow-y: auto; background: white; border-right: 1px solid #ddd; padding: 16px; flex-shrink: 0;">
+    <div style="width: 380px; background: white; border-right: 1px solid #ddd; flex-shrink: 0; overflow-y: auto; padding: 0;">
       <list
         [tours]="enrichedTours()"
         [searchTerm]="currentSearch"
         [selectedTourId]="selectedTourId()"
+        [activeTab]="activeTab()"
+        [allLogs]="tourLogs()"
+        [selectedLog]="selectedLog() ?? undefined"
+        [orsApiKey]="ORS_API_KEY"
         (tourSelected)="selectTour($event)"
-        (tourAdded)="onTourAdded($event)">
+        (tourAdded)="onTourAdded($event)"
+        (activeTabChange)="activeTab.set($event)"
+        (tourEdited)="onEditTour($event)"
+        (tourDeleted)="onDeleteTour($event)"
+        (logSelected)="selectedLog.set($event)"
+        (logAdded)="onLogAdded($event)"
+        (logEdited)="onEditLog($event)"
+        (logDeleted)="onDeleteLog($event)"
+        (tourClosed)="selectedTourId.set(null)">
       </list>
     </div>
     }
 
+    <!-- right side: always just the map -->
     <div style="flex: 1; display: flex; gap: 12px; padding: 16px; overflow: hidden; min-width: 0;">
 
       @if (!authService.isLoggedIn()) {
@@ -65,53 +78,9 @@
       }
 
       @else {
-      <div style="flex: 1; background: white; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; min-width: 0;">
-
-        <div style="display: flex; align-items: center; padding: 0 16px; background: rgba(239, 125, 184, 0.25); border-bottom: 1px solid rgba(239, 125, 184); flex-shrink: 0;">
-          <h3 style="margin: 0; font-size: 16px; margin-right: 20px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; color: #000000">{{selectedTour()?.name}}</h3>
-          <button (click)="activeTab.set('details')" [style.border-bottom]="activeTab() === 'details' ? '3px solid rgb(236, 86, 164)' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; letter-spacing: 0.5px">details</button>
-          <button (click)="activeTab.set('logs')" [style.border-bottom]="activeTab() === 'logs' ? '3px solid rgb(236, 86, 164)' : 'none'" style="padding: 12px; border:none; background:none; cursor:pointer; letter-spacing: 0.5px">tour logs</button>
-          <button (click)="selectedTourId.set(null)" style="margin-left: auto; border:none; background:none; cursor:pointer; font-size: 24px;">×</button>
-        </div>
-
-        <div style="flex: 1; overflow-y: auto; padding: 20px;">
-
-          @if (activeTab() == 'details') {
-          <tour_details
-            [tour]="selectedTour()"
-            [orsApiKey]="ORS_API_KEY"
-            (edit)="onEditTour($event)"
-            (delete)="onDeleteTour($event)">
-          </tour_details>
-          }
-
-          @if (activeTab() === 'logs') {
-          <div style="display: flex; gap: 20px; height: 100%;">
-            <div style="flex: 1; border-right: 1px solid #eee; overflow-y: auto;">
-              <tourlogs_list
-                [tourId]="selectedTour()!.id"
-                [allLogs]="tourLogs()"
-                (logSelected)="selectedLog.set($event)"
-                (logAdded)="onLogAdded($event)">
-              </tourlogs_list>
-            </div>
-            <div style="flex: 1.5; overflow-y: auto;">
-              <tourlog_details
-                [log]="selectedLog()"
-                (edit)="onEditLog($event)"
-                (delete)="onDeleteLog($event)">
-              </tourlog_details>
-            </div>
-          </div>
-          }
-
-        </div>
-      </div>
-
       <div style="flex: 1; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12); isolation: isolate; min-width: 0;">
         <app-map [tour]="selectedTour()" [apiKey]="ORS_API_KEY"></app-map>
       </div>
-
       }
 
     </div>

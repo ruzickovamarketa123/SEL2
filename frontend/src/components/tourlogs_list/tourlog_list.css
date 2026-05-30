@@ -1,16 +1,39 @@
-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-.log-item {
-  padding: 10px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+.logs-list-container {
+  font-family: 'Segoe UI', Roboto, sans-serif;
 }
 
-/* L'effetto hover gestito solo dai CSS */
+.log-item {
+  background: white;
+  border: 1px solid #e8e8e8;
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  margin-bottom: 8px;
+}
+
 .log-item:hover {
-  background-color: #f8f9fa;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  border-color: #ffdbe2;
+}
+
+.log-item.selected {
+  background-color: rgba(239, 125, 184, 0.18);
+  border-color: rgb(236, 86, 164);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
+  margin-bottom: 0;
+  box-shadow: none;
+}
+
+.log-detail-inline {
+  border: 1px solid rgb(236, 86, 164);
+  border-top: none;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  background: rgba(239, 125, 184, 0.07);
+  padding: 12px;
+  margin-bottom: 8px;
 }

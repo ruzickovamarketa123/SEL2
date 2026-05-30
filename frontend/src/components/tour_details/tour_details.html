@@ -4,14 +4,28 @@
   @if (!vm.isEditing()) {
   <div style="display: flex; flex-direction: column; gap: 16px;">
 
-    <div style="display: flex; gap: 8px;">
+    <div style="display: flex; gap: 8px; justify-content: flex-end;">
       <button (click)="vm.onEdit()"
-        style="font-size: 13px; background: rgba(77,163,255,0.15); color: #185FA5; border: 1px solid #85B7EB; padding: 7px 16px; border-radius: 8px; cursor: pointer; font-weight: 500;">
-        ✏️ edit tour
+        style="padding: 7px 14px;
+          background: rgb(73, 157, 208, 0.8);
+          color: #000;
+          border: 1.5px solid #000;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;">
+        edit tour
       </button>
       <button (click)="vm.onDelete()"
-        style="font-size: 13px; background: rgba(255,88,88,0.12); color: #A32D2D; border: 1px solid #F09595; padding: 7px 16px; border-radius: 8px; cursor: pointer; font-weight: 500;">
-        🗑️ delete tour
+        style="padding: 7px 14px;
+          background: rgba(255, 79, 55, 0.8);
+          color: #000;
+          border: 1.5px solid #000;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;">
+        delete tour
       </button>
     </div>
 
