@@ -31,7 +31,7 @@ const ORS_PROFILE: Record<string, string> = {
           border-radius: 16px; z-index: 1000;
           font-size: 14px; color: #555; gap: 8px;
         ">
-          <span style="font-size: 20px;">🗺️</span> loading route...
+          <span style="font-size: 20px;">loading route...</span> 
         </div>
       }
 
@@ -42,7 +42,7 @@ const ORS_PROFILE: Record<string, string> = {
           background: rgba(255, 88, 88, 0.9); color: white;
           padding: 8px 16px; border-radius: 8px; font-size: 13px; z-index: 1000;
         ">
-          ⚠️ {{ routeError }}
+          {{ routeError }}
         </div>
       }
     </div>

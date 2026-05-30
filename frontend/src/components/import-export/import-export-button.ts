@@ -11,28 +11,33 @@ import { CommonModule } from '@angular/common';
       <!-- Export button -->
       <button (click)="onExport()"
         style="
-          padding: 7px 14px; border-radius: 8px; cursor: pointer;
-          font-size: 13px; font-weight: 500;
-          background: rgba(77,163,255,0.12); color: #185FA5;
-          border: 1px solid #85B7EB;
-          display: flex; align-items: center; gap: 6px;
-        ">
-        ⬆️ export
+          padding: 8px 18px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        background: rgb(73, 157, 208, 0.8);
+        color: #000000;
+        border: 1.5px solid #000000;
+      ">
+        export
       </button>
 
       <!-- Import button -->
       <button (click)="onImport()"
         [disabled]="isImporting()"
         style="
-          padding: 7px 14px; border-radius: 8px; cursor: pointer;
-          font-size: 13px; font-weight: 500;
-          background: rgba(100,200,100,0.12); color: #2a7a2a;
-          border: 1px solid #90cc90;
-          display: flex; align-items: center; gap: 6px;
-          opacity: {{ isImporting() ? '0.6' : '1' }};
-        ">
-        @if (isImporting()) { ⏳ importing... }
-        @else { ⬇️ import }
+      padding: 8px 18px;
+      background: rgba(110, 219, 80, 0.8);
+      color: rgb(0, 0, 0);
+      border: 1.5px solid #000000;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    ">
+        @if (isImporting()) { importing... }
+        @else { import }
       </button>
 
       <!-- Feedback toast -->
