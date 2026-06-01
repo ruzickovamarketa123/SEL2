@@ -4,6 +4,7 @@ import com.example.backend.dto.OrsResponseDto;
 import com.example.backend.dto.SummaryDto;
 import com.example.backend.entity.Tour;
 import com.example.backend.entity.User;
+import com.example.backend.repository.TourLogRepository;
 import com.example.backend.repository.TourRepository;
 import com.example.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -13,16 +14,21 @@ import java.util.*;
 
 @Service
 public class TourService {
+
     private final TourRepository tourRepository;
     private final UserRepository userRepository;
+    private final TourLogRepository tourLogRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${ors.api.key}")
     private String apiKey;
 
-    public TourService(TourRepository tourRepository, UserRepository userRepository) {
+    public TourService(TourRepository tourRepository,
+                       UserRepository userRepository,
+                       TourLogRepository tourLogRepository) {
         this.tourRepository = tourRepository;
         this.userRepository = userRepository;
+        this.tourLogRepository = tourLogRepository;
     }
 
     public Tour create(Tour tour, UUID userId) {
@@ -32,11 +38,10 @@ public class TourService {
 
         String startCoords = tour.getFrom() != null ? tour.getFrom().replace(" ", "") : "";
         String endCoords = tour.getTo() != null ? tour.getTo().replace(" ", "") : "";
+        String profile = getOrsProfile(tour.getTransportType());
 
-        String url = "https://api.openrouteservice.org/v2/directions/driving-car?api_key=" + apiKey +
+        String url = "https://api.openrouteservice.org/v2/directions/" + profile + "?api_key=" + apiKey +
                 "&start=" + startCoords + "&end=" + endCoords;
-
-        System.out.println("URL CHE JAVA STA PROVANDO A CHIAMARE: " + url);
 
         try {
             OrsResponseDto response = restTemplate.getForObject(url, OrsResponseDto.class);
@@ -47,9 +52,7 @@ public class TourService {
                 tour.setEstimatedTime(summary.duration / 60.0);
             }
         } catch (Exception e) {
-            System.err.println("========== ERRORE OPEN ROUTE SERVICE ==========");
-            e.printStackTrace();
-            System.err.println("===============================================");
+            System.err.println("[TourService] ORS call failed during create: " + e.getMessage());
             tour.setDistance(0.0);
             tour.setEstimatedTime(0.0);
         }
@@ -77,12 +80,9 @@ public class TourService {
         existingTour.setTransportType(tourDetails.getTransportType());
 
         if (routeOrTransportChanged) {
-            String startCoords = existingTour.getFrom();
-            String endCoords = existingTour.getTo();
             String profile = getOrsProfile(existingTour.getTransportType());
-
             String url = "https://api.openrouteservice.org/v2/directions/" + profile + "?api_key=" + apiKey +
-                    "&start=" + startCoords + "&end=" + endCoords;
+                    "&start=" + existingTour.getFrom() + "&end=" + existingTour.getTo();
 
             try {
                 OrsResponseDto response = restTemplate.getForObject(url, OrsResponseDto.class);
@@ -93,7 +93,7 @@ public class TourService {
                     existingTour.setEstimatedTime(summary.duration / 60.0);
                 }
             } catch (Exception e) {
-                System.err.println("Error calling ORS during update: " + e.getMessage());
+                System.err.println("[TourService] ORS call failed during update: " + e.getMessage());
                 existingTour.setDistance(0.0);
                 existingTour.setEstimatedTime(0.0);
             }
@@ -102,20 +102,23 @@ public class TourService {
         return tourRepository.save(existingTour);
     }
 
+    /**
+     * Deletes a tour and all its associated tour logs.
+     * Tour logs must be removed first to avoid a foreign key constraint violation.
+     */
+    public void deleteById(UUID id) {
+        tourLogRepository.deleteByTourId(id);
+        tourRepository.deleteById(id);
+    }
+
     private String getOrsProfile(String transportType) {
-        if (transportType == null) {
-            return "driving-car";
-        }
-        switch (transportType.toLowerCase()) {
-            case "bike":
-                return "cycling-regular";
-            case "hike":
-            case "running":
-                return "foot-walking";
-            case "vacation":
-            default:
-                return "driving-car";
-        }
+        if (transportType == null) return "driving-car";
+        return switch (transportType.toLowerCase()) {
+            case "bike"     -> "cycling-regular";
+            case "hike",
+                 "running"  -> "foot-walking";
+            default         -> "driving-car";
+        };
     }
 
     public List<Tour> findByUserId(UUID userId) {
@@ -124,9 +127,5 @@ public class TourService {
 
     public Optional<Tour> findById(UUID id) {
         return tourRepository.findById(id);
-    }
-
-    public void deleteById(UUID id) {
-        tourRepository.deleteById(id);
     }
 }
