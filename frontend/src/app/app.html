@@ -31,7 +31,7 @@
   <div style="display: flex; flex: 1; overflow: hidden;">
 
     @if(authService.isLoggedIn()) {
-    <div style="width: 380px; background: white; border-right: 1px solid #ddd; flex-shrink: 0; overflow-y: auto; padding: 0;">
+    <div style="width: 380px; background: white; border-right: 1px solid #ddd; flex-shrink: 0; overflow-y: auto;">
       <list
         [tours]="enrichedTours()"
         [searchTerm]="currentSearch"
