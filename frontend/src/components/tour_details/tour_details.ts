@@ -1,4 +1,4 @@
-import { Component, Input, Output, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TourDetailsViewModel } from './tour_details.vm';
 import { Tour } from './tour_details.model';
@@ -19,9 +19,13 @@ export class Tour_Details {
     this.vm.tour.set(value);
   }
 
-  // orsApiKey mantenuto per compatibilità con app.html ma non più usato qui
   @Input() orsApiKey: string = '';
 
-  @Output() edit = this.vm.edit;
-  @Output() delete = this.vm.delete;
+  @Output() edit = new EventEmitter<Tour>();
+  @Output() delete = new EventEmitter<string>();
+
+  constructor() {
+    this.vm.edit.subscribe(tour => this.edit.emit(tour));
+    this.vm.delete.subscribe(id => this.delete.emit(id));
+  }
 }
