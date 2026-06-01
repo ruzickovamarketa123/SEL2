@@ -104,10 +104,15 @@
         ">cancel</button>
 
         <button type="button" (click)="vm.register()" [disabled]="vm.isLoading() || !vm.isFormValid()" style="
-          padding: 9px 22px; border-radius: 8px;
-          border: none; background: rgb(236, 86, 164, 0.8);
-          color: white; font-size: 14px; font-weight: 500; cursor: pointer;
-        ">{{ vm.isLoading() ? 'registering...' : 'register' }}</button>
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: rgb(236, 86, 164, 0.8);
+  color: rgb(0, 0, 0);
+  border: 1.5px solid #000000;
+">{{ vm.isLoading() ? 'registering...' : 'register' }}</button>
       </div>
 
     </div>

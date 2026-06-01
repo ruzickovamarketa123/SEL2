@@ -82,10 +82,15 @@
       ">cancel</button>
 
       <button type="button" (click)="vm.login()" [disabled]="vm.isLoading() || !vm.isFormValid()" style="
-        padding: 9px 22px; border-radius: 8px;
-        border: none; background: rgb(239, 125, 184, 0.8);
-        color: white; font-size: 14px; font-weight: 500; cursor: pointer;
-      ">{{ vm.isLoading() ? 'logging in...' : 'login' }}</button>
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: rgb(239, 125, 184, 0.8);
+  color: #000000;
+  border: 1.5px solid #000000;
+">{{ vm.isLoading() ? 'logging in...' : 'login' }}</button>
     </div>
 
   </div>

@@ -62,8 +62,15 @@
         padding: 9px 18px; border-radius: 8px; border: 1.5px solid #ddd;
         background: white; color: #555; font-size: 14px; cursor: pointer;">cancel</button>
       <button type="button" (click)="vm.save()" [disabled]="vm.isLoading()" style="
-        padding: 9px 22px; border-radius: 8px; border: none;
-        background: rgb(236, 86, 164, 0.8); color: white; font-size: 14px; font-weight: 500; cursor: pointer;">
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: rgb(239, 125, 184, 0.8);
+  color: #000000;
+  border: 1.5px solid #000000;
+">
         {{ vm.isLoading() ? 'saving...' : 'save changes' }}
       </button>
     </div>

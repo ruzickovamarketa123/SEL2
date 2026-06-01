@@ -18,7 +18,7 @@
         <app-profile></app-profile>
         <button (click)="authService.logout(); clearData()" style="
           padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 500;
-          cursor: pointer; background: rgb(236, 86, 164, 0.8); color: #000000; border: 1.5px solid #000000;
+          cursor: pointer; background: rgba(255, 79, 55, 0.8);; color: #000000; border: 1.5px solid #000000;
         ">logout</button>
       } @else {
         <app-login></app-login>
@@ -54,12 +54,13 @@
     </div>
     }
 
-    <!-- right side: always just the map -->
     <div style="flex: 1; display: flex; gap: 12px; padding: 16px; overflow: hidden; min-width: 0;">
 
       @if (!authService.isLoggedIn()) {
       <div style="flex: 1; display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
-        <div style="flex: 1; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12); isolation: isolate;"></div>
+        <div style="flex: 1; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12); isolation: isolate;">
+          <app-map [tour]="null" [apiKey]="ORS_API_KEY"></app-map>
+        </div>
         <div style="background: white; border-radius: 12px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); color: #aaa; text-align: center; flex-shrink: 0;">
           <p style="margin: 0; font-size: 14px;">LOG IN OR REGISTER TO START PLANNING YOUR TOURS</p>
         </div>
