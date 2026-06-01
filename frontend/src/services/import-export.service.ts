@@ -68,8 +68,10 @@ export class ImportExportService {
 
     for (const tourData of data.tours) {
       try {
-        // Strip id so the backend generates a new one, avoiding conflicts
-        const { id, logs, popularity, childFriendliness, ...tourPayload } = tourData;
+        // Strip id so the backend generates a new one, avoiding conflicts.
+        // Also strip distance and estimatedTime so the backend recalculates
+        // them fresh via the OpenRouteService API call in TourService.create().
+        const { id, logs, popularity, childFriendliness, distance, estimatedTime, ...tourPayload } = tourData;
 
         const createdTour = await this.tourService.create(tourPayload as Tour);
 

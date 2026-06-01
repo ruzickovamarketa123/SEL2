@@ -1,0 +1,96 @@
+{
+  "exportedAt": "2026-05-28T10:00:00.000Z",
+  "version": "1.0",
+  "tours": [
+    {
+      "name": "Edinburgh to Glasgow",
+      "description": "Road trip across the Scottish Central Belt.",
+      "from": "-3.1883,55.9533",
+      "to": "-4.2518,55.8642",
+      "transportType": "Vacation",
+      "logs": [
+        {
+          "date": "2026-01-25",
+          "time": "10:00",
+          "comment": "Foggy morning, motorway was quiet.",
+          "difficulty": "Easy",
+          "totalDistance": 72.4,
+          "totalTime": 65,
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "name": "Highlands Hike",
+      "description": "Trek through Glen Coe, one of Scotland's most dramatic glens.",
+      "from": "-4.9631,56.6755",
+      "to": "-5.1031,56.7055",
+      "transportType": "Hike",
+      "logs": [
+        {
+          "date": "2026-02-14",
+          "time": "09:00",
+          "comment": "Windy and rainy but absolutely stunning.",
+          "difficulty": "Hard",
+          "totalDistance": 14.5,
+          "totalTime": 240,
+          "rating": 5
+        },
+        {
+          "date": "2026-04-01",
+          "time": "08:30",
+          "comment": "Spring conditions, snow still on the peaks.",
+          "difficulty": "Hard",
+          "totalDistance": 15.1,
+          "totalTime": 255,
+          "rating": 5
+        }
+      ]
+    },
+    {
+      "name": "Dublin Riverside Run",
+      "description": "Morning run along the River Liffey from Phoenix Park to the docks.",
+      "from": "-6.3376,53.3558",
+      "to": "-6.2297,53.3498",
+      "transportType": "Running",
+      "logs": [
+        {
+          "date": "2026-03-17",
+          "time": "07:00",
+          "comment": "St. Patrick's Day morning, city still quiet.",
+          "difficulty": "Easy",
+          "totalDistance": 9.1,
+          "totalTime": 54,
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "name": "Paris Seine Bike",
+      "description": "Cycling along the Seine from Notre-Dame to the Eiffel Tower.",
+      "from": "2.3499,48.8530",
+      "to": "2.2945,48.8584",
+      "transportType": "Bike",
+      "logs": [
+        {
+          "date": "2026-04-22",
+          "time": "09:30",
+          "comment": "Perfect spring weather, river path was lovely.",
+          "difficulty": "Easy",
+          "totalDistance": 5.2,
+          "totalTime": 28,
+          "rating": 5
+        },
+        {
+          "date": "2026-05-06",
+          "time": "18:00",
+          "comment": "Evening ride at sunset, magical atmosphere.",
+          "difficulty": "Easy",
+          "totalDistance": 5.2,
+          "totalTime": 35,
+          "rating": 5
+        }
+      ]
+    }
+  ]
+}

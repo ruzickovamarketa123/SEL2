@@ -1,0 +1,78 @@
+{
+  "exportedAt": "2026-05-28T10:00:00.000Z",
+  "version": "1.0",
+  "tours": [
+    {
+      "name": "Copenhagen Canal Bike",
+      "description": "Cycling through Copenhagen's iconic canals and harbour area.",
+      "from": "12.5683,55.6761",
+      "to": "12.5996,55.6993",
+      "transportType": "Bike",
+      "logs": [
+        {
+          "date": "2026-03-08",
+          "time": "11:00",
+          "comment": "Flat and easy, amazing bike infrastructure.",
+          "difficulty": "Easy",
+          "totalDistance": 14.2,
+          "totalTime": 55,
+          "rating": 5
+        },
+        {
+          "date": "2026-04-12",
+          "time": "10:30",
+          "comment": "Rainy but Danes cycle anyway, fun experience.",
+          "difficulty": "Easy",
+          "totalDistance": 14.2,
+          "totalTime": 60,
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "name": "Lisbon Hills Run",
+      "description": "Running through Alfama and up to São Jorge Castle.",
+      "from": "-9.1393,38.7223",
+      "to": "-9.1336,38.7139",
+      "transportType": "Running",
+      "logs": [
+        {
+          "date": "2026-02-20",
+          "time": "07:30",
+          "comment": "Very hilly but the views from the top are incredible.",
+          "difficulty": "Hard",
+          "totalDistance": 5.8,
+          "totalTime": 52,
+          "rating": 5
+        }
+      ]
+    },
+    {
+      "name": "Swiss Alps Road Trip",
+      "description": "Drive from Zurich through Lucerne to Interlaken.",
+      "from": "8.5417,47.3769",
+      "to": "7.8632,46.6863",
+      "transportType": "Vacation",
+      "logs": [
+        {
+          "date": "2026-05-18",
+          "time": "08:00",
+          "comment": "Stunning mountain scenery, tunnels everywhere.",
+          "difficulty": "Easy",
+          "totalDistance": 125.0,
+          "totalTime": 105,
+          "rating": 5
+        },
+        {
+          "date": "2026-05-25",
+          "time": "09:00",
+          "comment": "Return trip, took the scenic route via Brünig Pass.",
+          "difficulty": "Medium",
+          "totalDistance": 138.0,
+          "totalTime": 130,
+          "rating": 5
+        }
+      ]
+    }
+  ]
+}

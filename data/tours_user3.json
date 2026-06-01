@@ -1,0 +1,78 @@
+{
+  "exportedAt": "2026-05-28T10:00:00.000Z",
+  "version": "1.0",
+  "tours": [
+    {
+      "name": "Berlin Morning Run",
+      "description": "Early run through Tiergarten and along the Spree.",
+      "from": "13.3503,52.5145",
+      "to": "13.4020,52.5200",
+      "transportType": "Running",
+      "logs": [
+        {
+          "date": "2026-01-10",
+          "time": "06:45",
+          "comment": "Freezing cold but the park was beautiful.",
+          "difficulty": "Easy",
+          "totalDistance": 7.2,
+          "totalTime": 42,
+          "rating": 4
+        },
+        {
+          "date": "2026-02-03",
+          "time": "07:00",
+          "comment": "Better weather, personal best time.",
+          "difficulty": "Easy",
+          "totalDistance": 7.2,
+          "totalTime": 38,
+          "rating": 5
+        },
+        {
+          "date": "2026-03-18",
+          "time": "06:30",
+          "comment": "Spring is coming, cherry blossoms starting.",
+          "difficulty": "Easy",
+          "totalDistance": 7.5,
+          "totalTime": 41,
+          "rating": 5
+        }
+      ]
+    },
+    {
+      "name": "Munich to Salzburg",
+      "description": "A classic Alpine road trip crossing the Austrian border.",
+      "from": "11.5820,48.1351",
+      "to": "13.0550,47.8095",
+      "transportType": "Vacation",
+      "logs": [
+        {
+          "date": "2026-04-05",
+          "time": "09:00",
+          "comment": "Smooth drive, stopped at Chiemsee for lunch.",
+          "difficulty": "Easy",
+          "totalDistance": 148.5,
+          "totalTime": 112,
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "name": "Black Forest Trail",
+      "description": "Hiking through the dense forests near Freiburg.",
+      "from": "7.8522,47.9990",
+      "to": "8.0522,48.0990",
+      "transportType": "Hike",
+      "logs": [
+        {
+          "date": "2026-05-02",
+          "time": "08:00",
+          "comment": "Muddy trails after rain but very atmospheric.",
+          "difficulty": "Medium",
+          "totalDistance": 18.3,
+          "totalTime": 260,
+          "rating": 4
+        }
+      ]
+    }
+  ]
+}

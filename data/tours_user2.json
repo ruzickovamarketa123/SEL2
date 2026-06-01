@@ -1,0 +1,69 @@
+{
+  "exportedAt": "2026-05-28T10:00:00.000Z",
+  "version": "1.0",
+  "tours": [
+    {
+      "name": "Amalfi Coast Drive",
+      "description": "Scenic coastal road from Salerno to Positano.",
+      "from": "14.7681,40.6824",
+      "to": "14.4847,40.6283",
+      "transportType": "Vacation",
+      "logs": [
+        {
+          "date": "2026-03-15",
+          "time": "09:00",
+          "comment": "Breathtaking views, narrow roads but worth it.",
+          "difficulty": "Medium",
+          "totalDistance": 52.3,
+          "totalTime": 95,
+          "rating": 5
+        }
+      ]
+    },
+    {
+      "name": "Dolomites Hike",
+      "description": "High altitude trail through the Tre Cime di Lavaredo.",
+      "from": "12.2951,46.6167",
+      "to": "12.3058,46.6244",
+      "transportType": "Hike",
+      "logs": [
+        {
+          "date": "2026-04-20",
+          "time": "07:30",
+          "comment": "Snow on the peaks, spectacular scenery.",
+          "difficulty": "Hard",
+          "totalDistance": 9.8,
+          "totalTime": 210,
+          "rating": 5
+        },
+        {
+          "date": "2026-05-10",
+          "time": "08:00",
+          "comment": "Second attempt, better weather this time.",
+          "difficulty": "Hard",
+          "totalDistance": 10.1,
+          "totalTime": 195,
+          "rating": 5
+        }
+      ]
+    },
+    {
+      "name": "Barcelona City Bike",
+      "description": "Cycling from the Gothic Quarter to Park Güell.",
+      "from": "2.1734,41.3851",
+      "to": "2.1527,41.4145",
+      "transportType": "Bike",
+      "logs": [
+        {
+          "date": "2026-02-28",
+          "time": "10:30",
+          "comment": "Lovely morning ride, uphill near the park.",
+          "difficulty": "Medium",
+          "totalDistance": 6.4,
+          "totalTime": 40,
+          "rating": 4
+        }
+      ]
+    }
+  ]
+}

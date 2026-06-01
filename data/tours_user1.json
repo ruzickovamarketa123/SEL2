@@ -1,0 +1,96 @@
+{
+  "exportedAt": "2026-05-28T10:00:00.000Z",
+  "version": "1.0",
+  "tours": [
+    {
+      "name": "Rome to Florence",
+      "description": "A classic road trip through the heart of Tuscany.",
+      "from": "12.4964,41.9028",
+      "to": "11.2558,43.7696",
+      "transportType": "Vacation",
+      "logs": [
+        {
+          "date": "2026-04-10",
+          "time": "09:00",
+          "comment": "Beautiful drive, light traffic in the morning.",
+          "difficulty": "Easy",
+          "totalDistance": 280.2,
+          "totalTime": 172,
+          "rating": 5
+        },
+        {
+          "date": "2026-05-01",
+          "time": "08:30",
+          "comment": "Holiday traffic was heavy near Arezzo.",
+          "difficulty": "Medium",
+          "totalDistance": 279.0,
+          "totalTime": 195,
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "name": "Vienna Forest Hike",
+      "description": "A relaxing hike through the Wienerwald, great for all ages.",
+      "from": "16.2533,48.2083",
+      "to": "16.1833,48.1333",
+      "transportType": "Hike",
+      "logs": [
+        {
+          "date": "2026-03-22",
+          "time": "10:00",
+          "comment": "Perfect spring weather, trails were dry.",
+          "difficulty": "Easy",
+          "totalDistance": 13.1,
+          "totalTime": 190,
+          "rating": 5
+        }
+      ]
+    },
+    {
+      "name": "Amsterdam Bike Tour",
+      "description": "Cycling through Amsterdam's canals and surrounding countryside.",
+      "from": "4.9041,52.3676",
+      "to": "4.7990,52.4285",
+      "transportType": "Bike",
+      "logs": [
+        {
+          "date": "2026-02-14",
+          "time": "11:00",
+          "comment": "Windy but fun. The canal paths are gorgeous.",
+          "difficulty": "Easy",
+          "totalDistance": 23.8,
+          "totalTime": 85,
+          "rating": 4
+        },
+        {
+          "date": "2026-04-30",
+          "time": "09:30",
+          "comment": "Crowded near the city center but great once outside.",
+          "difficulty": "Easy",
+          "totalDistance": 22.5,
+          "totalTime": 80,
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "name": "Prague Morning Run",
+      "description": "Early morning run along the Vltava river and back through the old town.",
+      "from": "14.4208,50.0880",
+      "to": "14.4013,50.0755",
+      "transportType": "Running",
+      "logs": [
+        {
+          "date": "2026-05-05",
+          "time": "06:30",
+          "comment": "Misty morning, almost no one around. Magical.",
+          "difficulty": "Medium",
+          "totalDistance": 8.5,
+          "totalTime": 48,
+          "rating": 5
+        }
+      ]
+    }
+  ]
+}
