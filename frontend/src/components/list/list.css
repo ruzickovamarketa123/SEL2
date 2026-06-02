@@ -42,7 +42,9 @@
 }
 
 .empty-state {
-  color: #aaa;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   font-size: 13px;
   padding: 16px 4px;
 }

@@ -8,6 +8,7 @@ import com.example.backend.repository.TourLogRepository;
 import com.example.backend.repository.TourRepository;
 import com.example.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import java.util.*;
@@ -106,6 +107,7 @@ public class TourService {
      * Deletes a tour and all its associated tour logs.
      * Tour logs must be removed first to avoid a foreign key constraint violation.
      */
+    @Transactional
     public void deleteById(UUID id) {
         tourLogRepository.deleteByTourId(id);
         tourRepository.deleteById(id);
