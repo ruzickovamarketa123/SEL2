@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <div style="display: flex; gap: 8px; align-items: center;">
 
-      <!-- Export button -->
+      <!-- export button -->
       <button (click)="onExport()"
         style="
           padding: 8px 18px;
@@ -23,7 +23,7 @@ import { CommonModule } from '@angular/common';
         export
       </button>
 
-      <!-- Import button -->
+      <!-- import button -->
       <button (click)="onImport()"
         [disabled]="isImporting()"
         style="
@@ -40,7 +40,7 @@ import { CommonModule } from '@angular/common';
         @else { import }
       </button>
 
-      <!-- Feedback toast -->
+      <!-- feedback toast -->
       @if (feedback()) {
         <span style="
           font-size: 12px; padding: 4px 10px; border-radius: 6px;

@@ -9,16 +9,13 @@ export class ListViewModel {
   showAddModal = signal(false);
   errorMessage = signal<string | null>(null);
 
-  // initially empty, it will be populated by the Input() of list.ts
   allToursData = signal<Tour[]>([]);
 
-  //reacts to changes in searchTerm and allToursData
   filteredTours = computed(() => {
     const term = this.searchTerm().toLowerCase();
     return this.allToursData().filter(t => t.name.toLowerCase().includes(term));
   });
 
-  //temporary state
   newTour = signal({
     name: '', description: '', from: '', to: '', transportType: null
   });

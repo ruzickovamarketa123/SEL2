@@ -3,7 +3,6 @@
   color: #333;
 }
 
-/* ── header ── */
 .list-header {
   display: flex;
   justify-content: space-between;
@@ -34,7 +33,6 @@
   background: rgba(110, 219, 80, 1);
 }
 
-/* ── list ── */
 .scroll-area {
   display: flex;
   flex-direction: column;
@@ -49,7 +47,6 @@
   padding: 16px 4px;
 }
 
-/* ── tour card ── */
 .tour-card {
   background: white;
   border: 1px solid #e8e8e8;
@@ -66,7 +63,6 @@
   border-color: #ffdbe2;
 }
 
-/* selected card — bottom corners square so it merges with detail panel */
 .tour-card.selected {
   background-color: rgba(239, 125, 184, 0.18);
   border-color: rgb(236, 86, 164);
@@ -124,7 +120,6 @@
   font-weight: 400;
 }
 
-/* ── detail panel ── */
 .detail-panel {
   background: rgba(239, 125, 184, 0.07);
   border: 1px solid rgb(236, 86, 164);
@@ -190,7 +185,6 @@
   padding-top: 12px;
 }
 
-/* ── misc ── */
 button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
