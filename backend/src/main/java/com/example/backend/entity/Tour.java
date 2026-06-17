@@ -2,6 +2,8 @@ package com.example.backend.entity;
 
 import jakarta.persistence.*;
 import java.util.UUID;
+import java.util.List;
+import java.util.ArrayList;
 import com.example.backend.entity.User;
 
 @Entity
@@ -23,6 +25,9 @@ public class Tour {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TourLog> tourLogs = new ArrayList<>();
 
     public Tour() {}
 

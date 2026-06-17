@@ -9,7 +9,6 @@ export class LoginViewModel {
   readonly errorMessage = signal<string | null>(null);
   readonly form = signal<LoginRequest>({ username: '', password: '' });
 
-  // Notifies parent (App) that login was successful so it can load data
   loginSuccess = new EventEmitter<void>();
 
   constructor(private authService: AuthService) {}

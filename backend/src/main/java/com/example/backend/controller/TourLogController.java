@@ -5,7 +5,10 @@ import com.example.backend.entity.TourLog;
 import com.example.backend.entity.Tour;
 import com.example.backend.repository.TourLogRepository;
 import com.example.backend.repository.TourRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,6 +20,8 @@ import java.util.UUID;
 @RequestMapping("/api/logs")
 public class TourLogController {
 
+    private static final Logger logger = LogManager.getLogger(TourLogController.class);
+
     private final TourLogRepository tourLogRepository;
     private final TourRepository tourRepository;
 
@@ -27,23 +32,22 @@ public class TourLogController {
 
     @GetMapping
     public List<TourLogDto> readAll() {
-        return tourLogRepository.findAll()
-                .stream()
-                .map(TourLogDto::new)
-                .toList();
+        logger.debug("GET /api/logs");
+        return tourLogRepository.findAll().stream().map(TourLogDto::new).toList();
     }
 
     @GetMapping("/{id}")
-    public TourLogDto read(@PathVariable UUID id) {
+    public ResponseEntity<TourLogDto> read(@PathVariable UUID id) {
+        logger.debug("GET /api/logs/{}", id);
         return tourLogRepository.findById(id)
                 .map(TourLogDto::new)
-                .orElse(null);
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // Accepts flat DTO from frontend (tourId + date/time strings),
-    // looks up the Tour entity, builds TourLog, and returns DTO
     @PostMapping
     public TourLogDto create(@RequestBody TourLogDto dto) {
+        logger.info("POST /api/logs for tourId={}", dto.getTourId());
         Tour tour = tourRepository.findById(dto.getTourId()).orElseThrow();
         LocalDateTime dateTime = LocalDateTime.of(
                 LocalDate.parse(dto.getDate()),
@@ -51,12 +55,14 @@ public class TourLogController {
         );
         TourLog log = new TourLog(tour, dateTime, dto.getTotalDistance(),
                 dto.getRating(), dto.getComment(), dto.getDifficulty(), dto.getTotalTime());
-        return new TourLogDto(tourLogRepository.save(log));
+        TourLogDto saved = new TourLogDto(tourLogRepository.save(log));
+        logger.info("TourLog created: id={}", saved.getId());
+        return saved;
     }
 
-    // Same as create, but sets the ID from the path variable before saving
     @PutMapping("/{id}")
     public TourLogDto update(@PathVariable UUID id, @RequestBody TourLogDto dto) {
+        logger.info("PUT /api/logs/{}", id);
         Tour tour = tourRepository.findById(dto.getTourId()).orElseThrow();
         LocalDateTime dateTime = LocalDateTime.of(
                 LocalDate.parse(dto.getDate()),
@@ -70,6 +76,7 @@ public class TourLogController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) {
+        logger.info("DELETE /api/logs/{}", id);
         tourLogRepository.deleteById(id);
     }
 }

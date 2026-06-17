@@ -6,12 +6,11 @@ import { TourLog } from '../tourlog_details/tourlog.model';
 import { ListViewModel } from './list.vm';
 import { Tour_Details } from '../tour_details/tour_details';
 import { TourLogList } from '../tourlogs_list/tourlog_list';
-import { TourLogDetails } from '../tourlog_details/tourlog';
 
 @Component({
   selector: 'list',
   standalone: true,
-  imports: [CommonModule, FormsModule, Tour_Details, TourLogList, TourLogDetails],
+  imports: [CommonModule, FormsModule, Tour_Details, TourLogList],
   providers: [ListViewModel],
   templateUrl: './list.html',
   styleUrls: ['./list.css'],
@@ -22,8 +21,6 @@ export class List {
   @Input() set tours(value: Tour[]) { this.vm.allToursData.set(value); }
   @Input() set searchTerm(value: string) { this.vm.searchTerm.set(value); }
   @Input() set selectedTourId(value: string | null) { this.vm.selectedId.set(value); }
-
-  // nové inputy pro detail panel
   @Input() activeTab: 'details' | 'logs' = 'details';
   @Input() allLogs: TourLog[] = [];
   @Input() selectedLog: TourLog | undefined = undefined;

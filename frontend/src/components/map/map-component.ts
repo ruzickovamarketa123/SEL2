@@ -7,7 +7,6 @@ import { Tour } from '../tour_details/tour_details.model';
 const EUROPE_CENTER: [number, number] = [54, 15];
 const EUROPE_ZOOM = 4;
 
-// ORS profile mapping (mirrors backend logic)
 const ORS_PROFILE: Record<string, string> = {
   Bike:     'cycling-regular',
   Hike:     'foot-walking',
@@ -22,7 +21,7 @@ const ORS_PROFILE: Record<string, string> = {
     <div style="position: relative; width: 100%; height: 100%;">
       <div id="tour-map" style="width: 100%; height: 100%;"></div>
 
-      <!-- Loading overlay -->
+      <!-- loading overlay -->
       @if (isLoading) {
         <div style="
           position: absolute; inset: 0;
@@ -35,7 +34,7 @@ const ORS_PROFILE: Record<string, string> = {
         </div>
       }
 
-      <!-- Error message -->
+      <!-- error message -->
       @if (routeError) {
         <div style="
           position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
@@ -75,7 +74,6 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
 
       this.map.invalidateSize();
 
-      // If a tour was set before the map was ready, render it now
       if (this.tour) {
         this.renderTour(this.tour);
       }
@@ -94,7 +92,6 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
     }
   }
 
-  // Parses "lon,lat" string into [lat, lon] for Leaflet
   private parseCoords(raw: string): [number, number] | null {
     const parts = raw.trim().split(',').map(Number);
     if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
@@ -118,7 +115,6 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
       return;
     }
 
-    // Place start/end markers immediately
     this.markersLayer = L.layerGroup().addTo(this.map);
 
     const startIcon = L.divIcon({
@@ -137,17 +133,14 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
       .bindPopup(`<b>End</b><br>${tour.to}`)
       .addTo(this.markersLayer);
 
-    // Fit map to markers right away
     const bounds = L.latLngBounds([fromCoords, toCoords]);
     this.map.fitBounds(bounds, { padding: [60, 60] });
 
-    // Fetch route from ORS
     this.isLoading = true;
     this.routeError = null;
 
     try {
       const profile = ORS_PROFILE[tour.transportType ?? ''] ?? 'driving-car';
-      // ORS expects "lon,lat" — our stored format is already "lon,lat"
       const url = `https://api.openrouteservice.org/v2/directions/${profile}?api_key=${this.apiKey}&start=${tour.from}&end=${tour.to}`;
 
       const res = await fetch(url);
@@ -158,7 +151,6 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
 
       if (!geometry) throw new Error('No route geometry in response');
 
-      // Draw the route polyline
       this.routeLayer = L.geoJSON(geometry, {
         style: {
           color: '#4da3ff',
@@ -167,7 +159,6 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
         }
       }).addTo(this.map);
 
-      // Fit to full route bounds
       this.map.fitBounds(this.routeLayer.getBounds(), { padding: [50, 50] });
 
     } catch (err: any) {

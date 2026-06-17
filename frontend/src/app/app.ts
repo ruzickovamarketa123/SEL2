@@ -23,7 +23,7 @@ import { ImportExportButton } from '../components/import-export/import-export-bu
 export class App {
 
   constructor(public authService: AuthService, private tourService: TourService, private tourLogService: TourLogService) {
-    // Observer pattern via effect — automatically reacts to login/logout state changes
+  
     effect(() => {
       if (authService.isLoggedIn()) {
         this.loadData();
@@ -58,15 +58,12 @@ export class App {
     this.selectedLog.set(null);
   }
 
-  // Computed signal for the currently selected tour —
-  // updates automatically when selectedTourId or tours list changes
   selectedTour = computed(() => {
     const id = this.selectedTourId();
     if (id === null) return null;
     return this.enrichedTours().find(t => t.id === id) || null;
   });
 
-  // Mediator pattern — enriches tours with computed stats from logs
   enrichedTours = computed(() => {
     const currentLogs = this.tourLogs();
     const currentTours = this.tours();
@@ -98,7 +95,6 @@ export class App {
     }
   }
 
-  // Mediator method — receives new tour from ListComponent and persists it
   async onTourAdded(newTourData: Tour) {
     const created = await this.tourService.create(newTourData);
     this.tours.update((current: Tour[]) => [...current, created]);
