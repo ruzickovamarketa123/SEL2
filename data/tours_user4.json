@@ -5,8 +5,8 @@
     {
       "name": "Copenhagen Canal Bike",
       "description": "Cycling through Copenhagen's iconic canals and harbour area.",
-      "from": "12.5683,55.6761",
-      "to": "12.5996,55.6993",
+      "from": "Copenhagen",
+      "to": "Nordhavn",
       "transportType": "Bike",
       "logs": [
         {
@@ -32,8 +32,8 @@
     {
       "name": "Lisbon Hills Run",
       "description": "Running through Alfama and up to São Jorge Castle.",
-      "from": "-9.1393,38.7223",
-      "to": "-9.1336,38.7139",
+      "from": "Alfama Lisbon",
+      "to": "São Jorge Castle Lisbon",
       "transportType": "Running",
       "logs": [
         {
@@ -50,8 +50,8 @@
     {
       "name": "Swiss Alps Road Trip",
       "description": "Drive from Zurich through Lucerne to Interlaken.",
-      "from": "8.5417,47.3769",
-      "to": "7.8632,46.6863",
+      "from": "Zurich",
+      "to": "Interlaken Switzerland",
       "transportType": "Vacation",
       "logs": [
         {

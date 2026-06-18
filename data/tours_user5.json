@@ -5,8 +5,8 @@
     {
       "name": "Edinburgh to Glasgow",
       "description": "Road trip across the Scottish Central Belt.",
-      "from": "-3.1883,55.9533",
-      "to": "-4.2518,55.8642",
+      "from": "Edinburgh",
+      "to": "Glasgow",
       "transportType": "Vacation",
       "logs": [
         {
@@ -21,37 +21,38 @@
       ]
     },
     {
-      "name": "Highlands Hike",
-      "description": "Trek through Glen Coe, one of Scotland's most dramatic glens.",
-      "from": "-4.9631,56.6755",
-      "to": "-5.1031,56.7055",
+      "name": "Rome Historic Center Walk",
+      "description": "A leisure walk through the heart of Rome, from the Colosseum to the Pantheon.",
+      "from": "Colosseum",
+      "to": "Pantheon",
       "transportType": "Hike",
       "logs": [
         {
-          "date": "2026-02-14",
-          "time": "09:00",
-          "comment": "Windy and rainy but absolutely stunning.",
-          "difficulty": "Hard",
-          "totalDistance": 14.5,
-          "totalTime": 240,
+          "date": "2026-02-15",
+          "time": "10:00",
+          "comment": "Beautiful sunny day, very crowded near the ruins.",
+          "difficulty": "Easy",
+          "totalDistance": 3.5,
+          "totalTime": 90,
           "rating": 5
         },
         {
-          "date": "2026-04-01",
-          "time": "08:30",
-          "comment": "Spring conditions, snow still on the peaks.",
-          "difficulty": "Hard",
-          "totalDistance": 15.1,
-          "totalTime": 255,
-          "rating": 5
+          "date": "2026-03-10",
+          "time": "15:30",
+          "comment": "Quick afternoon stroll.",
+          "difficulty": "Easy",
+          "totalDistance": 3.2,
+          "totalTime": 75,
+          "rating": 4
         }
       ]
     },
+
     {
       "name": "Dublin Riverside Run",
       "description": "Morning run along the River Liffey from Phoenix Park to the docks.",
-      "from": "-6.3376,53.3558",
-      "to": "-6.2297,53.3498",
+      "from": "Phoenix Park Dublin",
+      "to": "Dublin Docklands",
       "transportType": "Running",
       "logs": [
         {
@@ -68,8 +69,8 @@
     {
       "name": "Paris Seine Bike",
       "description": "Cycling along the Seine from Notre-Dame to the Eiffel Tower.",
-      "from": "2.3499,48.8530",
-      "to": "2.2945,48.8584",
+      "from": "Notre-Dame Paris",
+      "to": "Tour Eiffel",
       "transportType": "Bike",
       "logs": [
         {

@@ -1,5 +1,5 @@
 import {
-  Component, AfterViewInit, OnDestroy, Input, OnChanges, SimpleChanges
+  Component, AfterViewInit, OnDestroy, input, effect, ElementRef
 } from '@angular/core';
 import * as L from 'leaflet';
 import { Tour } from '../tour_details/tour_details.model';
@@ -19,22 +19,20 @@ const ORS_PROFILE: Record<string, string> = {
   standalone: true,
   template: `
     <div style="position: relative; width: 100%; height: 100%;">
-      <div id="tour-map" style="width: 100%; height: 100%;"></div>
+      <div class="map-container" style="width: 100%; height: 100%;"></div>
 
-      <!-- loading overlay -->
       @if (isLoading) {
         <div style="
           position: absolute; inset: 0;
           background: rgba(255,255,255,0.65);
           display: flex; align-items: center; justify-content: center;
           border-radius: 16px; z-index: 1000;
-          font-size: 14px; color: #555; gap: 8px;
+          font-size: 20px; color: #555;
         ">
-          <span style="font-size: 20px;">loading route...</span> 
+          loading route...
         </div>
       }
 
-      <!-- error message -->
       @if (routeError) {
         <div style="
           position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
@@ -46,25 +44,44 @@ const ORS_PROFILE: Record<string, string> = {
       }
     </div>
   `,
-  styles: [`
-    :host { display: block; width: 100%; height: 100%; }
-  `]
+  styles: [`:host { display: block; width: 100%; height: 100%; }`]
 })
-export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class MapComponent implements AfterViewInit, OnDestroy {
 
-  @Input() tour: Tour | null = null;
-  @Input() apiKey: string = '';
+  // Signal inputs — Angular tracks these reactively, unlike @Input()
+  tour   = input<Tour | null>(null);
+  apiKey = input<string>('');
 
   private map!: L.Map;
+  private mapReady = false;
   private routeLayer: L.GeoJSON | null = null;
   private markersLayer: L.LayerGroup | null = null;
+  private currentRenderToken = 0;
 
   isLoading = false;
   routeError: string | null = null;
 
+  constructor(private el: ElementRef) {
+    // effect() runs whenever tour() or apiKey() signal changes —
+    // this is the reliable reactive alternative to ngOnChanges
+    effect(() => {
+      const currentTour = this.tour();
+      // If the map isn't ready yet, ngAfterViewInit will call renderTour()
+      if (!this.mapReady) return;
+
+      this.clearRoute();
+      if (currentTour) {
+        this.renderTour(currentTour);
+      } else {
+        this.map.setView(EUROPE_CENTER, EUROPE_ZOOM);
+      }
+    });
+  }
+
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.map = L.map('tour-map', { zoomControl: true })
+      const container = this.el.nativeElement.querySelector('.map-container');
+      this.map = L.map(container, { zoomControl: true })
         .setView(EUROPE_CENTER, EUROPE_ZOOM);
 
       L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -73,23 +90,14 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
       }).addTo(this.map);
 
       this.map.invalidateSize();
+      this.mapReady = true;
 
-      if (this.tour) {
-        this.renderTour(this.tour);
+      // Render the tour that was already set before the map was ready
+      const currentTour = this.tour();
+      if (currentTour) {
+        this.renderTour(currentTour);
       }
     }, 100);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['tour'] && this.map) {
-      const tour = changes['tour'].currentValue as Tour | null;
-      this.clearRoute();
-      if (tour) {
-        this.renderTour(tour);
-      } else {
-        this.map.setView(EUROPE_CENTER, EUROPE_ZOOM);
-      }
-    }
   }
 
   private parseCoords(raw: string): [number, number] | null {
@@ -101,12 +109,16 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   private clearRoute(): void {
+    this.currentRenderToken++;
+    this.isLoading = false;
     this.routeError = null;
-    if (this.routeLayer) { this.routeLayer.remove(); this.routeLayer = null; }
+    if (this.routeLayer)   { this.routeLayer.remove();   this.routeLayer = null; }
     if (this.markersLayer) { this.markersLayer.remove(); this.markersLayer = null; }
   }
 
   private async renderTour(tour: Tour): Promise<void> {
+    const token = ++this.currentRenderToken;
+
     const fromCoords = this.parseCoords(tour.from);
     const toCoords   = this.parseCoords(tour.to);
 
@@ -127,45 +139,44 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
     });
 
     L.marker(fromCoords, { icon: startIcon })
-      .bindPopup(`<b>Start</b><br>${tour.from}`)
+      .bindPopup(`<b>Start</b><br>${tour.fromName || tour.from}`)
       .addTo(this.markersLayer);
     L.marker(toCoords, { icon: endIcon })
-      .bindPopup(`<b>End</b><br>${tour.to}`)
+      .bindPopup(`<b>End</b><br>${tour.toName || tour.to}`)
       .addTo(this.markersLayer);
 
-    const bounds = L.latLngBounds([fromCoords, toCoords]);
-    this.map.fitBounds(bounds, { padding: [60, 60] });
+    this.map.fitBounds(L.latLngBounds([fromCoords, toCoords]), { padding: [60, 60] });
 
     this.isLoading = true;
     this.routeError = null;
 
     try {
       const profile = ORS_PROFILE[tour.transportType ?? ''] ?? 'driving-car';
-      const url = `https://api.openrouteservice.org/v2/directions/${profile}?api_key=${this.apiKey}&start=${tour.from}&end=${tour.to}`;
+      const url = `https://api.openrouteservice.org/v2/directions/${profile}?api_key=${this.apiKey()}&start=${tour.from}&end=${tour.to}`;
 
       const res = await fetch(url);
+      if (token !== this.currentRenderToken) return;
       if (!res.ok) throw new Error(`ORS error: ${res.status}`);
 
       const data = await res.json();
       const geometry = data?.features?.[0]?.geometry;
-
       if (!geometry) throw new Error('No route geometry in response');
+      if (token !== this.currentRenderToken) return;
 
       this.routeLayer = L.geoJSON(geometry, {
-        style: {
-          color: '#4da3ff',
-          weight: 4,
-          opacity: 0.85,
-        }
+        style: { color: '#4da3ff', weight: 4, opacity: 0.85 }
       }).addTo(this.map);
 
       this.map.fitBounds(this.routeLayer.getBounds(), { padding: [50, 50] });
 
     } catch (err: any) {
+      if (token !== this.currentRenderToken) return;
       console.error('Map route error:', err);
       this.routeError = 'Could not load route. Showing markers only.';
     } finally {
-      this.isLoading = false;
+      if (token === this.currentRenderToken) {
+        this.isLoading = false;
+      }
     }
   }
 

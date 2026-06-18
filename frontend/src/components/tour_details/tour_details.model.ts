@@ -4,18 +4,20 @@ export interface Tour {
     id: string;
     name: string;
     description: string;
-    from: string;
-    to: string;
+    from: string;       // coordinates "lon,lat" — used by the map
+    to: string;         // coordinates "lon,lat" — used by the map
+    fromName?: string;  // human-readable label e.g. "Vienna"
+    toName?: string;    // human-readable label e.g. "Roma"
     transportType: TransportType;
-    popularity?: number; //1-5
-    childFriendliness ?: number; //1-5
+    popularity?: number;
+    childFriendliness?: number;
     logs?: TourLog[];
 
-    //REST API (OpenRouteService)
-    distance?: number;        //km
-    estimatedTime?: number;   //minutes
+    // REST API (OpenRouteService)
+    distance?: number;      // km
+    estimatedTime?: number; // minutes
 
-    //(Leaflet)
+    // (Leaflet)
     routeInformation?: any;
 }
 

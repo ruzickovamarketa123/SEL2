@@ -5,8 +5,8 @@
     {
       "name": "Amalfi Coast Drive",
       "description": "Scenic coastal road from Salerno to Positano.",
-      "from": "14.7681,40.6824",
-      "to": "14.4847,40.6283",
+      "from": "Salerno",
+      "to": "Positano",
       "transportType": "Vacation",
       "logs": [
         {
@@ -23,8 +23,8 @@
     {
       "name": "Dolomites Hike",
       "description": "High altitude trail through the Tre Cime di Lavaredo.",
-      "from": "12.2951,46.6167",
-      "to": "12.3058,46.6244",
+      "from": "Cortina d'Ampezzo",
+      "to": "Tre Cime di Lavaredo",
       "transportType": "Hike",
       "logs": [
         {
@@ -49,9 +49,9 @@
     },
     {
       "name": "Barcelona City Bike",
-      "description": "Cycling from the Gothic Quarter to Park Güell.",
-      "from": "2.1734,41.3851",
-      "to": "2.1527,41.4145",
+      "description": "Cycling from the Gothic Quarter to Barceloneta.",
+      "from": "Barcelona Gothic Quarter",
+      "to": "Barceloneta",
       "transportType": "Bike",
       "logs": [
         {

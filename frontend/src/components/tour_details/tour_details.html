@@ -32,11 +32,11 @@
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
       <div class="info-item">
         <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">from</div>
-        <div style="font-weight: 600; color: #333; font-size: 13px;">{{ tour.from }}</div>
+        <div style="font-weight: 600; color: #333; font-size: 13px;">{{ tour.fromName || tour.from }}</div>
       </div>
       <div class="info-item">
         <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">to</div>
-        <div style="font-weight: 600; color: #333; font-size: 13px;">{{ tour.to }}</div>
+        <div style="font-weight: 600; color: #333; font-size: 13px;">{{ tour.toName || tour.to }}</div>
       </div>
       <div class="info-item">
         <div style="color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">type</div>
@@ -105,14 +105,14 @@
           <label style="font-size: 13px; font-weight: 500; color: #555;">from</label>
           <input type="text"
             [ngModel]="vm.editTourData()?.from"
-            (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, from: $event})"
+            (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, from: $event, fromName: $event})"
             style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
         </div>
         <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
           <label style="font-size: 13px; font-weight: 500; color: #555;">to</label>
           <input type="text"
             [ngModel]="vm.editTourData()?.to"
-            (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, to: $event})"
+            (ngModelChange)="vm.editTourData.set({...vm.editTourData()!, to: $event, toName: $event})"
             style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none;" />
         </div>
       </div>

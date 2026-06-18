@@ -21,9 +21,9 @@
         </div>
         <div class="card-details">
           <div class="route">
-            <span class="route-point">{{ tour.from }}</span>
+            <span class="route-point">{{ tour.fromName || tour.from }}</span>
             <span class="route-arrow">→</span>
-            <span class="route-point">{{ tour.to }}</span>
+            <span class="route-point">{{ tour.toName || tour.to }}</span>
           </div>
         </div>
       </div>

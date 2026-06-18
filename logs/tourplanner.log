@@ -1,0 +1,51 @@
+2026-06-19 00:01:28 [http-nio-8080-exec-9] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Rome to Florence' for userId=ce8e6845-c9ca-4f24-9005-f5063c50a1cc
+2026-06-19 00:01:28 [http-nio-8080-exec-9] INFO  com.example.backend.service.TourService - Creating tour 'Rome to Florence' for userId=ce8e6845-c9ca-4f24-9005-f5063c50a1cc
+2026-06-19 00:01:28 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Geocoding location: 'Rome, Italy'
+2026-06-19 00:01:29 [http-nio-8080-exec-9] WARN  com.example.backend.service.TourService - Geocoding returned no results for 'Rome, Italy'
+2026-06-19 00:01:29 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Geocoding location: 'Florence, Italy'
+2026-06-19 00:01:29 [http-nio-8080-exec-9] WARN  com.example.backend.service.TourService - Geocoding returned no results for 'Florence, Italy'
+2026-06-19 00:01:29 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=driving-car, from=Rome, Italy, to=Florence, Italy
+2026-06-19 00:01:29 [http-nio-8080-exec-9] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Rome to Florence': 400 Bad Request on GET request for "https://api.openrouteservice.org/v2/directions/driving-car": "{"error":{"code":2003,"message":"Parameter 'Rome, Italy' has incorrect value or format."},"info":{"engine":{"build_date":"2026-06-12T10:08:58Z","graph_version":"4","graph_date":"2026-06-12T19:20:43Z","osm_date":"2026-05-17T23:59:59Z","version":"9.9.0"},"timestamp":1781820091465}}"
+2026-06-19 00:01:29 [http-nio-8080-exec-9] INFO  com.example.backend.service.TourService - Tour created successfully: id=f25d5d08-5db8-418c-898a-9b937e85a990, name='Rome to Florence'
+2026-06-19 00:01:29 [http-nio-8080-exec-6] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=f25d5d08-5db8-418c-898a-9b937e85a990
+2026-06-19 00:01:29 [http-nio-8080-exec-6] INFO  com.example.backend.controller.TourLogController - TourLog created: id=857ef3d6-ecfe-4e67-81d4-0210d9699f0f
+2026-06-19 00:01:29 [http-nio-8080-exec-8] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=f25d5d08-5db8-418c-898a-9b937e85a990
+2026-06-19 00:01:29 [http-nio-8080-exec-8] INFO  com.example.backend.controller.TourLogController - TourLog created: id=9d2a2be4-d34d-4fcc-8e62-1c81d7b7b4a1
+2026-06-19 00:01:29 [http-nio-8080-exec-5] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Vienna Forest Hike' for userId=ce8e6845-c9ca-4f24-9005-f5063c50a1cc
+2026-06-19 00:01:29 [http-nio-8080-exec-5] INFO  com.example.backend.service.TourService - Creating tour 'Vienna Forest Hike' for userId=ce8e6845-c9ca-4f24-9005-f5063c50a1cc
+2026-06-19 00:01:29 [http-nio-8080-exec-5] DEBUG com.example.backend.service.TourService - Geocoding location: 'Vienna, Austria'
+2026-06-19 00:01:29 [http-nio-8080-exec-5] WARN  com.example.backend.service.TourService - Geocoding returned no results for 'Vienna, Austria'
+2026-06-19 00:01:29 [http-nio-8080-exec-5] DEBUG com.example.backend.service.TourService - Geocoding location: 'Klosterneuburg, Austria'
+2026-06-19 00:01:30 [http-nio-8080-exec-5] WARN  com.example.backend.service.TourService - Geocoding returned no results for 'Klosterneuburg, Austria'
+2026-06-19 00:01:30 [http-nio-8080-exec-5] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=Vienna, Austria, to=Klosterneuburg, Austria
+2026-06-19 00:01:30 [http-nio-8080-exec-5] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Vienna Forest Hike': 400 Bad Request on GET request for "https://api.openrouteservice.org/v2/directions/foot-walking": "{"error":{"code":2003,"message":"Parameter 'Vienna, Austria' has incorrect value or format."},"info":{"engine":{"build_date":"2026-04-20T10:23:42Z","graph_version":"4","graph_date":"2026-05-05T20:04:18Z","osm_date":"2026-04-26T23:59:57Z","version":"9.9.0"},"timestamp":1781820091873}}"
+2026-06-19 00:01:30 [http-nio-8080-exec-5] INFO  com.example.backend.service.TourService - Tour created successfully: id=a56bc1eb-9233-4cb2-a7e3-ca6159924e7d, name='Vienna Forest Hike'
+2026-06-19 00:01:30 [http-nio-8080-exec-10] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=a56bc1eb-9233-4cb2-a7e3-ca6159924e7d
+2026-06-19 00:01:30 [http-nio-8080-exec-10] INFO  com.example.backend.controller.TourLogController - TourLog created: id=1f36b8bb-7433-4531-a34d-14d85d739ce9
+2026-06-19 00:01:30 [http-nio-8080-exec-1] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Amsterdam Bike Tour' for userId=ce8e6845-c9ca-4f24-9005-f5063c50a1cc
+2026-06-19 00:01:30 [http-nio-8080-exec-1] INFO  com.example.backend.service.TourService - Creating tour 'Amsterdam Bike Tour' for userId=ce8e6845-c9ca-4f24-9005-f5063c50a1cc
+2026-06-19 00:01:30 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourService - Geocoding location: 'Amsterdam, Netherlands'
+2026-06-19 00:01:30 [http-nio-8080-exec-1] WARN  com.example.backend.service.TourService - Geocoding returned no results for 'Amsterdam, Netherlands'
+2026-06-19 00:01:30 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourService - Geocoding location: 'Zaandam, Netherlands'
+2026-06-19 00:01:30 [http-nio-8080-exec-1] WARN  com.example.backend.service.TourService - Geocoding returned no results for 'Zaandam, Netherlands'
+2026-06-19 00:01:30 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=cycling-regular, from=Amsterdam, Netherlands, to=Zaandam, Netherlands
+2026-06-19 00:01:30 [http-nio-8080-exec-1] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Amsterdam Bike Tour': 400 Bad Request on GET request for "https://api.openrouteservice.org/v2/directions/cycling-regular": "{"error":{"code":2003,"message":"Parameter 'Amsterdam, Netherlands' has incorrect value or format."},"info":{"engine":{"build_date":"2026-06-12T10:08:58Z","graph_version":"4","graph_date":"2026-06-13T08:06:28Z","osm_date":"2026-05-17T23:59:59Z","version":"9.9.0"},"timestamp":1781820092181}}"
+2026-06-19 00:01:30 [http-nio-8080-exec-1] INFO  com.example.backend.service.TourService - Tour created successfully: id=951f0715-6e8b-45e2-b9e5-4be5361acc7e, name='Amsterdam Bike Tour'
+2026-06-19 00:01:30 [http-nio-8080-exec-2] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=951f0715-6e8b-45e2-b9e5-4be5361acc7e
+2026-06-19 00:01:30 [http-nio-8080-exec-2] INFO  com.example.backend.controller.TourLogController - TourLog created: id=0a9858ba-2e8b-4bcd-b042-8d408abb7832
+2026-06-19 00:01:30 [http-nio-8080-exec-7] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=951f0715-6e8b-45e2-b9e5-4be5361acc7e
+2026-06-19 00:01:30 [http-nio-8080-exec-7] INFO  com.example.backend.controller.TourLogController - TourLog created: id=2841c91d-5aec-41e9-9b2b-a2f9c7a23230
+2026-06-19 00:01:30 [http-nio-8080-exec-3] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Prague Morning Run' for userId=ce8e6845-c9ca-4f24-9005-f5063c50a1cc
+2026-06-19 00:01:30 [http-nio-8080-exec-3] INFO  com.example.backend.service.TourService - Creating tour 'Prague Morning Run' for userId=ce8e6845-c9ca-4f24-9005-f5063c50a1cc
+2026-06-19 00:01:30 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - Geocoding location: 'Prague, Czech Republic'
+2026-06-19 00:01:30 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - Geocoded 'Prague, Czech Republic' → 15.377705,49.88233
+2026-06-19 00:01:30 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - Geocoding location: 'Prague Old Town, Czech Republic'
+2026-06-19 00:01:30 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - Geocoded 'Prague Old Town, Czech Republic' → 14.460249,50.06694
+2026-06-19 00:01:30 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=15.377705,49.88233, to=14.460249,50.06694
+2026-06-19 00:01:31 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - ORS Directions: distance=90.769km, time=1089.2216666666668min
+2026-06-19 00:01:31 [http-nio-8080-exec-3] INFO  com.example.backend.service.TourService - Tour created successfully: id=ff88ff75-325d-4aa5-8a65-c45e8c039c2e, name='Prague Morning Run'
+2026-06-19 00:01:31 [http-nio-8080-exec-9] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=ff88ff75-325d-4aa5-8a65-c45e8c039c2e
+2026-06-19 00:01:31 [http-nio-8080-exec-9] INFO  com.example.backend.controller.TourLogController - TourLog created: id=2966c55f-a4d6-42ff-8a42-62211ece83ed
+2026-06-19 00:01:31 [http-nio-8080-exec-6] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
+2026-06-19 00:01:31 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=ce8e6845-c9ca-4f24-9005-f5063c50a1cc
+2026-06-19 00:01:31 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Fetching tours for userId=ce8e6845-c9ca-4f24-9005-f5063c50a1cc
