@@ -3,18 +3,17 @@ import { Tour } from '../tour_details/tour_details.model';
 
 @Injectable()
 export class ListViewModel {
-  
-  searchTerm = signal('');
-  selectedId = signal<string | null>(null);
+
+  searchTerm   = signal('');
+  selectedId   = signal<string | null>(null);
   showAddModal = signal(false);
   errorMessage = signal<string | null>(null);
 
   allToursData = signal<Tour[]>([]);
 
-  filteredTours = computed(() => {
-    const term = this.searchTerm().toLowerCase();
-    return this.allToursData().filter(t => t.name.toLowerCase().includes(term));
-  });
+  // Tours are already filtered by the backend — this computed just
+  // exposes the full list so the template can iterate over it.
+  filteredTours = computed(() => this.allToursData());
 
   newTour = signal({
     name: '', description: '', from: '', to: '', transportType: null
@@ -31,9 +30,14 @@ export class ListViewModel {
     this.errorMessage.set(null);
   }
 
-  isFormValid(): boolean {         
+  isFormValid(): boolean {
     const { name, from, to, transportType } = this.newTour();
-    return name.trim().length > 0 && from.trim().length > 0 && to.trim().length > 0 && transportType !== null;
+    return (
+      name.trim().length > 0 &&
+      from.trim().length > 0 &&
+      to.trim().length > 0 &&
+      transportType !== null
+    );
   }
 
   resetForm() {

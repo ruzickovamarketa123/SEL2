@@ -41,4 +41,13 @@ export class TourService {
       this.http.delete<void>(`${this.API_URL}/${id}`, { headers: this.getHeaders() })
     );
   }
+
+  async search(term: string): Promise<Tour[]> {
+    return firstValueFrom(
+      this.http.get<Tour[]>(`${this.API_URL}/search`, {
+        headers: this.getHeaders(),
+        params: { q: term }
+      })
+    );
+  }
 }

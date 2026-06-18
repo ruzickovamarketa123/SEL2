@@ -20,7 +20,7 @@
     <!-- search bar — only visible when logged in -->
     @if (authService.isLoggedIn()) {
       <div style="flex: 0 0 66%;">
-        <search-input (searchChanged)="currentSearch = $event"></search-input>
+        <search-input (searchChanged)="onSearchChanged($event)"></search-input>
       </div>
     }
 
@@ -71,7 +71,7 @@
       ">
         <list
           [tours]="enrichedTours()"
-          [searchTerm]="currentSearch"
+          [searchTerm]="searchTerm()"
           [selectedTourId]="selectedTourId()"
           [activeTab]="activeTab()"
           [allLogs]="tourLogs()"

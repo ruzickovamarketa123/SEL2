@@ -79,4 +79,7 @@ public class Tour {
 
     public String getRouteInformation() { return routeInformation; }
     public void setRouteInformation(String routeInformation) { this.routeInformation = routeInformation; }
+
+    public List<TourLog> getTourLogs() { return tourLogs; }
+    public void setTourLogs(List<TourLog> tourLogs) { this.tourLogs = tourLogs; }
 }

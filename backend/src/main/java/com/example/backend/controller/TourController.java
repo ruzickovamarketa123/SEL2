@@ -26,19 +26,29 @@ public class TourController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping
+    public List<Tour> readAll(HttpServletRequest request) {
+        UUID userId = (UUID) request.getAttribute("userId");
+        logger.debug("GET /api/tours for userId={}", userId);
+        return tourService.findByUserId(userId);
+    }
+
+    @GetMapping("/search")
+    public List<Tour> search(@RequestParam String q, HttpServletRequest request) {
+        UUID userId = (UUID) request.getAttribute("userId");
+        logger.debug("GET /api/tours/search?q={} for userId={}", q, userId);
+        if (q == null || q.isBlank()) {
+            return tourService.findByUserId(userId);
+        }
+        return tourService.search(q.trim(), userId);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Tour> read(@PathVariable UUID id) {
         logger.debug("GET /api/tours/{}", id);
         return tourService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping
-    public List<Tour> readAll(HttpServletRequest request) {
-        UUID userId = (UUID) request.getAttribute("userId");
-        logger.debug("GET /api/tours for userId={}", userId);
-        return tourService.findByUserId(userId);
     }
 
     @PostMapping

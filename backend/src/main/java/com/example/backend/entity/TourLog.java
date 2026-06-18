@@ -1,5 +1,6 @@
 package com.example.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,6 +15,7 @@ public class TourLog {
 
     @ManyToOne
     @JoinColumn(name = "tour_id", nullable = false)
+    @JsonIgnore
     private Tour tour;
 
     private LocalDateTime dateTime;

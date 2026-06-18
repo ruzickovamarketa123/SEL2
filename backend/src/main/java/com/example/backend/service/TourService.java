@@ -152,14 +152,19 @@ public class TourService {
         return tourRepository.findById(id);
     }
 
+    public List<Tour> search(String term, UUID userId) {
+        logger.debug("Full-text search: term='{}' userId={}", term, userId);
+        return tourRepository.searchByUserId(userId, term);
+    }
+
     // ── geocoding ────────────────────────────────────────────────────────────
 
     /**
      * If location is already in "lon,lat" format it is returned as-is.
-     * Otherwise, the ORS Geocoding API is called to resolve the city name to coordinates.
-     * On any failure the original string is returned so
+     * Otherwise the ORS Geocoding API is called to resolve the city
+     * name to coordinates.  On any failure the original string is returned so
      * the caller can still attempt the directions call and handle the error
-     * there (consistent with the existing fallback strategy).
+     * there
      */
     String geocodeLocation(String location) {
         if (location == null || location.isBlank()) return location;

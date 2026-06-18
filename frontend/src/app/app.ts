@@ -17,13 +17,12 @@ import { ImportExportButton } from '../components/import-export/import-export-bu
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, SearchInput, List, LoginComponent, ProfileComponent,  RegisterComponent, MapComponent, ImportExportButton],
+  imports: [CommonModule, SearchInput, List, LoginComponent, ProfileComponent, RegisterComponent, MapComponent, ImportExportButton],
   templateUrl: './app.html',
 })
 export class App {
 
   constructor(public authService: AuthService, private tourService: TourService, private tourLogService: TourLogService) {
-  
     effect(() => {
       if (authService.isLoggedIn()) {
         this.loadData();
@@ -34,13 +33,18 @@ export class App {
   }
 
   readonly ORS_API_KEY = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6Ijg0ODE5ZTI1ZTFmMjA3OTIxMTYxZmYyYWM5MTllMTEwMzUzNzE4ODE4Zjk0MDFhNTFjZmJhYjE1IiwiaCI6Im11cm11cjY0In0=';
-  currentSearch = '';
+
+  searchTerm     = signal('');        // reactive search term
+  private searchDebounceTimer: any;   // debounce handle
+
   selectedTourId = signal<string | null>(null);
-  selectedLog = signal<TourLog | null>(null);
-  activeTab = signal<'details' | 'logs'>('details');
-  tours = signal<Tour[]>([]);
-  tourLogs = signal<TourLog[]>([]);
+  selectedLog    = signal<TourLog | null>(null);
+  activeTab      = signal<'details' | 'logs'>('details');
+  tours          = signal<Tour[]>([]);
+  tourLogs       = signal<TourLog[]>([]);
   private importExportService = inject(ImportExportService);
+
+  // ── data loading ────────────────────────────────────────────────────────────
 
   async loadData() {
     const [tours, logs] = await Promise.all([
@@ -56,7 +60,32 @@ export class App {
     this.tourLogs.set([]);
     this.selectedTourId.set(null);
     this.selectedLog.set(null);
+    this.searchTerm.set('');
   }
+
+  // ── search ──────────────────────────────────────────────────────────────────
+
+  /**
+   * Called by SearchInput on every keystroke.
+   * Debounces 300ms so we don't hit the backend on every character.
+   * Empty/short terms reload all tours instead of searching.
+   */
+  onSearchChanged(term: string) {
+    this.searchTerm.set(term);
+    clearTimeout(this.searchDebounceTimer);
+    this.searchDebounceTimer = setTimeout(async () => {
+      if (term.trim().length < 2) {
+        // too short — just reload everything
+        const tours = await this.tourService.findAll();
+        this.tours.set(tours);
+      } else {
+        const results = await this.tourService.search(term.trim());
+        this.tours.set(results);
+      }
+    }, 300);
+  }
+
+  // ── computed ────────────────────────────────────────────────────────────────
 
   selectedTour = computed(() => {
     const id = this.selectedTourId();
@@ -66,13 +95,40 @@ export class App {
 
   enrichedTours = computed(() => {
     const currentLogs = this.tourLogs();
-    const currentTours = this.tours();
-    return currentTours.map(tour => ({
+    return this.tours().map(tour => ({
       ...tour,
-      popularity: this.calculatePopularity(tour.id, currentLogs),
+      popularity:        this.calculatePopularity(tour.id, currentLogs),
       childFriendliness: this.calculateChildFriendliness(tour.id, currentLogs)
     }));
   });
+
+  // ── tour CRUD ────────────────────────────────────────────────────────────────
+
+  async onTourAdded(newTourData: Tour) {
+    const created = await this.tourService.create(newTourData);
+    this.tours.update(current => [...current, created]);
+  }
+
+  selectTour(tour: Tour) {
+    this.selectedTourId.set(tour.id);
+    this.activeTab.set('details');
+    this.selectedLog.set(null);
+  }
+
+  async onEditTour(updatedTour: Tour) {
+    const updated = await this.tourService.update(updatedTour);
+    this.tours.update(list => list.map(t => t.id === updated.id ? updated : t));
+  }
+
+  async onDeleteTour(tourId: string) {
+    await this.tourService.delete(tourId);
+    this.tours.update(list => list.filter(t => t.id !== tourId));
+    if (this.selectedTourId() === tourId) {
+      this.selectedTourId.set(null);
+    }
+  }
+
+  // ── log CRUD ─────────────────────────────────────────────────────────────────
 
   async onLogAdded(newLog: TourLog) {
     const created = await this.tourLogService.create(newLog);
@@ -95,94 +151,65 @@ export class App {
     }
   }
 
-  async onTourAdded(newTourData: Tour) {
-    const created = await this.tourService.create(newTourData);
-    this.tours.update((current: Tour[]) => [...current, created]);
-  }
-
-  onSearchChanged(term: string) {
-    this.currentSearch = term;
-  }
-
-  selectTour(tour: Tour) {
-    this.selectedTourId.set(tour.id);
-    this.activeTab.set('details');
-    this.selectedLog.set(null);
-  }
-
-  async onEditTour(updatedTour: Tour) {
-    const updated = await this.tourService.update(updatedTour);
-    this.tours.update(list => list.map(t => t.id === updated.id ? updated : t));
-  }
-
-  async onDeleteTour(tourId: string) {
-    await this.tourService.delete(tourId);
-    this.tours.update(currentTours => currentTours.filter(t => t.id !== tourId));
-    if (this.selectedTourId() === tourId) {
-      this.selectedTourId.set(null);
-    }
-  }
+  // ── computed attributes ───────────────────────────────────────────────────────
 
   calculatePopularity(tourId: string, allLogs: TourLog[]): number {
-    const tourLogs = allLogs.filter(log => log.tourId === tourId);
-    if (tourLogs.length === 0) return 0;
-    return Math.min(5, tourLogs.length);
+    const logs = allLogs.filter(l => l.tourId === tourId);
+    if (logs.length === 0) return 0;
+    return Math.min(5, logs.length);
   }
 
   calculateChildFriendliness(tourId: string, allLogs: TourLog[]): number {
-    const tourLogs = allLogs.filter(log => log.tourId === tourId);
-    if (tourLogs.length === 0) return 0;
+    const logs = allLogs.filter(l => l.tourId === tourId);
+    if (logs.length === 0) return 0;
 
     let score = 5;
 
-    const hasExpert = tourLogs.some(l => l.difficulty === 'Expert');
-    const hasHard = tourLogs.some(l => l.difficulty === 'Hard');
-    const hasMedium = tourLogs.some(l => l.difficulty === 'Medium');
+    if      (logs.some(l => l.difficulty === 'Expert')) score -= 3;
+    else if (logs.some(l => l.difficulty === 'Hard'))   score -= 2;
+    else if (logs.some(l => l.difficulty === 'Medium')) score -= 1;
 
-    if (hasExpert) score -= 3;
-    else if (hasHard) score -= 2;
-    else if (hasMedium) score -= 1;
+    const avgDistance = logs.reduce((s, l) => s + l.totalDistance, 0) / logs.length;
+    if      (avgDistance > 15) score -= 2;
+    else if (avgDistance > 8)  score -= 1;
 
-    const avgDistance = tourLogs.reduce((sum, log) => sum + log.totalDistance, 0) / tourLogs.length;
-    if (avgDistance > 15) score -= 2;
-    else if (avgDistance > 8) score -= 1;
-
-    const avgTime = tourLogs.reduce((sum, log) => sum + log.totalTime, 0) / tourLogs.length;
-    if (avgTime > 240) score -= 2;
+    const avgTime = logs.reduce((s, l) => s + l.totalTime, 0) / logs.length;
+    if      (avgTime > 240) score -= 2;
     else if (avgTime > 120) score -= 1;
 
     return Math.max(1, score);
   }
 
+  // ── import / export ────────────────────────────────────────────────────────────
+
   async onExport(): Promise<void> {
     const allLogs = await this.tourLogService.findAll();
     await this.importExportService.exportAllTours(this.tours(), allLogs);
   }
- 
+
   async onImport(btn: ImportExportButton): Promise<void> {
-  const file = await this.importExportService.openFilePicker();
-  if (!file) return;
+    const file = await this.importExportService.openFilePicker();
+    if (!file) return;
 
-  btn.setImporting(true);
-  try {
-    const result = await this.importExportService.importTours(file);
+    btn.setImporting(true);
+    try {
+      const result = await this.importExportService.importTours(file);
+      const [tours, logs] = await Promise.all([
+        this.tourService.findAll(),
+        this.tourLogService.findAll()
+      ]);
+      this.tours.set(tours);
+      this.tourLogs.set(logs);
 
-    const [tours, logs] = await Promise.all([
-      this.tourService.findAll(),
-      this.tourLogService.findAll()
-    ]);
-    this.tours.set(tours);
-    this.tourLogs.set(logs);
+      const msg = result.errors.length > 0
+        ? `Imported ${result.imported} tour(s). ${result.errors.length} error(s).`
+        : `✓ Imported ${result.imported} tour(s) successfully!`;
+      btn.showFeedback(result.errors.length > 0 ? 'error' : 'success', msg);
 
-    const msg = result.errors.length > 0
-      ? `Imported ${result.imported} tour(s). ${result.errors.length} error(s).`
-      : `✓ Imported ${result.imported} tour(s) successfully!`;
-    btn.showFeedback(result.errors.length > 0 ? 'error' : 'success', msg);
-
-  } catch (err: any) {
-    btn.showFeedback('error', err.message ?? 'Import failed.');
-  } finally {
-    btn.setImporting(false);
+    } catch (err: any) {
+      btn.showFeedback('error', err.message ?? 'Import failed.');
+    } finally {
+      btn.setImporting(false);
+    }
   }
-}
 }

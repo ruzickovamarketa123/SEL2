@@ -1,214 +1,56 @@
-2026-06-18 22:27:19 [main] INFO  com.example.backend.controller.TourController - DELETE /api/tours/24da6a0b-995e-4c3c-a84e-6c9c4704684e
-2026-06-18 22:27:20 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=7c50e069-a334-499b-a690-60f7a6f0cf66
-2026-06-18 22:27:20 [main] INFO  com.example.backend.controller.TourController - PUT /api/tours/733d348f-0527-4eaf-8467-0f5724ec8c92 by userId=186140b3-f843-499e-bab6-c79d8f0aa1c2
-2026-06-18 22:27:20 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours/155573ff-7604-4060-9e29-b1245ce62069
-2026-06-18 22:27:20 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=e1cb7b86-0e26-4a70-b223-61ab6b0740fb
-2026-06-18 22:27:20 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours/7786a2d7-f934-4244-aba6-bc1a3a53e22d
-2026-06-18 22:27:20 [main] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Test Tour' for userId=01cd3a7b-20ef-41a1-a27b-71d0a2529755
-2026-06-18 22:27:20 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
-2026-06-18 22:27:20 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs/e75e47e1-40d3-44cf-9d2d-f96499a48f79
-2026-06-18 22:27:20 [main] INFO  com.example.backend.controller.TourLogController - DELETE /api/logs/48bcebff-0eb9-47ac-a390-a7e19b4ca123
-2026-06-18 22:27:20 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs/2497b52c-0726-4118-a881-a2df2dd7cd25
-2026-06-18 22:27:20 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=e5a1feca-e4c3-42fa-8d51-39dc480924aa
-2026-06-18 22:27:20 [main] INFO  com.example.backend.controller.TourLogController - PUT /api/logs/12713a96-1c80-4db5-8244-0631c8b79e0d
-2026-06-18 22:27:20 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
-2026-06-18 22:27:20 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=b6d2123a-f715-494b-98f4-adf620be2779
-2026-06-18 22:27:20 [main] INFO  com.example.backend.controller.TourLogController - TourLog created: id=c6f759be-2687-446b-aa22-93d7574d9827
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Updating tour id=7f9aa274-fe79-4356-8789-8c20b2677bd4 by userId=0741759c-d68c-45a8-8352-d923a86c3814
-2026-06-18 22:27:21 [main] ERROR com.example.backend.service.TourService - Tour not found with id=7f9aa274-fe79-4356-8789-8c20b2677bd4
-2026-06-18 22:27:21 [main] DEBUG com.example.backend.service.TourService - Fetching tours for userId=3dcb61b0-f765-49d0-8d8f-3461b1a0bd90
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Creating tour 'Drive' for userId=c2f30555-15ec-4c96-bdaf-b1e3828a247b
-2026-06-18 22:27:21 [main] DEBUG com.example.backend.service.TourService - Calling ORS API: profile=driving-car, from=1.0,2.0, to=3.0,4.0
-2026-06-18 22:27:21 [main] WARN  com.example.backend.service.TourService - ORS call failed during create for tour 'Drive': skip
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Drive'
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Creating tour 'Bike Tour' for userId=9812d270-1bd3-475b-930c-debe20fbb2f4
-2026-06-18 22:27:21 [main] DEBUG com.example.backend.service.TourService - Calling ORS API: profile=cycling-regular, from=1.0,2.0, to=3.0,4.0
-2026-06-18 22:27:21 [main] WARN  com.example.backend.service.TourService - ORS call failed during create for tour 'Bike Tour': skip
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Bike Tour'
-2026-06-18 22:27:21 [main] DEBUG com.example.backend.service.TourService - Fetching tour id=907e1424-abfe-4d22-a74a-f0b8386c0367
-2026-06-18 22:27:21 [main] DEBUG com.example.backend.service.TourService - Fetching tours for userId=4d6a6e74-92fb-4a6d-9710-33450724db28
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Creating tour 'Test' for userId=ad26cbc3-1425-4a16-9136-7e84b8fc8569
-2026-06-18 22:27:21 [main] ERROR com.example.backend.service.TourService - User not found with id=ad26cbc3-1425-4a16-9136-7e84b8fc8569
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Updating tour id=d0e48ad4-9b56-4176-84cf-72ea73c774e7 by userId=61906b61-6f6e-46ea-b99e-66a46dbf072b
-2026-06-18 22:27:21 [main] WARN  com.example.backend.service.TourService - Unauthorized update attempt: userId=61906b61-6f6e-46ea-b99e-66a46dbf072b tried to update tour id=d0e48ad4-9b56-4176-84cf-72ea73c774e7
-2026-06-18 22:27:21 [main] DEBUG com.example.backend.service.TourService - Fetching tour id=eb2ef357-bbf4-4bc3-9793-25b216b3aa1a
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Updating tour id=85ee46f3-d615-4cbc-807f-c696d99ea90f by userId=68e3ba66-d3bb-4ff8-b39b-1739ed1c7c44
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Tour updated successfully: id=85ee46f3-d615-4cbc-807f-c696d99ea90f
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Creating tour 'Rainy Day' for userId=e9e9bd62-5a07-4c6e-8e55-0c238b16303b
-2026-06-18 22:27:21 [main] DEBUG com.example.backend.service.TourService - Calling ORS API: profile=foot-walking, from=1.0,2.0, to=3.0,4.0
-2026-06-18 22:27:21 [main] WARN  com.example.backend.service.TourService - ORS call failed during create for tour 'Rainy Day': ORS unavailable
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=f79c50e9-54dc-45bb-933c-75d87e203833, name='Rainy Day'
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Deleting tour id=5082ef53-34ac-4111-93ae-1a147ab8bcd1 and its logs
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Tour id=5082ef53-34ac-4111-93ae-1a147ab8bcd1 deleted successfully
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Creating tour 'Hike' for userId=71c92e51-8199-4c96-afe9-6aca3e9b7126
-2026-06-18 22:27:21 [main] DEBUG com.example.backend.service.TourService - Calling ORS API: profile=foot-walking, from=1.0,2.0, to=3.0,4.0
-2026-06-18 22:27:21 [main] WARN  com.example.backend.service.TourService - ORS call failed during create for tour 'Hike': skip
-2026-06-18 22:27:21 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Hike'
-2026-06-18 22:55:41 [main] INFO  com.example.backend.controller.TourController - DELETE /api/tours/5cfbf4f0-1b90-46f8-a006-52e71e73a8f5
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=4942e361-9d73-4efe-b442-a3305123ac3b
-2026-06-18 22:55:41 [main] INFO  com.example.backend.controller.TourController - PUT /api/tours/779d6190-ba31-49e4-a1f1-4c1394394bfd by userId=f174b1e9-7eb9-440b-848b-310215a8c4ac
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours/3597b3ba-28ff-4ee2-9a6d-66672938c07d
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=25e7d1ea-2ae2-4a90-8cb7-72831e0bfb5d
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours/d86c7e68-c2cd-494b-b123-2d8fc542b0c6
-2026-06-18 22:55:41 [main] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Test Tour' for userId=5e7d79c1-ed8b-4367-b212-fda8ddf34b48
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs/38379a7e-09bd-41f4-8404-b8c7a292b6b0
-2026-06-18 22:55:41 [main] INFO  com.example.backend.controller.TourLogController - DELETE /api/logs/15274b2b-2488-46cc-a054-10c1bfff95f3
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs/d5b1f157-a3d1-4890-933d-21007b1911fa
-2026-06-18 22:55:41 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=1710a5da-1908-4189-9ac4-cbdc17ea530d
-2026-06-18 22:55:41 [main] INFO  com.example.backend.controller.TourLogController - PUT /api/logs/8762f8ae-38eb-4e6e-b0fd-e522ebfd2e04
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
-2026-06-18 22:55:41 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=1fc64f3a-3deb-49a3-9cb3-cac9de7b3f6b
-2026-06-18 22:55:41 [main] INFO  com.example.backend.controller.TourLogController - TourLog created: id=8a6db93e-2efe-46c0-8ed0-498b2b095399
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Updating tour id=bb524db3-8a95-4722-9a57-fd32fb2bf179 by userId=e40112c6-6514-47d8-a428-e0e41979ebce
-2026-06-18 22:55:41 [main] ERROR com.example.backend.service.TourService - Tour not found with id=bb524db3-8a95-4722-9a57-fd32fb2bf179
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - Fetching tours for userId=21af5125-ba5e-4098-b322-bde2662ab488
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Creating tour 'Drive' for userId=41226516-203c-4a04-91f2-76c44f3d7588
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=driving-car, from=1.0,2.0, to=3.0,4.0
-2026-06-18 22:55:41 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Drive': skip
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Drive'
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Creating tour 'Bike Tour' for userId=ae4e286d-e6c4-4a19-8745-4832c9147eb4
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=cycling-regular, from=1.0,2.0, to=3.0,4.0
-2026-06-18 22:55:41 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Bike Tour': skip
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Bike Tour'
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - Fetching tour id=726471e8-7b7d-4721-bd89-6eab3d9ac1b3
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - Fetching tours for userId=01bd44b5-fa45-4931-9a3e-3394bac736e8
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Creating tour 'Test' for userId=f621700b-9244-4683-a8be-5853d9abaee9
-2026-06-18 22:55:41 [main] ERROR com.example.backend.service.TourService - User not found with id=f621700b-9244-4683-a8be-5853d9abaee9
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Updating tour id=5b040747-96d9-4f94-aae7-9494ef746103 by userId=cd1fccbb-c228-4dc9-a417-81d8636818d6
-2026-06-18 22:55:41 [main] WARN  com.example.backend.service.TourService - Unauthorized update attempt: userId=cd1fccbb-c228-4dc9-a417-81d8636818d6 tried to update tour id=5b040747-96d9-4f94-aae7-9494ef746103
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - Fetching tour id=82376888-6bca-434e-9dcc-130c8dff3c32
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Updating tour id=9e2bb163-35a2-46e4-a259-46f755f64d9d by userId=9d0599b2-69e6-4495-8f45-8f55d1b3f6bd
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Tour updated successfully: id=9e2bb163-35a2-46e4-a259-46f755f64d9d
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Creating tour 'Rainy Day' for userId=abcd4291-83ac-4d5c-ae24-8bcf57da0559
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=1.0,2.0, to=3.0,4.0
-2026-06-18 22:55:41 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Rainy Day': ORS unavailable
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=81787eae-7a37-41b9-9c39-87382571b099, name='Rainy Day'
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Deleting tour id=2163091b-4e25-4e69-b241-a2bf9ba79820 and its logs
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Tour id=2163091b-4e25-4e69-b241-a2bf9ba79820 deleted successfully
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Creating tour 'Hike' for userId=17bae252-7295-4f4f-aa07-be2dadd613d0
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 22:55:41 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=1.0,2.0, to=3.0,4.0
-2026-06-18 22:55:41 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Hike': skip
-2026-06-18 22:55:41 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Hike'
-2026-06-18 23:08:27 [main] INFO  com.example.backend.controller.TourController - DELETE /api/tours/f04b1f1b-4510-4da9-af61-1314447fdad7
-2026-06-18 23:08:27 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=5c48e43a-4651-4852-ba3e-21f8a3422358
-2026-06-18 23:08:28 [main] INFO  com.example.backend.controller.TourController - PUT /api/tours/98399e26-5021-41d2-9a3b-6e68c66884fe by userId=d57a9225-36a7-4fc1-a003-bdd2ad30297f
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours/55d8fc38-c5e5-4a1d-a9d7-6fa44ce8c825
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=32d889c0-9399-4956-9ff7-2cebc806aebb
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours/e3a3385e-9138-42f3-af4f-5d0c2c9a1a94
-2026-06-18 23:08:28 [main] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Test Tour' for userId=16d514f0-cdcc-4045-9a3c-38a6e9294afe
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs/39f94047-920b-4b67-abab-b87b3693eec8
-2026-06-18 23:08:28 [main] INFO  com.example.backend.controller.TourLogController - DELETE /api/logs/0986e864-177e-4db6-b2f8-7ecedb62735d
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs/6742f3f6-e4de-44a5-a302-7eb9cae79f6c
-2026-06-18 23:08:28 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=0e2f1cd3-9374-465f-a606-e17d4265350c
-2026-06-18 23:08:28 [main] INFO  com.example.backend.controller.TourLogController - PUT /api/logs/2f08cc54-a9a1-495b-8c3d-817918ed189a
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
-2026-06-18 23:08:28 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=6e76fa44-b8d6-4389-80a1-1e701b5e754b
-2026-06-18 23:08:28 [main] INFO  com.example.backend.controller.TourLogController - TourLog created: id=0c6a2237-99b5-4cd6-b3ea-45f4732d9150
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Updating tour id=1894b551-1691-4339-bdd2-9258f717226e by userId=5fc5988f-b603-4fd1-a6ed-13e34155c728
-2026-06-18 23:08:28 [main] ERROR com.example.backend.service.TourService - Tour not found with id=1894b551-1691-4339-bdd2-9258f717226e
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - Fetching tours for userId=a9cf929f-bf07-42fc-a795-46730fcbf36e
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Creating tour 'Drive' for userId=6cf318e3-5d3d-4a6a-a7ce-1a9097e0ee85
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=driving-car, from=1.0,2.0, to=3.0,4.0
-2026-06-18 23:08:28 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Drive': skip
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Drive'
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Creating tour 'Bike Tour' for userId=78ec96e7-f0eb-40af-a428-50e80172c157
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=cycling-regular, from=1.0,2.0, to=3.0,4.0
-2026-06-18 23:08:28 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Bike Tour': skip
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Bike Tour'
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - Fetching tour id=e695906c-35ea-4782-98bd-721173d895e3
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - Fetching tours for userId=3953160c-a09e-47df-b618-475932d853fe
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Creating tour 'Test' for userId=76942ba1-5755-4e8e-95c2-891bed7afff0
-2026-06-18 23:08:28 [main] ERROR com.example.backend.service.TourService - User not found with id=76942ba1-5755-4e8e-95c2-891bed7afff0
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Updating tour id=7e89a7ea-37b1-4849-a0e6-abfa036737cf by userId=e00b336a-eaf7-45e1-86a2-de6e3751bff8
-2026-06-18 23:08:28 [main] WARN  com.example.backend.service.TourService - Unauthorized update attempt: userId=e00b336a-eaf7-45e1-86a2-de6e3751bff8 tried to update tour id=7e89a7ea-37b1-4849-a0e6-abfa036737cf
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - Fetching tour id=cfb6e5a9-890f-405f-b100-ac0f4725e32f
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Updating tour id=a6cdcc8d-df39-4d46-874d-433566523de8 by userId=cb4a7cb7-be3a-4491-a7aa-8faef3fd35e9
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Tour updated successfully: id=a6cdcc8d-df39-4d46-874d-433566523de8
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Creating tour 'Rainy Day' for userId=7754e02b-fbea-4e7f-8540-883dfac59cf0
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=1.0,2.0, to=3.0,4.0
-2026-06-18 23:08:28 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Rainy Day': ORS unavailable
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=41edc12f-1f26-4e98-88b3-1c7c5f47ce3b, name='Rainy Day'
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Deleting tour id=8f417729-f18a-412c-ae1e-e1ede24eb743 and its logs
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Tour id=8f417729-f18a-412c-ae1e-e1ede24eb743 deleted successfully
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Creating tour 'Hike' for userId=72623de3-f0cd-4db8-bfe0-ca051524509c
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:08:28 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=1.0,2.0, to=3.0,4.0
-2026-06-18 23:08:28 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Hike': skip
-2026-06-18 23:08:28 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Hike'
-2026-06-18 23:35:42 [main] INFO  com.example.backend.controller.TourController - DELETE /api/tours/4e45fe02-1ea8-41f6-9020-892a5a284f56
-2026-06-18 23:35:42 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=98be73bb-6584-42bf-a91c-cc04d4591335
-2026-06-18 23:35:42 [main] INFO  com.example.backend.controller.TourController - PUT /api/tours/8e376fc7-a03b-44ab-ad6a-652ad29bd4d7 by userId=ee8bfc85-35c9-41ae-8fe4-c6bca5e9af82
-2026-06-18 23:35:42 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours/9f59c3bf-13dc-4540-9a87-86527b9ebeeb
-2026-06-18 23:35:42 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=d9c7a341-89db-4b5e-a042-88812f3160aa
-2026-06-18 23:35:42 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours/3b347f64-e249-4317-a1fc-dd2345f1a7f2
-2026-06-18 23:35:42 [main] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Test Tour' for userId=5c3b3316-8b3f-4bbe-bbd4-2470b6d73a43
-2026-06-18 23:35:42 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
-2026-06-18 23:35:42 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs/773197fc-1751-4f92-aff1-e7908650df27
-2026-06-18 23:35:42 [main] INFO  com.example.backend.controller.TourLogController - DELETE /api/logs/c0579ba4-a804-4d7d-8d43-33584c45c0f3
-2026-06-18 23:35:42 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs/f6f3dade-6e1e-432b-a346-22522169cade
-2026-06-18 23:35:42 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=62ab13b2-7920-43ec-b41d-420c4f4c9d66
-2026-06-18 23:35:42 [main] INFO  com.example.backend.controller.TourLogController - PUT /api/logs/40c8f5f1-08ef-49f3-a872-02598f102a0d
-2026-06-18 23:35:42 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
-2026-06-18 23:35:42 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=e03061e5-248a-4b5f-8469-1b9a2af448fb
-2026-06-18 23:35:42 [main] INFO  com.example.backend.controller.TourLogController - TourLog created: id=442ee1bc-1c27-4eea-a022-b1d0178e3bbf
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Updating tour id=9b7aa9a7-7825-4ae1-9a42-287b7dcdc338 by userId=0cb77f3c-1b02-47a4-a486-230414c3fbdb
-2026-06-18 23:35:43 [main] ERROR com.example.backend.service.TourService - Tour not found with id=9b7aa9a7-7825-4ae1-9a42-287b7dcdc338
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - Fetching tours for userId=0733fec1-bca9-4063-aaed-2b858caf0097
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Creating tour 'Drive' for userId=e4f6b1e0-27a7-43dd-a11d-daed18fd825c
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=driving-car, from=1.0,2.0, to=3.0,4.0
-2026-06-18 23:35:43 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Drive': skip
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Drive'
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Creating tour 'Bike Tour' for userId=3ea6201a-ab03-4a5f-bfdc-92f87b24f809
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=cycling-regular, from=1.0,2.0, to=3.0,4.0
-2026-06-18 23:35:43 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Bike Tour': skip
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Bike Tour'
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - Fetching tour id=f5a396b9-720a-4180-ab2e-457506382add
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - Fetching tours for userId=dab81a34-deb6-49ac-80c5-e27725d5796d
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Creating tour 'Test' for userId=60e09761-f6ed-4c41-854b-094f11fcade1
-2026-06-18 23:35:43 [main] ERROR com.example.backend.service.TourService - User not found with id=60e09761-f6ed-4c41-854b-094f11fcade1
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Updating tour id=675d8151-aba8-496e-acf0-b4111432fd4a by userId=ab1d310b-79c4-49c5-a737-fcb253b44d5d
-2026-06-18 23:35:43 [main] WARN  com.example.backend.service.TourService - Unauthorized update attempt: userId=ab1d310b-79c4-49c5-a737-fcb253b44d5d tried to update tour id=675d8151-aba8-496e-acf0-b4111432fd4a
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - Fetching tour id=a132181a-c7c8-47cb-9b12-56a612503c5a
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Updating tour id=9404d6c6-c023-4440-ae27-f2c092c88f89 by userId=c662f5a5-0033-41b5-917e-6976ec38e0c5
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Tour updated successfully: id=9404d6c6-c023-4440-ae27-f2c092c88f89
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Creating tour 'Rainy Day' for userId=d14832a8-3254-43ab-9cb2-9b2459d77511
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=1.0,2.0, to=3.0,4.0
-2026-06-18 23:35:43 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Rainy Day': ORS unavailable
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=c431c5cc-5a2a-4d14-90ee-8e59604616e9, name='Rainy Day'
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Deleting tour id=183d16cf-e068-433f-8290-8e4694ee31f3 and its logs
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Tour id=183d16cf-e068-433f-8290-8e4694ee31f3 deleted successfully
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Creating tour 'Hike' for userId=86f65bfe-f23f-4c96-af8a-135e14bbdc07
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
-2026-06-18 23:35:43 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=1.0,2.0, to=3.0,4.0
-2026-06-18 23:35:43 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Hike': skip
-2026-06-18 23:35:43 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Hike'
+2026-06-19 01:05:35 [main] INFO  com.example.backend.controller.TourController - DELETE /api/tours/20eaadf8-dab3-408f-a792-e854fb22dc42
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=b21695b1-06e4-4dcd-bae2-25b3aa41632d
+2026-06-19 01:05:35 [main] INFO  com.example.backend.controller.TourController - PUT /api/tours/84e8abdf-619f-457b-997f-82bf28e7e1cb by userId=df0e4d57-34d8-4cc6-bfbd-81e594ac4a6d
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours/d80b89f1-6fad-4e21-872e-22a676a083c8
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=9ad6e85f-2641-4aa3-9974-e72d73070fff
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.controller.TourController - GET /api/tours/a1b7b860-e591-429a-b5da-2ca134000266
+2026-06-19 01:05:35 [main] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Test Tour' for userId=515fb307-cfad-4f3f-b597-2f27321e337b
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs/a65cd76b-abbb-4f27-90b6-46c4992f2c73
+2026-06-19 01:05:35 [main] INFO  com.example.backend.controller.TourLogController - DELETE /api/logs/debd4740-bd32-4ebd-b0f1-e8ee795ba9f5
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs/98ffccfa-f27d-4e2f-99e2-4b327b03dfae
+2026-06-19 01:05:35 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=2624753f-992a-4722-9c6e-00187f219410
+2026-06-19 01:05:35 [main] INFO  com.example.backend.controller.TourLogController - PUT /api/logs/442232e9-e6eb-4b00-807b-2ab307520d87
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs
+2026-06-19 01:05:35 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=bbf23727-4f6e-4762-b6fd-1992b1ef85a8
+2026-06-19 01:05:35 [main] INFO  com.example.backend.controller.TourLogController - TourLog created: id=246e54a0-5ff0-445e-b8d4-9208a790b088
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Updating tour id=8fc8507b-546b-4576-82f7-f1bf8b74d0fe by userId=f3ee8e88-4830-4ebf-9619-fc477a884593
+2026-06-19 01:05:35 [main] ERROR com.example.backend.service.TourService - Tour not found with id=8fc8507b-546b-4576-82f7-f1bf8b74d0fe
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - Fetching tours for userId=86f42430-2421-40f4-b0d7-b43cef28aac7
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Creating tour 'Drive' for userId=6367ae42-89c8-43f2-8320-ad7b7d1567ef
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=driving-car, from=1.0,2.0, to=3.0,4.0
+2026-06-19 01:05:35 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Drive': skip
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Drive'
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Creating tour 'Bike Tour' for userId=a1acd572-1a38-4082-b3b6-c48441111e2f
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=cycling-regular, from=1.0,2.0, to=3.0,4.0
+2026-06-19 01:05:35 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Bike Tour': skip
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Bike Tour'
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - Fetching tour id=87e39c59-4fda-4830-924c-72ba5633e003
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - Fetching tours for userId=b51263e1-736e-405a-8ad8-c43d85fa65b6
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Creating tour 'Test' for userId=7385a837-ef17-4268-be2a-dadb328d3719
+2026-06-19 01:05:35 [main] ERROR com.example.backend.service.TourService - User not found with id=7385a837-ef17-4268-be2a-dadb328d3719
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Updating tour id=7f7cfd02-4103-4502-90d2-18fe12ddd54b by userId=4003abf0-7369-440b-999c-61e6f17e92db
+2026-06-19 01:05:35 [main] WARN  com.example.backend.service.TourService - Unauthorized update attempt: userId=4003abf0-7369-440b-999c-61e6f17e92db tried to update tour id=7f7cfd02-4103-4502-90d2-18fe12ddd54b
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - Fetching tour id=8b3f7dff-22ef-4b69-b2a0-d2dc4d0cdb14
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Updating tour id=8dfeeb94-aad5-4b0d-a79e-4e1825fbb9f8 by userId=8c4864bd-f795-45b6-8f6b-08c28fb0032a
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Tour updated successfully: id=8dfeeb94-aad5-4b0d-a79e-4e1825fbb9f8
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Creating tour 'Rainy Day' for userId=95cd7b10-eb2c-4b6f-b105-527883553cff
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=1.0,2.0, to=3.0,4.0
+2026-06-19 01:05:35 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Rainy Day': ORS unavailable
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=d6707e16-7345-49af-8980-ef98a61e15d9, name='Rainy Day'
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Deleting tour id=8ecf9098-2019-47d3-b539-587a613b769d and its logs
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Tour id=8ecf9098-2019-47d3-b539-587a613b769d deleted successfully
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Creating tour 'Hike' for userId=96145983-3a1c-4f0e-b03b-d48107a5ccfb
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - '1.0,2.0' is already a coordinate ? skipping geocoding
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - '3.0,4.0' is already a coordinate ? skipping geocoding
+2026-06-19 01:05:35 [main] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=1.0,2.0, to=3.0,4.0
+2026-06-19 01:05:35 [main] WARN  com.example.backend.service.TourService - ORS Directions call failed for tour 'Hike': skip
+2026-06-19 01:05:35 [main] INFO  com.example.backend.service.TourService - Tour created successfully: id=null, name='Hike'
