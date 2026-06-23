@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { TourLog } from '../components/tourlog_details/tourlog.model';
 import { AuthService } from './auth.service';
+import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class TourLogService {
 
-  // Aggiunto il prefisso "/api"
-  private readonly API_URL = 'http://localhost:8080/api/logs';
+  private readonly API_URL = `${environment.backendUrl}/api/tours`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

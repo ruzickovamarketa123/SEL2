@@ -2,6 +2,7 @@ package com.example.backend.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -12,7 +13,8 @@ import java.util.UUID;
 @Service
 public class JwtService {
 
-    private static final String SECRET = "secret-private-key-minimal-32-char";
+    @Value("${jwt.secret}")
+    private String secret;
 
     public String generateToken(UUID userId) {
         return Jwts.builder()
@@ -43,7 +45,7 @@ public class JwtService {
     }
 
     private SecretKey getKey() {
-        return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 }
 

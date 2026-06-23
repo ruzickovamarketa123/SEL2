@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 import { ProfileComponent } from '../components/auth/profile/profile';
 import { ImportExportService } from '../services/import-export.service';
 import { ImportExportButton } from '../components/import-export/import-export-button';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +33,7 @@ export class App {
     });
   }
 
-  readonly ORS_API_KEY = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6Ijg0ODE5ZTI1ZTFmMjA3OTIxMTYxZmYyYWM5MTllMTEwMzUzNzE4ODE4Zjk0MDFhNTFjZmJhYjE1IiwiaCI6Im11cm11cjY0In0=';
+  readonly ORS_API_KEY = environment.orsApiKey;
 
   searchTerm     = signal('');        // reactive search term
   private searchDebounceTimer: any;   // debounce handle

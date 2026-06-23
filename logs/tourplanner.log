@@ -45,3 +45,23 @@
 2026-06-23 18:05:34 [http-nio-8080-exec-5] DEBUG com.example.backend.service.TourService - Full-text search: term='vie' userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
 2026-06-23 18:05:35 [http-nio-8080-exec-6] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=vienna for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
 2026-06-23 18:05:35 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Full-text search: term='vienna' userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:28:17 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:28:17 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:28:17 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:28:17 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - Fetching tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:28:45 [http-nio-8080-exec-8] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:28:45 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Fetching tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:28:45 [http-nio-8080-exec-6] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:28:45 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Fetching tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:33:10 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:33:10 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Fetching tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:33:10 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:33:10 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - Fetching tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:35:06 [http-nio-8080-exec-10] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:35:06 [http-nio-8080-exec-10] DEBUG com.example.backend.service.TourService - Fetching tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:35:06 [http-nio-8080-exec-9] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:35:06 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Fetching tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:36:42 [http-nio-8080-exec-7] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:36:42 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourService - Fetching tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:36:42 [http-nio-8080-exec-5] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35
+2026-06-23 18:36:42 [http-nio-8080-exec-5] DEBUG com.example.backend.service.TourService - Fetching tours for userId=04d87d5d-be3d-488e-8fc9-437cce3bfb35

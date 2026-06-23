@@ -3,11 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Tour } from '../components/tour_details/tour_details.model';
 import { AuthService } from './auth.service';
+import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class TourService {
 
-  private readonly API_URL = 'http://localhost:8080/api/tours';
+  private readonly API_URL = `${environment.backendUrl}/api/tours`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
