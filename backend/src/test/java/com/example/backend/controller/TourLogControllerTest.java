@@ -3,8 +3,8 @@ package com.example.backend.controller;
 import com.example.backend.dto.TourLogDto;
 import com.example.backend.entity.Tour;
 import com.example.backend.entity.TourLog;
-import com.example.backend.repository.TourLogRepository;
-import com.example.backend.repository.TourRepository;
+import com.example.backend.service.TourLogService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,65 +15,72 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TourLogControllerTest {
 
-    @Mock private TourLogRepository tourLogRepository;
-    @Mock private TourRepository tourRepository;
+    // The controller now depends only on TourLogService — no direct repo access
+    @Mock private TourLogService tourLogService;
+    @Mock private HttpServletRequest request;
 
     @InjectMocks
     private TourLogController tourLogController;
 
+    private UUID userId;
     private UUID logId;
     private UUID tourId;
-    private Tour testTour;
-    private TourLog testLog;
+    private TourLogDto testDto;
 
     @BeforeEach
     void setUp() {
-        logId = UUID.randomUUID();
+        userId = UUID.randomUUID();
+        logId  = UUID.randomUUID();
         tourId = UUID.randomUUID();
 
-        testTour = new Tour("Alpine Trail", "desc", "1.0,2.0", "3.0,4.0", "hike", 10.0, 60.0, null);
-        testTour.setId(tourId);
+        testDto = new TourLogDto();
+        testDto.setId(logId);
+        testDto.setTourId(tourId);
+        testDto.setDate("2026-06-01");
+        testDto.setTime("10:00");
+        testDto.setTotalDistance(12.5);
+        testDto.setRating(4);
+        testDto.setComment("Great hike");
+        testDto.setDifficulty("Medium");
+        testDto.setTotalTime(90.0);
 
-        testLog = new TourLog(testTour, LocalDateTime.of(2026, 6, 1, 10, 0),
-                12.5, 4, "Great hike", "medium", 90.0);
-        testLog.setId(logId);
+        when(request.getAttribute("userId")).thenReturn(userId);
     }
 
     @Test
-    void readAll_returnsListOfDtos() {
-        when(tourLogRepository.findAll()).thenReturn(List.of(testLog));
+    // readAll must return only logs belonging to the current user
+    void readAll_returnsOnlyUserLogs() {
+        when(tourLogService.findAllByUser(userId)).thenReturn(List.of(testDto));
 
-        List<TourLogDto> result = tourLogController.readAll();
+        List<TourLogDto> result = tourLogController.readAll(request);
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getId()).isEqualTo(logId);
-        assertThat(result.get(0).getTourId()).isEqualTo(tourId);
+        verify(tourLogService).findAllByUser(userId);
     }
 
     @Test
     void readAll_noLogs_returnsEmptyList() {
-        when(tourLogRepository.findAll()).thenReturn(List.of());
+        when(tourLogService.findAllByUser(userId)).thenReturn(List.of());
 
-        List<TourLogDto> result = tourLogController.readAll();
+        List<TourLogDto> result = tourLogController.readAll(request);
 
         assertThat(result).isEmpty();
     }
 
     @Test
-    void read_existingId_returns200WithDto() {
-        when(tourLogRepository.findById(logId)).thenReturn(Optional.of(testLog));
+    void read_existingLog_returns200() {
+        when(tourLogService.findById(logId, userId)).thenReturn(testDto);
 
-        ResponseEntity<TourLogDto> result = tourLogController.read(logId);
+        ResponseEntity<TourLogDto> result = tourLogController.read(logId, request);
 
         assertThat(result.getStatusCode().value()).isEqualTo(200);
         assertThat(result.getBody()).isNotNull();
@@ -81,75 +88,52 @@ class TourLogControllerTest {
     }
 
     @Test
-    void read_nonExistingId_returns404() {
-        when(tourLogRepository.findById(logId)).thenReturn(Optional.empty());
+    // Service throws RuntimeException when log not found or not owned — controller returns 404
+    void read_notFoundOrUnauthorized_returns404() {
+        when(tourLogService.findById(logId, userId)).thenThrow(new RuntimeException("Not found"));
 
-        ResponseEntity<TourLogDto> result = tourLogController.read(logId);
+        ResponseEntity<TourLogDto> result = tourLogController.read(logId, request);
 
         assertThat(result.getStatusCode().value()).isEqualTo(404);
-        assertThat(result.getBody()).isNull();
     }
 
     @Test
-    void create_savesLogAndReturnsDto() {
-        when(tourRepository.findById(tourId)).thenReturn(Optional.of(testTour));
-        when(tourLogRepository.save(any(TourLog.class))).thenReturn(testLog);
+    void create_delegatesToServiceAndReturnsDto() {
+        when(tourLogService.create(testDto, userId)).thenReturn(testDto);
 
-        TourLogDto dto = new TourLogDto();
-        dto.setTourId(tourId);
-        dto.setDate("2026-06-01");
-        dto.setTime("10:00");
-        dto.setTotalDistance(12.5);
-        dto.setRating(4);
-        dto.setComment("Great hike");
-        dto.setDifficulty("medium");
-        dto.setTotalTime(90.0);
-
-        TourLogDto result = tourLogController.create(dto);
+        TourLogDto result = tourLogController.create(testDto, request);
 
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(logId);
-        verify(tourLogRepository).save(any(TourLog.class));
+        verify(tourLogService).create(testDto, userId);
     }
 
     @Test
-    void create_tourNotFound_throwsException() {
-        when(tourRepository.findById(tourId)).thenReturn(Optional.empty());
+    // Service throws if the tour doesn't belong to the user
+    void create_unauthorizedTour_throwsException() {
+        when(tourLogService.create(testDto, userId))
+                .thenThrow(new RuntimeException("Not authorized to add logs to this tour"));
 
-        TourLogDto dto = new TourLogDto();
-        dto.setTourId(tourId);
-        dto.setDate("2026-06-01");
-        dto.setTime("10:00");
-
-        assertThatThrownBy(() -> tourLogController.create(dto))
-                .isInstanceOf(Exception.class);
+        assertThatThrownBy(() -> tourLogController.create(testDto, request))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Not authorized");
     }
 
     @Test
-    void update_savesLogWithCorrectId() {
-        when(tourRepository.findById(tourId)).thenReturn(Optional.of(testTour));
-        when(tourLogRepository.save(any(TourLog.class))).thenReturn(testLog);
+    void update_delegatesToServiceAndReturnsDto() {
+        when(tourLogService.update(logId, testDto, userId)).thenReturn(testDto);
 
-        TourLogDto dto = new TourLogDto();
-        dto.setTourId(tourId);
-        dto.setDate("2026-06-01");
-        dto.setTime("10:00");
-        dto.setTotalDistance(12.5);
-        dto.setRating(4);
-        dto.setComment("Updated comment");
-        dto.setDifficulty("hard");
-        dto.setTotalTime(90.0);
-
-        TourLogDto result = tourLogController.update(logId, dto);
+        TourLogDto result = tourLogController.update(logId, testDto, request);
 
         assertThat(result).isNotNull();
-        verify(tourLogRepository).save(argThat(log -> log.getId().equals(logId)));
+        verify(tourLogService).update(logId, testDto, userId);
     }
 
     @Test
-    void delete_callsDeleteById() {
-        tourLogController.delete(logId);
+    void delete_delegatesToServiceWithUserId() {
+        tourLogController.delete(logId, request);
 
-        verify(tourLogRepository).deleteById(logId);
+        // Ownership check is done inside TourLogService — controller just delegates
+        verify(tourLogService).delete(logId, userId);
     }
 }

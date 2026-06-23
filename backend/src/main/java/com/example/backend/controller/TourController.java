@@ -44,9 +44,10 @@ public class TourController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tour> read(@PathVariable UUID id) {
-        logger.debug("GET /api/tours/{}", id);
-        return tourService.findById(id)
+    public ResponseEntity<Tour> read(@PathVariable UUID id, HttpServletRequest request) {
+        UUID userId = (UUID) request.getAttribute("userId");
+        logger.debug("GET /api/tours/{} for userId={}", id, userId);
+        return tourService.findById(id, userId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -66,8 +67,9 @@ public class TourController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {
+    public void delete(@PathVariable UUID id, HttpServletRequest request) {
+        UUID userId = (UUID) request.getAttribute("userId");
         logger.info("DELETE /api/tours/{}", id);
-        tourService.deleteById(id);
+        tourService.deleteById(id, userId);
     }
 }

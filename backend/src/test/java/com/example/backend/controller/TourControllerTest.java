@@ -69,20 +69,24 @@ class TourControllerTest {
     }
 
     @Test
+    // findById now filters by userId — existing tour with correct owner returns 200
     void read_existingId_returns200WithTour() {
-        when(tourService.findById(tourId)).thenReturn(Optional.of(testTour));
+        when(request.getAttribute("userId")).thenReturn(userId);
+        when(tourService.findById(tourId, userId)).thenReturn(Optional.of(testTour));
 
-        ResponseEntity<Tour> result = tourController.read(tourId);
+        ResponseEntity<Tour> result = tourController.read(tourId, request);
 
         assertThat(result.getStatusCode().value()).isEqualTo(200);
         assertThat(result.getBody()).isEqualTo(testTour);
     }
 
     @Test
+    // findById returns empty when tour doesn't exist or belongs to another user
     void read_nonExistingId_returns404() {
-        when(tourService.findById(tourId)).thenReturn(Optional.empty());
+        when(request.getAttribute("userId")).thenReturn(userId);
+        when(tourService.findById(tourId, userId)).thenReturn(Optional.empty());
 
-        ResponseEntity<Tour> result = tourController.read(tourId);
+        ResponseEntity<Tour> result = tourController.read(tourId, request);
 
         assertThat(result.getStatusCode().value()).isEqualTo(404);
         assertThat(result.getBody()).isNull();
@@ -111,9 +115,35 @@ class TourControllerTest {
     }
 
     @Test
-    void delete_callsServiceDelete() {
-        tourController.delete(tourId);
+    // delete now requires userId for ownership check
+    void delete_callsServiceDeleteWithUserId() {
+        when(request.getAttribute("userId")).thenReturn(userId);
 
-        verify(tourService).deleteById(tourId);
+        tourController.delete(tourId, request);
+
+        verify(tourService).deleteById(tourId, userId);
+    }
+
+    @Test
+    void search_returnsTours() {
+        when(request.getAttribute("userId")).thenReturn(userId);
+        when(tourService.search("Vienna", userId)).thenReturn(List.of(testTour));
+
+        List<Tour> result = tourController.search("Vienna", request);
+
+        assertThat(result).hasSize(1);
+        verify(tourService).search("Vienna", userId);
+    }
+
+    @Test
+    void search_emptyQuery_returnsAllTours() {
+        when(request.getAttribute("userId")).thenReturn(userId);
+        when(tourService.findByUserId(userId)).thenReturn(List.of(testTour));
+
+        List<Tour> result = tourController.search("", request);
+
+        assertThat(result).hasSize(1);
+        verify(tourService).findByUserId(userId);
+        verify(tourService, never()).search(any(), any());
     }
 }

@@ -8,7 +8,6 @@ import com.example.backend.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
@@ -24,10 +23,10 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class TourServiceTest {
 
-    @Mock private TourRepository tourRepository;
-    @Mock private UserRepository userRepository;
+    @Mock private TourRepository    tourRepository;
+    @Mock private UserRepository    userRepository;
     @Mock private TourLogRepository tourLogRepository;
-    @Mock private RestTemplate restTemplate;
+    @Mock private RestTemplate      restTemplate;
 
     private TourService tourService;
 
@@ -48,31 +47,48 @@ class TourServiceTest {
     }
 
     @Test
-    void findById_existingTour_returnsTour() {
+    void findById_existingTourCorrectUser_returnsTour() {
         Tour tour = new Tour("Alpine Trail", "Nice hike", "14.0,48.0", "16.0,47.0", "hike", 12.5, 180.0, null);
         tour.setId(tourId);
+        tour.setUser(testUser);
         when(tourRepository.findById(tourId)).thenReturn(Optional.of(tour));
 
-        Optional<Tour> result = tourService.findById(tourId);
+        Optional<Tour> result = tourService.findById(tourId, userId);
 
         assertThat(result).isPresent();
         assertThat(result.get().getName()).isEqualTo("Alpine Trail");
     }
 
     @Test
-    //important because the controller does orElse(null) — this chain only works if the service actually returns an empty optional
-    void findById_nonExistingTour_returnsEmpty() {
-        when(tourRepository.findById(tourId)).thenReturn(Optional.empty());
+    // findById must return empty when the tour belongs to a different user
+    void findById_tourBelongsToOtherUser_returnsEmpty() {
+        User otherUser = new User();
+        otherUser.setId(UUID.randomUUID());
 
-        Optional<Tour> result = tourService.findById(tourId);
+        Tour tour = new Tour("Alpine Trail", "Nice hike", "14.0,48.0", "16.0,47.0", "hike", 12.5, 180.0, null);
+        tour.setId(tourId);
+        tour.setUser(otherUser);
+        when(tourRepository.findById(tourId)).thenReturn(Optional.of(tour));
+
+        Optional<Tour> result = tourService.findById(tourId, userId);
 
         assertThat(result).isEmpty();
     }
 
     @Test
-    //verifies the service doesn't accidentally filter, transform, or lose items
+    // controller does orElse(404) — this chain only works if the service returns empty optional
+    void findById_nonExistingTour_returnsEmpty() {
+        when(tourRepository.findById(tourId)).thenReturn(Optional.empty());
+
+        Optional<Tour> result = tourService.findById(tourId, userId);
+
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    // verifies the service doesn't accidentally filter, transform, or lose items
     void findByUserId_returnsTourList() {
-        Tour t1 = new Tour("Tour A", "", "1.0,2.0", "3.0,4.0", "car", 10.0, 60.0, null);
+        Tour t1 = new Tour("Tour A", "", "1.0,2.0", "3.0,4.0", "car",  10.0, 60.0, null);
         Tour t2 = new Tour("Tour B", "", "5.0,6.0", "7.0,8.0", "bike", 20.0, 90.0, null);
         when(tourRepository.findByUserId(userId)).thenReturn(List.of(t1, t2));
 
@@ -83,7 +99,7 @@ class TourServiceTest {
     }
 
     @Test
-    //checks the service returns empty list rather than null — because the frontend would crash if it got null
+    // checks the service returns empty list rather than null — the frontend would crash on null
     void findByUserId_noTours_returnsEmptyList() {
         when(tourRepository.findByUserId(userId)).thenReturn(List.of());
 
@@ -92,8 +108,9 @@ class TourServiceTest {
         assertThat(result).isEmpty();
     }
 
+
     @Test
-    //without it, the next line tour.setUser(user) would get a null and throw a confusing exception
+        //without it, the next line tour.setUser(user) would get a null and throw a confusing exception
     void create_userNotFound_throwsException() {
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
@@ -105,10 +122,10 @@ class TourServiceTest {
     }
 
     @Test
-    //tests the resilience logic — the app shouldn't crash just because an external API is unavailable
+    // the app must not crash just because ORS is temporarily unavailable
     void create_orsCallFails_savesTourWithZeroDistanceAndTime() {
         when(userRepository.findById(userId)).thenReturn(Optional.of(testUser));
-        when(restTemplate.getForObject(any(String.class), eq(com.example.backend.dto.OrsResponseDto.class)))
+        when(restTemplate.getForObject(any(String.class), any()))
                 .thenThrow(new RuntimeException("ORS unavailable"));
 
         Tour tour = new Tour("Rainy Day", "", "1.0,2.0", "3.0,4.0", "hike", null, null, null);
@@ -124,7 +141,49 @@ class TourServiceTest {
     }
 
     @Test
-    //checks the service throws "Tour not found" rather than a NullPointerException when trying to call methods on a null tour
+    void create_bikeTransport_usesCyclingProfile() {
+        when(userRepository.findById(userId)).thenReturn(Optional.of(testUser));
+        when(restTemplate.getForObject(any(String.class), any()))
+                .thenThrow(new RuntimeException("skip"));
+        when(tourRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+
+        Tour tour = new Tour("Bike Tour", "", "1.0,2.0", "3.0,4.0", "bike", null, null, null);
+        tourService.create(tour, userId);
+
+        verify(restTemplate).getForObject(
+                argThat((String url) -> url.contains("cycling-regular")), any());
+    }
+
+    @Test
+    void create_hikeTransport_usesFootWalkingProfile() {
+        when(userRepository.findById(userId)).thenReturn(Optional.of(testUser));
+        when(restTemplate.getForObject(any(String.class), any()))
+                .thenThrow(new RuntimeException("skip"));
+        when(tourRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+
+        Tour tour = new Tour("Hike", "", "1.0,2.0", "3.0,4.0", "hike", null, null, null);
+        tourService.create(tour, userId);
+
+        verify(restTemplate).getForObject(
+                argThat((String url) -> url.contains("foot-walking")), any());
+    }
+
+    @Test
+    void create_nullTransport_usesDefaultDrivingProfile() {
+        when(userRepository.findById(userId)).thenReturn(Optional.of(testUser));
+        when(restTemplate.getForObject(any(String.class), any()))
+                .thenThrow(new RuntimeException("skip"));
+        when(tourRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+
+        Tour tour = new Tour("Drive", "", "1.0,2.0", "3.0,4.0", null, null, null, null);
+        tourService.create(tour, userId);
+
+        verify(restTemplate).getForObject(
+                argThat((String url) -> url.contains("driving-car")), any());
+    }
+
+    @Test
+    // checks the service throws "Tour not found" rather than a NullPointerException
     void update_tourNotFound_throwsException() {
         when(tourRepository.findById(tourId)).thenReturn(Optional.empty());
 
@@ -134,7 +193,7 @@ class TourServiceTest {
     }
 
     @Test
-    //tests the ownership guard — without it anyone could edit anyone else's tours
+    // ownership guard — without it anyone could edit anyone else's tours
     void update_unauthorizedUser_throwsException() {
         UUID otherUserId = UUID.randomUUID();
         User otherUser = new User();
@@ -143,7 +202,6 @@ class TourServiceTest {
         Tour existing = new Tour("Tour", "", "1.0,2.0", "3.0,4.0", "car", 10.0, 60.0, null);
         existing.setId(tourId);
         existing.setUser(otherUser);
-
         when(tourRepository.findById(tourId)).thenReturn(Optional.of(existing));
 
         assertThatThrownBy(() -> tourService.update(tourId, new Tour(), userId))
@@ -152,7 +210,7 @@ class TourServiceTest {
     }
 
     @Test
-    //tests the optimization — no point making an expensive external API call if the route didn't change
+    // tests the optimization - no point making an expensive ORS call if only the name/description changed
     void update_noRouteChange_doesNotCallOrs() {
         Tour existing = new Tour("Tour", "desc", "1.0,2.0", "3.0,4.0", "car", 10.0, 60.0, null);
         existing.setId(tourId);
@@ -167,60 +225,90 @@ class TourServiceTest {
         verify(restTemplate, never()).getForObject(any(String.class), any());
     }
 
+
     @Test
-    //tests the cascade logic, if someone accidentally removes one of those lines, this test catches it
-    void deleteById_deletesLogsAndTour() {
-        tourService.deleteById(tourId);
+    // cascade logic — if either line is removed accidentally, this test catches it
+    void deleteById_ownerCanDelete_deletesLogsAndTour() {
+        Tour tour = new Tour("Tour", "", "1.0,2.0", "3.0,4.0", "car", 10.0, 60.0, null);
+        tour.setId(tourId);
+        tour.setUser(testUser);
+        when(tourRepository.findById(tourId)).thenReturn(Optional.of(tour));
+
+        tourService.deleteById(tourId, userId);
 
         verify(tourLogRepository).deleteByTourId(tourId);
         verify(tourRepository).deleteById(tourId);
     }
 
     @Test
-    void create_bikeTransport_usesCyclingProfile() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(testUser));
-        when(restTemplate.getForObject(any(String.class), any()))
-                .thenThrow(new RuntimeException("skip"));
-        when(tourRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+    // unauthorized delete must throw before touching the DB
+    void deleteById_unauthorizedUser_throwsException() {
+        User otherUser = new User();
+        otherUser.setId(UUID.randomUUID());
 
-        Tour tour = new Tour("Bike Tour", "", "1.0,2.0", "3.0,4.0", "bike", null, null, null);
-        tourService.create(tour, userId);
+        Tour tour = new Tour("Tour", "", "1.0,2.0", "3.0,4.0", "car", 10.0, 60.0, null);
+        tour.setId(tourId);
+        tour.setUser(otherUser);
+        when(tourRepository.findById(tourId)).thenReturn(Optional.of(tour));
 
-        verify(restTemplate).getForObject(
-                argThat((String url) -> url.contains("cycling-regular")),
-                any()
-        );
+        assertThatThrownBy(() -> tourService.deleteById(tourId, userId))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Not authorized");
+
+        verify(tourRepository, never()).deleteById(any());
+        verify(tourLogRepository, never()).deleteByTourId(any());
+    }
+
+
+    @Test
+    // if input is already coordinates it must be returned as-is without any HTTP call
+    void geocodeLocation_alreadyCoordinates_returnsAsIs() {
+        String result = tourService.geocodeLocation("16.37,48.21");
+
+        assertThat(result).isEqualTo("16.37,48.21");
+        verifyNoInteractions(restTemplate);
     }
 
     @Test
-    void create_hikeTransport_usesFootWalkingProfile() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(testUser));
-        when(restTemplate.getForObject(any(String.class), any()))
-                .thenThrow(new RuntimeException("skip"));
-        when(tourRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+    // spaces around the comma must be normalised so ORS directions doesn't choke
+    void geocodeLocation_coordinatesWithSpaces_normalizesComma() {
+        String result = tourService.geocodeLocation("16.37, 48.21");
 
-        Tour tour = new Tour("Hike", "", "1.0,2.0", "3.0,4.0", "hike", null, null, null);
-        tourService.create(tour, userId);
-
-        verify(restTemplate).getForObject(
-                argThat((String url) -> url.contains("foot-walking")),
-                any()
-        );
+        assertThat(result).isEqualTo("16.37,48.21");
+        verifyNoInteractions(restTemplate);
     }
 
     @Test
-    void create_nullTransport_usesDefaultDrivingProfile() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(testUser));
-        when(restTemplate.getForObject(any(String.class), any()))
-                .thenThrow(new RuntimeException("skip"));
-        when(tourRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+    // if ORS geocoding fails the original string is returned so the tour can still be saved
+    void geocodeLocation_orsGeodingFails_returnsOriginalString() {
+        when(restTemplate.getForObject(any(String.class), eq(com.example.backend.dto.GeocodingDto.class)))
+                .thenThrow(new RuntimeException("network error"));
 
-        Tour tour = new Tour("Drive", "", "1.0,2.0", "3.0,4.0", null, null, null, null);
-        tourService.create(tour, userId);
+        String result = tourService.geocodeLocation("Vienna");
 
-        verify(restTemplate).getForObject(
-                argThat((String url) -> url.contains("driving-car")),
-                any()
-        );
+        assertThat(result).isEqualTo("Vienna");
+    }
+
+    // ── search ────────────────────────────────────────────────────────────────
+
+    @Test
+    void search_delegatesToRepository() {
+        Tour tour = new Tour("Vienna Forest Hike", "desc", "16.0,48.0", "16.1,48.1", "hike", 10.0, 60.0, null);
+        when(tourRepository.searchByUserId(userId, "vienna")).thenReturn(List.of(tour));
+
+        List<Tour> result = tourService.search("vienna", userId);
+
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).getName()).isEqualTo("Vienna Forest Hike");
+        verify(tourRepository).searchByUserId(userId, "vienna");
+    }
+
+    @Test
+    void search_noResults_returnsEmptyList() {
+        when(tourRepository.searchByUserId(userId, "xyz")).thenReturn(List.of());
+
+        List<Tour> result = tourService.search("xyz", userId);
+
+        assertThat(result).isEmpty();
     }
 }

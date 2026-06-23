@@ -55,8 +55,6 @@ public class TourService {
         this.restTemplate      = restTemplate;
     }
 
-    // ── public CRUD ──────────────────────────────────────────────────────────
-
     public Tour create(Tour tour, UUID userId) {
         logger.info("Creating tour '{}' for userId={}", tour.getName(), userId);
 
@@ -135,7 +133,14 @@ public class TourService {
     }
 
     @Transactional
-    public void deleteById(UUID id) {
+    public void deleteById(UUID id, UUID userId) {
+        Tour tour = tourRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Tour not found"));
+
+        if (!tour.getUser().getId().equals(userId)) {
+            logger.warn("Unauthorized delete: userId={} tried to delete tour id={}", userId, id);
+            throw new RuntimeException("Not authorized to delete this tour");
+        }
         logger.info("Deleting tour id={} and its logs", id);
         tourLogRepository.deleteByTourId(id);
         tourRepository.deleteById(id);
@@ -147,17 +152,16 @@ public class TourService {
         return tourRepository.findByUserId(userId);
     }
 
-    public Optional<Tour> findById(UUID id) {
-        logger.debug("Fetching tour id={}", id);
-        return tourRepository.findById(id);
+    public Optional<Tour> findById(UUID id,  UUID userId) {
+        logger.debug("Fetching tour id={} for userId={}", id, userId);
+        return tourRepository.findById(id)
+                .filter(tour -> tour.getUser().getId().equals(userId));
     }
 
     public List<Tour> search(String term, UUID userId) {
         logger.debug("Full-text search: term='{}' userId={}", term, userId);
         return tourRepository.searchByUserId(userId, term);
     }
-
-    // ── geocoding ────────────────────────────────────────────────────────────
 
     /**
      * If location is already in "lon,lat" format it is returned as-is.
@@ -207,8 +211,6 @@ public class TourService {
         return trimmed;
     }
 
-    // ── ORS directions ───────────────────────────────────────────────────────
-
     /**
      * Calls ORS Directions and sets distance (km) and estimatedTime (min) on
      * the tour.  On any failure both fields are set to 0.0
@@ -242,8 +244,6 @@ public class TourService {
             tour.setEstimatedTime(0.0);
         }
     }
-
-    // ── helpers ──────────────────────────────────────────────────────────────
 
     private String getOrsProfile(String transportType) {
         if (transportType == null) return "driving-car";

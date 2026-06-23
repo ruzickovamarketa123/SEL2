@@ -1,15 +1,17 @@
 package com.example.backend.dto;
 
+import java.util.UUID;
+
 public class TourDto {
 
-    private int id;
+    private UUID id;
     private String name;
     private String description;
     private String from;
     private String to;
     private String transportType;
 
-    public TourDto(int id, String name, String description, String from, String to, String transportType) {
+    public TourDto(UUID id, String name, String description, String from, String to, String transportType) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -18,10 +20,10 @@ public class TourDto {
         this.transportType = transportType;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
