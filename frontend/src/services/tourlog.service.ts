@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class TourLogService {
 
-  private readonly API_URL = `${environment.backendUrl}/api/tours`;
+  private readonly API_URL = `${environment.backendUrl}/api/logs`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

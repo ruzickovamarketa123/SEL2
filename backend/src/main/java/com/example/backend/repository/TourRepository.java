@@ -14,20 +14,13 @@ public interface TourRepository extends JpaRepository<Tour, UUID> {
 
     /**
      * Full-text search across tour fields and their log comments.
-     * Searches (case-insensitive) in:
-     *   - tour name
-     *   - tour description
-     *   - fromName / toName
-     *   - transportType
-     *   - log comments
-     *
-     * Uses LEFT JOIN so tours with no logs are still returned if
-     * the tour fields match.  DISTINCT avoids duplicates when a
-     * tour has multiple matching logs.
+     * Uses LEFT JOIN (no FETCH) since tourLogs are @JsonIgnore — 
+     * we only need them for the WHERE condition, not for serialization.
+     * DISTINCT avoids duplicate tours when multiple logs match.
      */
     @Query("""
         SELECT DISTINCT t FROM Tour t
-        LEFT JOIN FETCH t.tourLogs l
+        LEFT JOIN t.tourLogs l
         WHERE t.user.id = :userId
           AND (
             LOWER(t.name)          LIKE LOWER(CONCAT('%', :term, '%')) OR

@@ -1,5 +1,6 @@
 import {
-  Component, AfterViewInit, OnDestroy, input, effect, ElementRef
+  Component, AfterViewInit, OnDestroy, input, effect, ElementRef,
+  ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
 import * as L from 'leaflet';
 import { Tour } from '../tour_details/tour_details.model';
@@ -17,6 +18,7 @@ const ORS_PROFILE: Record<string, string> = {
 @Component({
   selector: 'app-map',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div style="position: relative; width: 100%; height: 100%;">
       <div class="map-container" style="width: 100%; height: 100%;"></div>
@@ -61,7 +63,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   isLoading = false;
   routeError: string | null = null;
 
-  constructor(private el: ElementRef) {
+  constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {
     // effect() runs whenever tour() or apiKey() signal changes —
     // this is the reliable reactive alternative to ngOnChanges
     effect(() => {
@@ -124,6 +126,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
     if (!fromCoords || !toCoords) {
       this.routeError = 'Invalid coordinates for this tour.';
+      this.cdr.markForCheck();
       return;
     }
 
@@ -147,8 +150,10 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
     this.map.fitBounds(L.latLngBounds([fromCoords, toCoords]), { padding: [60, 60] });
 
+    // Set loading BEFORE the await and notify Angular immediately
     this.isLoading = true;
     this.routeError = null;
+    this.cdr.markForCheck();
 
     try {
       const profile = ORS_PROFILE[tour.transportType ?? ''] ?? 'driving-car';
@@ -176,6 +181,8 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     } finally {
       if (token === this.currentRenderToken) {
         this.isLoading = false;
+        // Notify Angular that isLoading/routeError changed after the async fetch
+        this.cdr.markForCheck();
       }
     }
   }

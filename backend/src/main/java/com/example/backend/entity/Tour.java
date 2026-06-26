@@ -1,5 +1,6 @@
 package com.example.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.UUID;
 import java.util.List;
@@ -25,9 +26,11 @@ public class Tour {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore   // prevents infinite recursion and avoids exposing user data
     private User user;
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore   // logs are fetched separately via /api/logs — not nested in tour
     private List<TourLog> tourLogs = new ArrayList<>();
 
     public Tour() {}
