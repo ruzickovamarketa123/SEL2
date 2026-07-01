@@ -1,7 +1,6 @@
 package com.example.backend.controller;
 
 import com.example.backend.entity.Tour;
-import com.example.backend.repository.UserRepository;
 import com.example.backend.service.TourService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
@@ -18,12 +17,10 @@ public class TourController {
 
     private static final Logger logger = LogManager.getLogger(TourController.class);
 
-    private final UserRepository userRepository;
     private final TourService tourService;
 
-    public TourController(TourService tourService, UserRepository userRepository) {
+    public TourController(TourService tourService) {
         this.tourService = tourService;
-        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -34,13 +31,14 @@ public class TourController {
     }
 
     @GetMapping("/search")
-    public List<Tour> search(@RequestParam String q, HttpServletRequest request) {
+    public List<Tour> search(@RequestParam(required = false, defaultValue = "") String q,
+                             @RequestParam(required = false) Integer minPopularity,
+                             @RequestParam(required = false) Integer minChildFriendliness,
+                             HttpServletRequest request) {
         UUID userId = (UUID) request.getAttribute("userId");
-        logger.debug("GET /api/tours/search?q={} for userId={}", q, userId);
-        if (q == null || q.isBlank()) {
-            return tourService.findByUserId(userId);
-        }
-        return tourService.search(q.trim(), userId);
+        logger.debug("GET /api/tours/search?q={}&minPopularity={}&minChildFriendliness={} for userId={}",
+                q, minPopularity, minChildFriendliness, userId);
+        return tourService.search(q.trim(), minPopularity, minChildFriendliness, userId);
     }
 
     @GetMapping("/{id}")

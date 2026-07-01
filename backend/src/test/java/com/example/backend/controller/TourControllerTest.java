@@ -2,7 +2,6 @@ package com.example.backend.controller;
 
 import com.example.backend.entity.Tour;
 import com.example.backend.entity.User;
-import com.example.backend.repository.UserRepository;
 import com.example.backend.service.TourService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,6 @@ import static org.mockito.Mockito.*;
 class TourControllerTest {
 
     @Mock private TourService tourService;
-    @Mock private UserRepository userRepository;
     @Mock private HttpServletRequest request;
 
     @InjectMocks
@@ -127,23 +125,22 @@ class TourControllerTest {
     @Test
     void search_returnsTours() {
         when(request.getAttribute("userId")).thenReturn(userId);
-        when(tourService.search("Vienna", userId)).thenReturn(List.of(testTour));
+        when(tourService.search("Vienna", 0, 0, userId)).thenReturn(List.of(testTour));
 
-        List<Tour> result = tourController.search("Vienna", request);
+        List<Tour> result = tourController.search("Vienna", 0, 0, request);
 
         assertThat(result).hasSize(1);
-        verify(tourService).search("Vienna", userId);
+        verify(tourService).search("Vienna", 0, 0, userId);
     }
 
     @Test
-    void search_emptyQuery_returnsAllTours() {
+    void search_emptyQuery_delegatesToServiceSearch() {
         when(request.getAttribute("userId")).thenReturn(userId);
-        when(tourService.findByUserId(userId)).thenReturn(List.of(testTour));
+        when(tourService.search("", 0, 0, userId)).thenReturn(List.of(testTour));
 
-        List<Tour> result = tourController.search("", request);
+        List<Tour> result = tourController.search("", 0, 0, request);
 
         assertThat(result).hasSize(1);
-        verify(tourService).findByUserId(userId);
-        verify(tourService, never()).search(any(), any());
+        verify(tourService).search("", 0, 0, userId);
     }
 }

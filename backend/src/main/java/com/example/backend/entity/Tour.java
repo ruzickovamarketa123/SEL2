@@ -24,6 +24,11 @@ public class Tour {
     private Double estimatedTime;
     private String routeInformation;
 
+    @Transient
+    private int popularity;
+    @Transient
+    private int childFriendliness;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore   // prevents infinite recursion and avoids exposing user data
@@ -85,4 +90,10 @@ public class Tour {
 
     public List<TourLog> getTourLogs() { return tourLogs; }
     public void setTourLogs(List<TourLog> tourLogs) { this.tourLogs = tourLogs; }
+
+    public int getPopularity() { return popularity; }
+    public void setPopularity(int popularity) { this.popularity = popularity; }
+
+    public int getChildFriendliness() { return childFriendliness; }
+    public void setChildFriendliness(int childFriendliness) { this.childFriendliness = childFriendliness; }
 }

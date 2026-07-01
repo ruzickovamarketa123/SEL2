@@ -10,4 +10,6 @@ public interface TourLogRepository extends JpaRepository<TourLog, UUID> {
 
     // Returns only logs whose tour belongs to the given user
     List<TourLog> findByTourUserId(UUID userId);
+
+    List<TourLog> findByTourId(UUID tourId);
 }

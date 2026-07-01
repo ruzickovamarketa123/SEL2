@@ -1,6 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.entity.Tour;
+import com.example.backend.entity.TourLog;          // AGGIUNTO: per i test sui calcoli
 import com.example.backend.entity.User;
 import com.example.backend.repository.TourLogRepository;
 import com.example.backend.repository.TourRepository;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;                      // AGGIUNTO: per costruire TourLog nei test
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -289,14 +291,13 @@ class TourServiceTest {
         assertThat(result).isEqualTo("Vienna");
     }
 
-    // ── search ────────────────────────────────────────────────────────────────
-
     @Test
     void search_delegatesToRepository() {
         Tour tour = new Tour("Vienna Forest Hike", "desc", "16.0,48.0", "16.1,48.1", "hike", 10.0, 60.0, null);
+        tour.setId(tourId);
         when(tourRepository.searchByUserId(userId, "vienna")).thenReturn(List.of(tour));
 
-        List<Tour> result = tourService.search("vienna", userId);
+        List<Tour> result = tourService.search("vienna", 0, 0, userId);
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getName()).isEqualTo("Vienna Forest Hike");
@@ -307,8 +308,54 @@ class TourServiceTest {
     void search_noResults_returnsEmptyList() {
         when(tourRepository.searchByUserId(userId, "xyz")).thenReturn(List.of());
 
-        List<Tour> result = tourService.search("xyz", userId);
+        List<Tour> result = tourService.search("xyz", 0, 0, userId);
 
         assertThat(result).isEmpty();
+    }
+
+
+    @Test
+    void calculatePopularity_countsLogsCappedAtFive() {
+        assertThat(tourService.calculatePopularity(List.of())).isZero();
+        assertThat(tourService.calculatePopularity(List.of(new TourLog(), new TourLog(), new TourLog())))
+                .isEqualTo(3);
+        assertThat(tourService.calculatePopularity(java.util.Collections.nCopies(7, new TourLog())))
+                .isEqualTo(5);
+    }
+
+    @Test
+    void calculateChildFriendliness_easyShortTour_isFive() {
+        TourLog easy = new TourLog(null, LocalDateTime.now(), 3.0, 5, "ok", "Easy", 30.0);
+        assertThat(tourService.calculateChildFriendliness(List.of(easy))).isEqualTo(5);
+    }
+
+    @Test
+    void calculateChildFriendliness_expertLongTour_isClampedToOne() {
+        TourLog tough = new TourLog(null, LocalDateTime.now(), 20.0, 2, "tough", "Expert", 300.0);
+        assertThat(tourService.calculateChildFriendliness(List.of(tough))).isEqualTo(1);
+    }
+
+    @Test
+    void calculateChildFriendliness_noLogs_isZero() {
+        assertThat(tourService.calculateChildFriendliness(List.of())).isZero();
+    }
+
+    @Test
+    void search_minPopularityFilter_excludesLowPopularityTours() {
+        Tour popular = new Tour("Popular", "", "1,2", "3,4", "hike", 1.0, 1.0, null);
+        popular.setId(tourId);
+        Tour lonely = new Tour("Lonely", "", "1,2", "3,4", "hike", 1.0, 1.0, null);
+        lonely.setId(UUID.randomUUID());
+
+        when(tourRepository.findByUserId(userId)).thenReturn(List.of(popular, lonely));
+
+        TourLog a = new TourLog(popular, LocalDateTime.now(), 5.0, 4, "c", "Easy", 60.0);
+        TourLog b = new TourLog(popular, LocalDateTime.now(), 5.0, 4, "c", "Easy", 60.0);
+        TourLog c = new TourLog(popular, LocalDateTime.now(), 5.0, 4, "c", "Easy", 60.0);
+        when(tourLogRepository.findByTourUserId(userId)).thenReturn(List.of(a, b, c));
+
+        List<Tour> result = tourService.search("", 1, 0, userId);
+
+        assertThat(result).extracting(Tour::getName).containsExactly("Popular");
     }
 }

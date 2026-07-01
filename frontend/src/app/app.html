@@ -17,10 +17,42 @@
     z-index: 10;
   ">
 
-    <!-- search bar — only visible when logged in -->
+    <!-- search bar + filtri — only visible when logged in -->
     @if (authService.isLoggedIn()) {
-      <div style="flex: 0 0 66%;">
-        <search-input (searchChanged)="onSearchChanged($event)"></search-input>
+      <div style="flex: 0 0 66%; display: flex; align-items: center; gap: 10px;">
+
+        <div style="flex: 1;">
+          <search-input (searchChanged)="onSearchChanged($event)"></search-input>
+        </div>
+
+        <label style="display: flex; align-items: center; gap: 4px; font-size: 12px; color: #555; white-space: nowrap;">
+          min pop
+          <select
+            (change)="minPopularity.set(+$any($event.target).value); onFiltersChanged()"
+            style="padding: 7px 8px; border-radius: 8px; border: 1.5px solid #000; font-size: 13px; background: white; cursor: pointer;">
+            <option value="0">any</option>
+            <option value="1">≥ 1</option>
+            <option value="2">≥ 2</option>
+            <option value="3">≥ 3</option>
+            <option value="4">≥ 4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+
+        <label style="display: flex; align-items: center; gap: 4px; font-size: 12px; color: #555; white-space: nowrap;">
+          min kids
+          <select
+            (change)="minChildFriendliness.set(+$any($event.target).value); onFiltersChanged()"
+            style="padding: 7px 8px; border-radius: 8px; border: 1.5px solid #000; font-size: 13px; background: white; cursor: pointer;">
+            <option value="0">any</option>
+            <option value="1">≥ 1</option>
+            <option value="2">≥ 2</option>
+            <option value="3">≥ 3</option>
+            <option value="4">≥ 4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+
       </div>
     }
 
@@ -69,8 +101,9 @@
         flex-shrink: 0;
         overflow-y: auto;
       ">
+        
         <list
-          [tours]="enrichedTours()"
+          [tours]="tours()"
           [searchTerm]="searchTerm()"
           [selectedTourId]="selectedTourId()"
           [activeTab]="activeTab()"

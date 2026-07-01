@@ -4,6 +4,7 @@ import com.example.backend.dto.GeocodingDto;
 import com.example.backend.dto.OrsResponseDto;
 import com.example.backend.dto.SummaryDto;
 import com.example.backend.entity.Tour;
+import com.example.backend.entity.TourLog;          // AGGIUNTO: serve per i calcoli sui log
 import com.example.backend.entity.User;
 import com.example.backend.repository.TourLogRepository;
 import com.example.backend.repository.TourRepository;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.stream.Collectors;               // AGGIUNTO: per raggruppare i log per tour
 
 @Service
 public class TourService {
@@ -82,6 +84,7 @@ public class TourService {
         fetchAndApplyRouteData(tour, fromCoords, toCoords);
 
         Tour saved = tourRepository.save(tour);
+        enrich(saved, List.of());
         logger.info("Tour created successfully: id={}, name='{}'", saved.getId(), saved.getName());
         return saved;
     }
@@ -128,6 +131,7 @@ public class TourService {
         }
 
         Tour saved = tourRepository.save(existingTour);
+        enrich(saved, tourLogRepository.findByTourId(saved.getId()));
         logger.info("Tour updated successfully: id={}", saved.getId());
         return saved;
     }
@@ -149,18 +153,72 @@ public class TourService {
 
     public List<Tour> findByUserId(UUID userId) {
         logger.debug("Fetching tours for userId={}", userId);
-        return tourRepository.findByUserId(userId);
+        return enrichAll(tourRepository.findByUserId(userId), userId);
     }
 
     public Optional<Tour> findById(UUID id,  UUID userId) {
         logger.debug("Fetching tour id={} for userId={}", id, userId);
         return tourRepository.findById(id)
-                .filter(tour -> tour.getUser().getId().equals(userId));
+                .filter(tour -> tour.getUser().getId().equals(userId))
+                .map(tour -> {
+                    enrich(tour, tourLogRepository.findByTourId(id));
+                    return tour;
+                });
     }
 
-    public List<Tour> search(String term, UUID userId) {
-        logger.debug("Full-text search: term='{}' userId={}", term, userId);
-        return tourRepository.searchByUserId(userId, term);
+    public List<Tour> search(String term, Integer minPopularity, Integer minChildFriendliness, UUID userId) {
+        int minPop   = (minPopularity == null)        ? 0 : minPopularity;
+        int minChild = (minChildFriendliness == null) ? 0 : minChildFriendliness;
+        logger.debug("Full-text search: term='{}' minPop={} minChild={} userId={}", term, minPop, minChild, userId);
+
+        List<Tour> base = (term == null || term.isBlank())
+                ? tourRepository.findByUserId(userId)
+                : tourRepository.searchByUserId(userId, term);
+
+        List<Tour> enriched = enrichAll(base, userId);
+
+        return enriched.stream()
+                .filter(t -> t.getPopularity() >= minPop && t.getChildFriendliness() >= minChild)
+                .toList();
+    }
+
+    private List<Tour> enrichAll(List<Tour> tours, UUID userId) {
+        List<TourLog> allLogs = tourLogRepository.findByTourUserId(userId);
+        Map<UUID, List<TourLog>> logsByTour = allLogs.stream()
+                .collect(Collectors.groupingBy(log -> log.getTour().getId()));
+        for (Tour tour : tours) {
+            enrich(tour, logsByTour.getOrDefault(tour.getId(), List.of()));
+        }
+        return tours;
+    }
+
+    private void enrich(Tour tour, List<TourLog> logs) {
+        tour.setPopularity(calculatePopularity(logs));
+        tour.setChildFriendliness(calculateChildFriendliness(logs));
+    }
+
+    int calculatePopularity(List<TourLog> logs) {
+        if (logs.isEmpty()) return 0;
+        return Math.min(5, logs.size());
+    }
+
+    int calculateChildFriendliness(List<TourLog> logs) {
+        if (logs.isEmpty()) return 0;
+        int score = 5;
+
+        if      (logs.stream().anyMatch(l -> "Expert".equalsIgnoreCase(l.getDifficulty()))) score -= 3;
+        else if (logs.stream().anyMatch(l -> "Hard".equalsIgnoreCase(l.getDifficulty())))   score -= 2;
+        else if (logs.stream().anyMatch(l -> "Medium".equalsIgnoreCase(l.getDifficulty()))) score -= 1;
+
+        double avgDistance = logs.stream().mapToDouble(TourLog::getTotalDistance).average().orElse(0);
+        if      (avgDistance > 15) score -= 2;
+        else if (avgDistance > 8)  score -= 1;
+
+        double avgTime = logs.stream().mapToDouble(TourLog::getTotalTime).average().orElse(0);
+        if      (avgTime > 240) score -= 2;
+        else if (avgTime > 120) score -= 1;
+
+        return Math.max(1, score);
     }
 
     /**

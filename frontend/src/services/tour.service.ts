@@ -43,11 +43,15 @@ export class TourService {
     );
   }
 
-  async search(term: string): Promise<Tour[]> {
+  async search(term: string, minPopularity = 0, minChildFriendliness = 0): Promise<Tour[]> {
     return firstValueFrom(
       this.http.get<Tour[]>(`${this.API_URL}/search`, {
         headers: this.getHeaders(),
-        params: { q: term }
+        params: {
+          q: term,
+          minPopularity: String(minPopularity),
+          minChildFriendliness: String(minChildFriendliness)
+        }
       })
     );
   }
