@@ -12,6 +12,7 @@ import com.example.backend.exception.UserNotFoundException;
 import com.example.backend.repository.TourLogRepository;
 import com.example.backend.repository.TourRepository;
 import com.example.backend.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class TourService {
     private final UserRepository    userRepository;
     private final TourLogRepository tourLogRepository;
     private final RestTemplate      restTemplate;
+    private final ObjectMapper      objectMapper = new ObjectMapper();
 
     @Value("${ors.api.key}")
     private String apiKey;
@@ -49,7 +51,6 @@ public class TourService {
         this.restTemplate      = new RestTemplate();
     }
 
-    // Constructor for testing (allows injecting a mock RestTemplate)
     public TourService(TourRepository tourRepository,
                        UserRepository userRepository,
                        TourLogRepository tourLogRepository,
@@ -70,7 +71,6 @@ public class TourService {
                 });
         tour.setUser(user);
 
-        // Save human-readable names before geocoding overwrites from/to with coords
         String fromInput = tour.getFrom() != null ? tour.getFrom().trim() : "";
         String toInput   = tour.getTo()   != null ? tour.getTo().trim()   : "";
 
@@ -79,8 +79,6 @@ public class TourService {
 
         tour.setFrom(fromCoords);
         tour.setTo(toCoords);
-        // If input was already coordinates keep them as the display name too,
-        // otherwise show the city name the user typed
         tour.setFromName(isCoordinate(fromInput) ? fromCoords : fromInput);
         tour.setToName(isCoordinate(toInput)     ? toCoords   : toInput);
 
@@ -106,7 +104,6 @@ public class TourService {
             throw new UnauthorizedAccessException("Not authorized to update this tour");
         }
 
-        // Save human-readable names before geocoding
         String fromInput = tourDetails.getFrom() != null ? tourDetails.getFrom().trim() : "";
         String toInput   = tourDetails.getTo()   != null ? tourDetails.getTo().trim()   : "";
 
@@ -280,6 +277,16 @@ public class TourService {
                 SummaryDto summary = response.features.get(0).properties.summary;
                 tour.setDistance(summary.distance / 1000.0);
                 tour.setEstimatedTime(summary.duration / 60.0);
+
+                Object geometry = response.features.get(0).geometry;
+                if (geometry != null) {
+                    try {
+                        tour.setRouteInformation(objectMapper.writeValueAsString(geometry));
+                    } catch (Exception e) {
+                        logger.warn("Failed to serialize route geometry for tour '{}': {}", tour.getName(), e.getMessage());
+                    }
+                }
+
                 logger.debug("ORS Directions: distance={}km, time={}min",
                         tour.getDistance(), tour.getEstimatedTime());
             } else {

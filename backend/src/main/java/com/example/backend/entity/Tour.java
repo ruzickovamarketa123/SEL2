@@ -15,14 +15,16 @@ public class Tour {
     private UUID id;
     private String name;
     private String description;
-    private String fromLocation;   // stores coordinates "lon,lat"
-    private String toLocation;     // stores coordinates "lon,lat"
-    private String fromName;       // stores human-readable name e.g. "Vienna"
-    private String toName;         // stores human-readable name e.g. "Roma"
+    private String fromLocation;
+    private String toLocation;
+    private String fromName;
+    private String toName;
     private String transportType;
     private Double distance;
     private Double estimatedTime;
-    private String routeInformation;
+
+    @Column(columnDefinition = "TEXT")
+    private String routeInformation;   // GeoJSON route geometry, stored as JSON text
 
     @Transient
     private int popularity;
@@ -31,11 +33,11 @@ public class Tour {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore   // prevents infinite recursion and avoids exposing user data
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore   // logs are fetched separately via /api/logs — not nested in tour
+    @JsonIgnore
     private List<TourLog> tourLogs = new ArrayList<>();
 
     public Tour() {}

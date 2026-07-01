@@ -3,6 +3,9 @@ package com.example.backend.service;
 import com.example.backend.dto.TourLogDto;
 import com.example.backend.entity.Tour;
 import com.example.backend.entity.TourLog;
+import com.example.backend.exception.TourLogNotFoundException;
+import com.example.backend.exception.TourNotFoundException;
+import com.example.backend.exception.UnauthorizedAccessException;
 import com.example.backend.repository.TourLogRepository;
 import com.example.backend.repository.TourRepository;
 import org.apache.logging.log4j.LogManager;
@@ -49,14 +52,13 @@ public class TourLogService {
         Tour tour = tourRepository.findById(dto.getTourId())
                 .orElseThrow(() -> {
                     logger.error("Tour not found: id={}", dto.getTourId());
-                    return new RuntimeException("Tour not found");
+                    return new TourNotFoundException("Tour not found");
                 });
 
-        // Verify the tour belongs to the requesting user
         if (!tour.getUser().getId().equals(userId)) {
             logger.warn("Unauthorized log creation: userId={} tried to log on tourId={}",
                     userId, dto.getTourId());
-            throw new RuntimeException("Not authorized to add logs to this tour");
+            throw new UnauthorizedAccessException("Not authorized to add logs to this tour");
         }
 
         TourLog log = new TourLog(
@@ -102,12 +104,12 @@ public class TourLogService {
         TourLog log = tourLogRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.error("TourLog not found: id={}", id);
-                    return new RuntimeException("TourLog not found");
+                    return new TourLogNotFoundException("TourLog not found");
                 });
 
         if (!log.getTour().getUser().getId().equals(userId)) {
             logger.warn("Unauthorized access: userId={} tried to access log id={}", userId, id);
-            throw new RuntimeException("Not authorized to access this log");
+            throw new UnauthorizedAccessException("Not authorized to access this log");
         }
 
         return log;

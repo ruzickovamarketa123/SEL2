@@ -21,17 +21,15 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
   private vm = inject(MapViewModel);
 
-  tour   = input<Tour | null>(null);
-  apiKey = input<string>('');
+  tour = input<Tour | null>(null);
 
   private map!: L.Map;
   private mapReady = false;
   private routeLayer: L.GeoJSON | null = null;
   private markersLayer: L.LayerGroup | null = null;
-  private currentRenderToken = 0;
 
-  isLoading = false;
   routeError: string | null = null;
+  routeNote: string | null = null;
 
   constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {
     effect(() => {
@@ -69,16 +67,13 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   }
 
   private clearRoute(): void {
-    this.currentRenderToken++;
-    this.isLoading = false;
     this.routeError = null;
+    this.routeNote = null;
     if (this.routeLayer)   { this.routeLayer.remove();   this.routeLayer = null; }
     if (this.markersLayer) { this.markersLayer.remove(); this.markersLayer = null; }
   }
 
-  private async renderTour(tour: Tour): Promise<void> {
-    const token = ++this.currentRenderToken;
-
+  private renderTour(tour: Tour): void {
     const fromCoords = this.vm.parseCoords(tour.from);
     const toCoords   = this.vm.parseCoords(tour.to);
 
@@ -108,30 +103,18 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
     this.map.fitBounds(L.latLngBounds([fromCoords, toCoords]), { padding: [60, 60] });
 
-    this.isLoading = true;
-    this.routeError = null;
-    this.cdr.markForCheck();
+    const geometry = this.vm.parseRouteGeometry(tour);
 
-    try {
-      const geometry = await this.vm.fetchRoute(tour, this.apiKey());
-      if (token !== this.currentRenderToken) return;
-
+    if (geometry) {
       this.routeLayer = L.geoJSON(geometry, {
         style: { color: '#4da3ff', weight: 4, opacity: 0.85 }
       }).addTo(this.map);
-
       this.map.fitBounds(this.routeLayer.getBounds(), { padding: [50, 50] });
-
-    } catch (err: any) {
-      if (token !== this.currentRenderToken) return;
-      console.error('Map route error:', err);
-      this.routeError = 'Could not load route. Showing markers only.';
-    } finally {
-      if (token === this.currentRenderToken) {
-        this.isLoading = false;
-        this.cdr.markForCheck();
-      }
+    } else {
+      this.routeNote = 'Route line unavailable for this tour. Showing markers only.';
     }
+
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy(): void {

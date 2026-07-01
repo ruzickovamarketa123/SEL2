@@ -1,15 +1,13 @@
 <div style="position: relative; width: 100%; height: 100%;">
   <div class="map-container" style="width: 100%; height: 100%;"></div>
 
-  @if (isLoading) {
+  @if (routeNote) {
     <div style="
-      position: absolute; inset: 0;
-      background: rgba(255,255,255,0.65);
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 16px; z-index: 1000;
-      font-size: 20px; color: #555;
+      position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,0.9); color: #666;
+      padding: 8px 16px; border-radius: 8px; font-size: 13px; z-index: 1000;
     ">
-      loading route...
+      {{ routeNote }}
     </div>
   }
 

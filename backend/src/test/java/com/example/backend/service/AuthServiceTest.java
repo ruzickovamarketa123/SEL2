@@ -44,10 +44,7 @@ class AuthServiceTest {
         existingUser.setPasswordHash("hashed-secret");
     }
 
-    // ── register ─────────────────────────────────────────────────────────────
-
     @Test
-        // register must hash the raw password before saving — never persist plaintext
     void register_hashesPasswordBeforeSaving() {
         RegisterRequestDto dto = new RegisterRequestDto();
         dto.setUsername("newuser");
@@ -63,7 +60,6 @@ class AuthServiceTest {
     }
 
     @Test
-        // the returned DTO must carry a real token and the username the caller registered with
     void register_returnsTokenAndUsername() {
         RegisterRequestDto dto = new RegisterRequestDto();
         dto.setUsername("newuser");
@@ -78,8 +74,6 @@ class AuthServiceTest {
         assertThat(result.getToken()).isEqualTo("token-123");
         assertThat(result.getUsername()).isEqualTo("newuser");
     }
-
-    // ── login ────────────────────────────────────────────────────────────────
 
     @Test
     void login_correctCredentials_returnsToken() {
@@ -98,7 +92,6 @@ class AuthServiceTest {
     }
 
     @Test
-        // without this check, a typo'd username would NPE instead of failing cleanly
     void login_userNotFound_throwsException() {
         LoginRequestDto dto = new LoginRequestDto();
         dto.setUsername("ghost");
@@ -114,7 +107,6 @@ class AuthServiceTest {
     }
 
     @Test
-        // wrong password must fail even when the username exists — and must not issue a token
     void login_wrongPassword_throwsException() {
         LoginRequestDto dto = new LoginRequestDto();
         dto.setUsername("marketa");

@@ -69,7 +69,6 @@ class UserServiceTest {
     }
 
     @Test
-        // blank strings must be ignored, not overwrite the existing value with ""
     void updateProfile_blankFields_areIgnored() {
         UpdateUserDto dto = new UpdateUserDto();
         dto.setUsername("   ");
@@ -85,7 +84,6 @@ class UserServiceTest {
     }
 
     @Test
-        // password must be re-hashed, never stored or compared as plaintext
     void updateProfile_passwordProvided_getsHashedBeforeSaving() {
         UpdateUserDto dto = new UpdateUserDto();
         dto.setPassword("new-plaintext");
@@ -102,7 +100,6 @@ class UserServiceTest {
     void updateProfile_noPasswordProvided_leavesHashUnchanged() {
         UpdateUserDto dto = new UpdateUserDto();
         dto.setUsername("newname");
-        // password intentionally left null
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(existingUser));
 

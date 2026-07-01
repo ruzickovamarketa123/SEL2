@@ -601,3 +601,20 @@
 2026-07-01 12:57:39 [main] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=ef57196f-da9a-4606-99e6-1d9425216eaf
 2026-07-01 12:57:39 [main] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=39c1b978-b071-402c-b8a9-18f028bd2b7b userId=0baa4e79-027b-4600-80b5-7ced713cf0d4
 2026-07-01 12:57:39 [main] INFO  com.example.backend.controller.TourLogController - PUT /api/logs/f2cdbeba-0851-4b55-a86a-56e5f4ff97db by userId=f306bb44-73cc-4f2d-a787-53da690b2ee8
+2026-07-01 21:08:07 [main] INFO  com.example.backend.BackendApplication - Starting BackendApplication using Java 25.0.2 with PID 40769 (/Users/marketaruzickova/IdeaProjects/SE2L/backend/target/classes started by marketaruzickova in /Users/marketaruzickova/IdeaProjects/SE2L/backend)
+2026-07-01 21:08:07 [main] DEBUG com.example.backend.BackendApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
+2026-07-01 21:08:07 [main] INFO  com.example.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-01 21:08:09 [main] DEBUG com.example.backend.security.JwtFilter - Filter 'jwtFilter' configured for use
+2026-07-01 21:08:14 [main] INFO  com.example.backend.BackendApplication - Started BackendApplication in 7.549 seconds (process running for 8.631)
+2026-07-01 21:08:19 [http-nio-8080-exec-1] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:08:19 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:08:19 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:08:19 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:08:20 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:08:20 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:08:20 [http-nio-8080-exec-5] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:08:20 [http-nio-8080-exec-5] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:25:16 [http-nio-8080-exec-8] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:25:16 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:25:16 [http-nio-8080-exec-10] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-01 21:25:16 [http-nio-8080-exec-10] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99

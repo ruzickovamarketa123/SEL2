@@ -9,17 +9,16 @@ import { AuthService } from '../services/auth.service';
 import { ProfileComponent } from '../components/auth/profile/profile';
 import { ImportExportButton } from '../components/import-export/import-export-button';
 import { Mediator } from '../services/mediator.service';
-import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, SearchInput, List, LoginComponent, ProfileComponent, RegisterComponent, MapComponent, ImportExportButton],
   templateUrl: './app.html',
+  styleUrl: './app.css',
 })
 export class App {
   readonly mediator = inject(Mediator);
-  readonly ORS_API_KEY = environment.orsApiKey;
 
   constructor(public authService: AuthService) {
     effect(() => {
