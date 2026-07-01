@@ -2,6 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.dto.UpdateUserDto;
 import com.example.backend.entity.User;
+import com.example.backend.exception.UserNotFoundException;
 import com.example.backend.repository.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +32,7 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> {
                     logger.error("User not found: id={}", userId);
-                    return new RuntimeException("User not found");
+                    return new UserNotFoundException("User not found");
                 });
 
         if (dto.getUsername() != null && !dto.getUsername().isBlank()) {

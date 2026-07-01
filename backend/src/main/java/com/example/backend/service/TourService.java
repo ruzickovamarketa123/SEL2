@@ -4,8 +4,11 @@ import com.example.backend.dto.GeocodingDto;
 import com.example.backend.dto.OrsResponseDto;
 import com.example.backend.dto.SummaryDto;
 import com.example.backend.entity.Tour;
-import com.example.backend.entity.TourLog;          // AGGIUNTO: serve per i calcoli sui log
+import com.example.backend.entity.TourLog;
 import com.example.backend.entity.User;
+import com.example.backend.exception.TourNotFoundException;
+import com.example.backend.exception.UnauthorizedAccessException;
+import com.example.backend.exception.UserNotFoundException;
 import com.example.backend.repository.TourLogRepository;
 import com.example.backend.repository.TourRepository;
 import com.example.backend.repository.UserRepository;
@@ -18,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
-import java.util.stream.Collectors;               // AGGIUNTO: per raggruppare i log per tour
+import java.util.stream.Collectors;
 
 @Service
 public class TourService {
@@ -63,7 +66,7 @@ public class TourService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> {
                     logger.error("User not found with id={}", userId);
-                    return new RuntimeException("User not found");
+                    return new UserNotFoundException("User not found");
                 });
         tour.setUser(user);
 
@@ -95,12 +98,12 @@ public class TourService {
         Tour existingTour = tourRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.error("Tour not found with id={}", id);
-                    return new RuntimeException("Tour not found");
+                    return new TourNotFoundException("Tour not found");
                 });
 
         if (!existingTour.getUser().getId().equals(userId)) {
             logger.warn("Unauthorized update attempt: userId={} tried to update tour id={}", userId, id);
-            throw new RuntimeException("Not authorized to update this tour");
+            throw new UnauthorizedAccessException("Not authorized to update this tour");
         }
 
         // Save human-readable names before geocoding
@@ -114,8 +117,8 @@ public class TourService {
 
         boolean routeOrTransportChanged =
                 !Objects.equals(existingTour.getFrom(), newFrom) ||
-                !Objects.equals(existingTour.getTo(),   newTo)   ||
-                !Objects.equals(existingTour.getTransportType(), tourDetails.getTransportType());
+                        !Objects.equals(existingTour.getTo(),   newTo)   ||
+                        !Objects.equals(existingTour.getTransportType(), tourDetails.getTransportType());
 
         existingTour.setName(tourDetails.getName());
         existingTour.setDescription(tourDetails.getDescription());
@@ -139,11 +142,11 @@ public class TourService {
     @Transactional
     public void deleteById(UUID id, UUID userId) {
         Tour tour = tourRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Tour not found"));
+                .orElseThrow(() -> new TourNotFoundException("Tour not found"));
 
         if (!tour.getUser().getId().equals(userId)) {
             logger.warn("Unauthorized delete: userId={} tried to delete tour id={}", userId, id);
-            throw new RuntimeException("Not authorized to delete this tour");
+            throw new UnauthorizedAccessException("Not authorized to delete this tour");
         }
         logger.info("Deleting tour id={} and its logs", id);
         tourLogRepository.deleteByTourId(id);
@@ -221,13 +224,6 @@ public class TourService {
         return Math.max(1, score);
     }
 
-    /**
-     * If location is already in "lon,lat" format it is returned as-is.
-     * Otherwise the ORS Geocoding API is called to resolve the city
-     * name to coordinates.  On any failure the original string is returned so
-     * the caller can still attempt the directions call and handle the error
-     * there
-     */
     String geocodeLocation(String location) {
         if (location == null || location.isBlank()) return location;
 
@@ -235,7 +231,7 @@ public class TourService {
 
         if (isCoordinate(trimmed)) {
             logger.debug("'{}' is already a coordinate — skipping geocoding", trimmed);
-            return trimmed.replace(" ", "");   // normalise spaces around comma
+            return trimmed.replace(" ", "");
         }
 
         logger.debug("Geocoding location: '{}'", trimmed);
@@ -255,7 +251,7 @@ public class TourService {
                     && response.features.get(0).geometry.coordinates != null) {
 
                 double[] coords = response.features.get(0).geometry.coordinates;
-                String result = coords[0] + "," + coords[1];   // lon,lat
+                String result = coords[0] + "," + coords[1];
                 logger.debug("Geocoded '{}' → {}", trimmed, result);
                 return result;
             }
@@ -265,14 +261,9 @@ public class TourService {
             logger.warn("Geocoding failed for '{}': {}", trimmed, e.getMessage());
         }
 
-        // Return original string; ORS directions will fail gracefully via existing fallback
         return trimmed;
     }
 
-    /**
-     * Calls ORS Directions and sets distance (km) and estimatedTime (min) on
-     * the tour.  On any failure both fields are set to 0.0
-     */
     private void fetchAndApplyRouteData(Tour tour, String fromCoords, String toCoords) {
         String profile = getOrsProfile(tour.getTransportType());
         String url = ORS_DIRECTIONS_URL + profile
@@ -312,10 +303,6 @@ public class TourService {
         };
     }
 
-    /**
-     * Returns true if value looks like "lon,lat"
-     * e.g. "16.3738,48.2082" or "16.3738, 48.2082".
-     */
     private boolean isCoordinate(String value) {
         String[] parts = value.split(",");
         if (parts.length != 2) return false;

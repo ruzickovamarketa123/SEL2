@@ -4,6 +4,8 @@ import com.example.backend.dto.AuthResponseDto;
 import com.example.backend.dto.LoginRequestDto;
 import com.example.backend.dto.RegisterRequestDto;
 import com.example.backend.entity.User;
+import com.example.backend.exception.InvalidCredentialsException;
+import com.example.backend.exception.UserNotFoundException;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.security.JwtService;
 import org.apache.logging.log4j.LogManager;
@@ -48,12 +50,12 @@ public class AuthService {
         User user = userRepository.findByUsername(dto.getUsername())
                 .orElseThrow(() -> {
                     logger.warn("Login failed: no user found with username '{}'", dto.getUsername());
-                    return new RuntimeException("User not found");
+                    return new UserNotFoundException("User not found");
                 });
 
         if (!passwordEncoder.matches(dto.getPassword(), user.getPasswordHash())) {
             logger.warn("Login failed: incorrect password for username '{}'", dto.getUsername());
-            throw new RuntimeException("Invalid password");
+            throw new InvalidCredentialsException("Invalid password");
         }
 
         String token = jwtService.generateToken(user.getId());
