@@ -1,0 +1,45 @@
+<div style="display: flex; gap: 8px; align-items: center;">
+
+  <!-- export button -->
+  <button (click)="onExport()"
+    style="
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      background: rgb(73, 157, 208, 0.8);
+      color: #000000;
+      border: 1.5px solid #000000;
+    ">
+    export
+  </button>
+
+  <!-- import button -->
+  <button (click)="onImport()"
+    [disabled]="vm.isImporting()"
+    style="
+      padding: 8px 18px;
+      background: rgba(110, 219, 80, 0.8);
+      color: rgb(0, 0, 0);
+      border: 1.5px solid #000000;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    ">
+    @if (vm.isImporting()) { importing... }
+    @else { import }
+  </button>
+
+  <!-- feedback toast -->
+  @if (vm.feedback()) {
+  <span
+    [style.background]="vm.feedback()!.type === 'success' ? 'rgba(80,180,80,0.15)' : 'rgba(220,60,60,0.12)'"
+    [style.color]="vm.feedback()!.type === 'success' ? '#2a7a2a' : '#a32d2d'"
+    [style.border]="'1px solid ' + (vm.feedback()!.type === 'success' ? '#90cc90' : '#f09595')"
+    style="font-size: 12px; padding: 4px 10px; border-radius: 6px;">
+    {{ vm.feedback()!.message }}
+  </span>
+}
+</div>
