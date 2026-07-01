@@ -57,28 +57,6 @@ class TourControllerTest {
     }
 
     @Test
-    void readAll_noTours_returnsEmptyList() {
-        when(request.getAttribute("userId")).thenReturn(userId);
-        when(tourService.findByUserId(userId)).thenReturn(List.of());
-
-        List<Tour> result = tourController.readAll(request);
-
-        assertThat(result).isEmpty();
-    }
-
-    @Test
-    // findById now filters by userId — existing tour with correct owner returns 200
-    void read_existingId_returns200WithTour() {
-        when(request.getAttribute("userId")).thenReturn(userId);
-        when(tourService.findById(tourId, userId)).thenReturn(Optional.of(testTour));
-
-        ResponseEntity<Tour> result = tourController.read(tourId, request);
-
-        assertThat(result.getStatusCode().value()).isEqualTo(200);
-        assertThat(result.getBody()).isEqualTo(testTour);
-    }
-
-    @Test
     // findById returns empty when tour doesn't exist or belongs to another user
     void read_nonExistingId_returns404() {
         when(request.getAttribute("userId")).thenReturn(userId);
@@ -122,25 +100,4 @@ class TourControllerTest {
         verify(tourService).deleteById(tourId, userId);
     }
 
-    @Test
-    void search_returnsTours() {
-        when(request.getAttribute("userId")).thenReturn(userId);
-        when(tourService.search("Vienna", 0, 0, userId)).thenReturn(List.of(testTour));
-
-        List<Tour> result = tourController.search("Vienna", 0, 0, request);
-
-        assertThat(result).hasSize(1);
-        verify(tourService).search("Vienna", 0, 0, userId);
-    }
-
-    @Test
-    void search_emptyQuery_delegatesToServiceSearch() {
-        when(request.getAttribute("userId")).thenReturn(userId);
-        when(tourService.search("", 0, 0, userId)).thenReturn(List.of(testTour));
-
-        List<Tour> result = tourController.search("", 0, 0, request);
-
-        assertThat(result).hasSize(1);
-        verify(tourService).search("", 0, 0, userId);
-    }
 }

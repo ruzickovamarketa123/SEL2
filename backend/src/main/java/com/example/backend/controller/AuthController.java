@@ -3,45 +3,32 @@ package com.example.backend.controller;
 import com.example.backend.dto.AuthResponseDto;
 import com.example.backend.dto.LoginRequestDto;
 import com.example.backend.dto.RegisterRequestDto;
-import com.example.backend.entity.User;
-import com.example.backend.repository.UserRepository;
-import com.example.backend.security.JwtService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.backend.service.AuthService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final UserRepository userRepository;
-    private final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
+    private static final Logger logger = LogManager.getLogger(AuthController.class);
 
-    public AuthController(UserRepository userRepository, JwtService jwtService, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.jwtService = jwtService;
-        this.passwordEncoder = passwordEncoder;
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
     @PostMapping("/register")
     public AuthResponseDto register(@RequestBody RegisterRequestDto dto) {
-        User user = new User();
-        user.setUsername(dto.getUsername());
-        user.setEmail(dto.getEmail());
-        user.setPasswordHash(passwordEncoder.encode(dto.getPassword()));
-        userRepository.save(user);
-        String token = jwtService.generateToken(user.getId());
-        return new AuthResponseDto(token, user.getUsername());
+        logger.info("POST /api/auth/register - username='{}'", dto.getUsername());
+        return authService.register(dto);
     }
 
     @PostMapping("/login")
     public AuthResponseDto login(@RequestBody LoginRequestDto dto) {
-        User user = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        if (!passwordEncoder.matches(dto.getPassword(), user.getPasswordHash())) {
-            throw new RuntimeException("Invalid password");
-        }
-        String token = jwtService.generateToken(user.getId());
-        return new AuthResponseDto(token, user.getUsername());
+        logger.info("POST /api/auth/login - username='{}'", dto.getUsername());
+        return authService.login(dto);
     }
 }

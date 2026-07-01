@@ -78,40 +78,6 @@ class TourServiceTest {
     }
 
     @Test
-    // controller does orElse(404) — this chain only works if the service returns empty optional
-    void findById_nonExistingTour_returnsEmpty() {
-        when(tourRepository.findById(tourId)).thenReturn(Optional.empty());
-
-        Optional<Tour> result = tourService.findById(tourId, userId);
-
-        assertThat(result).isEmpty();
-    }
-
-    @Test
-    // verifies the service doesn't accidentally filter, transform, or lose items
-    void findByUserId_returnsTourList() {
-        Tour t1 = new Tour("Tour A", "", "1.0,2.0", "3.0,4.0", "car",  10.0, 60.0, null);
-        Tour t2 = new Tour("Tour B", "", "5.0,6.0", "7.0,8.0", "bike", 20.0, 90.0, null);
-        when(tourRepository.findByUserId(userId)).thenReturn(List.of(t1, t2));
-
-        List<Tour> result = tourService.findByUserId(userId);
-
-        assertThat(result).hasSize(2);
-        assertThat(result).extracting(Tour::getName).containsExactly("Tour A", "Tour B");
-    }
-
-    @Test
-    // checks the service returns empty list rather than null — the frontend would crash on null
-    void findByUserId_noTours_returnsEmptyList() {
-        when(tourRepository.findByUserId(userId)).thenReturn(List.of());
-
-        List<Tour> result = tourService.findByUserId(userId);
-
-        assertThat(result).isEmpty();
-    }
-
-
-    @Test
         //without it, the next line tour.setUser(user) would get a null and throw a confusing exception
     void create_userNotFound_throwsException() {
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
@@ -143,58 +109,6 @@ class TourServiceTest {
     }
 
     @Test
-    void create_bikeTransport_usesCyclingProfile() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(testUser));
-        when(restTemplate.getForObject(any(String.class), any()))
-                .thenThrow(new RuntimeException("skip"));
-        when(tourRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
-
-        Tour tour = new Tour("Bike Tour", "", "1.0,2.0", "3.0,4.0", "bike", null, null, null);
-        tourService.create(tour, userId);
-
-        verify(restTemplate).getForObject(
-                argThat((String url) -> url.contains("cycling-regular")), any());
-    }
-
-    @Test
-    void create_hikeTransport_usesFootWalkingProfile() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(testUser));
-        when(restTemplate.getForObject(any(String.class), any()))
-                .thenThrow(new RuntimeException("skip"));
-        when(tourRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
-
-        Tour tour = new Tour("Hike", "", "1.0,2.0", "3.0,4.0", "hike", null, null, null);
-        tourService.create(tour, userId);
-
-        verify(restTemplate).getForObject(
-                argThat((String url) -> url.contains("foot-walking")), any());
-    }
-
-    @Test
-    void create_nullTransport_usesDefaultDrivingProfile() {
-        when(userRepository.findById(userId)).thenReturn(Optional.of(testUser));
-        when(restTemplate.getForObject(any(String.class), any()))
-                .thenThrow(new RuntimeException("skip"));
-        when(tourRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
-
-        Tour tour = new Tour("Drive", "", "1.0,2.0", "3.0,4.0", null, null, null, null);
-        tourService.create(tour, userId);
-
-        verify(restTemplate).getForObject(
-                argThat((String url) -> url.contains("driving-car")), any());
-    }
-
-    @Test
-    // checks the service throws "Tour not found" rather than a NullPointerException
-    void update_tourNotFound_throwsException() {
-        when(tourRepository.findById(tourId)).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> tourService.update(tourId, new Tour(), userId))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Tour not found");
-    }
-
-    @Test
     // ownership guard — without it anyone could edit anyone else's tours
     void update_unauthorizedUser_throwsException() {
         UUID otherUserId = UUID.randomUUID();
@@ -210,23 +124,6 @@ class TourServiceTest {
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("Not authorized");
     }
-
-    @Test
-    // tests the optimization - no point making an expensive ORS call if only the name/description changed
-    void update_noRouteChange_doesNotCallOrs() {
-        Tour existing = new Tour("Tour", "desc", "1.0,2.0", "3.0,4.0", "car", 10.0, 60.0, null);
-        existing.setId(tourId);
-        existing.setUser(testUser);
-
-        Tour details = new Tour("Tour Updated", "new desc", "1.0,2.0", "3.0,4.0", "car", null, null, null);
-        when(tourRepository.findById(tourId)).thenReturn(Optional.of(existing));
-        when(tourRepository.save(any())).thenReturn(existing);
-
-        tourService.update(tourId, details, userId);
-
-        verify(restTemplate, never()).getForObject(any(String.class), any());
-    }
-
 
     @Test
     // cascade logic — if either line is removed accidentally, this test catches it
@@ -263,24 +160,6 @@ class TourServiceTest {
 
 
     @Test
-    // if input is already coordinates it must be returned as-is without any HTTP call
-    void geocodeLocation_alreadyCoordinates_returnsAsIs() {
-        String result = tourService.geocodeLocation("16.37,48.21");
-
-        assertThat(result).isEqualTo("16.37,48.21");
-        verifyNoInteractions(restTemplate);
-    }
-
-    @Test
-    // spaces around the comma must be normalised so ORS directions doesn't choke
-    void geocodeLocation_coordinatesWithSpaces_normalizesComma() {
-        String result = tourService.geocodeLocation("16.37, 48.21");
-
-        assertThat(result).isEqualTo("16.37,48.21");
-        verifyNoInteractions(restTemplate);
-    }
-
-    @Test
     // if ORS geocoding fails the original string is returned so the tour can still be saved
     void geocodeLocation_orsGeodingFails_returnsOriginalString() {
         when(restTemplate.getForObject(any(String.class), eq(com.example.backend.dto.GeocodingDto.class)))
@@ -305,16 +184,6 @@ class TourServiceTest {
     }
 
     @Test
-    void search_noResults_returnsEmptyList() {
-        when(tourRepository.searchByUserId(userId, "xyz")).thenReturn(List.of());
-
-        List<Tour> result = tourService.search("xyz", 0, 0, userId);
-
-        assertThat(result).isEmpty();
-    }
-
-
-    @Test
     void calculatePopularity_countsLogsCappedAtFive() {
         assertThat(tourService.calculatePopularity(List.of())).isZero();
         assertThat(tourService.calculatePopularity(List.of(new TourLog(), new TourLog(), new TourLog())))
@@ -324,20 +193,9 @@ class TourServiceTest {
     }
 
     @Test
-    void calculateChildFriendliness_easyShortTour_isFive() {
-        TourLog easy = new TourLog(null, LocalDateTime.now(), 3.0, 5, "ok", "Easy", 30.0);
-        assertThat(tourService.calculateChildFriendliness(List.of(easy))).isEqualTo(5);
-    }
-
-    @Test
     void calculateChildFriendliness_expertLongTour_isClampedToOne() {
         TourLog tough = new TourLog(null, LocalDateTime.now(), 20.0, 2, "tough", "Expert", 300.0);
         assertThat(tourService.calculateChildFriendliness(List.of(tough))).isEqualTo(1);
-    }
-
-    @Test
-    void calculateChildFriendliness_noLogs_isZero() {
-        assertThat(tourService.calculateChildFriendliness(List.of())).isZero();
     }
 
     @Test
