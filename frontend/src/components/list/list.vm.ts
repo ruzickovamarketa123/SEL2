@@ -1,23 +1,33 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Tour } from '../tour_details/tour_details.model';
+import { Mediator } from '../../services/mediator.service';
 
 @Injectable()
 export class ListViewModel {
+  private mediator = inject(Mediator);
 
-  searchTerm   = signal('');
-  selectedId   = signal<string | null>(null);
+  filteredTours = this.mediator.enrichedTours;
+  selectedId    = this.mediator.selectedTourId;
+  activeTab     = this.mediator.activeTab;
+
   showAddModal = signal(false);
   errorMessage = signal<string | null>(null);
-
-  allToursData = signal<Tour[]>([]);
-
-  // Tours are already filtered by the backend — this computed just
-  // exposes the full list so the template can iterate over it.
-  filteredTours = computed(() => this.allToursData());
 
   newTour = signal({
     name: '', description: '', from: '', to: '', transportType: null
   });
+
+  select(tour: Tour) {
+    this.mediator.selectTour(tour);
+  }
+
+  closeTour() {
+    this.mediator.closeTour();
+  }
+
+  setActiveTab(tab: 'details' | 'logs') {
+    this.mediator.activeTab.set(tab);
+  }
 
   openAddModal() {
     this.newTour.set({ name: '', description: '', from: '', to: '', transportType: null });
@@ -32,15 +42,16 @@ export class ListViewModel {
 
   isFormValid(): boolean {
     const { name, from, to, transportType } = this.newTour();
-    return (
-      name.trim().length > 0 &&
-      from.trim().length > 0 &&
-      to.trim().length > 0 &&
-      transportType !== null
-    );
+    return name.trim().length > 0 && from.trim().length > 0 &&
+           to.trim().length > 0 && transportType !== null;
   }
 
-  resetForm() {
-    this.newTour.set({ name: '', description: '', from: '', to: '', transportType: null as any });
+  addTour() {
+    if (!this.isFormValid()) {
+      this.errorMessage.set('please fill in all required fields.');
+      return;
+    }
+    this.mediator.addTour(this.newTour() as Tour);
+    this.closeAddModal();
   }
 }

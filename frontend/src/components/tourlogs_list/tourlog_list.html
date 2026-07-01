@@ -31,11 +31,7 @@
 
       @if (selectedLogId() === log.id) {
       <div class="log-detail-inline" (click)="$event.stopPropagation()">
-        <tourlog_details
-          [log]="log"
-          (edit)="onLogEdit($event)"
-          (delete)="onLogDelete($event)">
-        </tourlog_details>
+        <tourlog_details></tourlog_details>
       </div>
       }
 
