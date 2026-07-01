@@ -68,6 +68,26 @@ class TourLogControllerTest {
     }
 
     @Test
+    void readAll_noLogs_returnsEmptyList() {
+        when(tourLogService.findAllByUser(userId)).thenReturn(List.of());
+
+        List<TourLogDto> result = tourLogController.readAll(request);
+
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    void read_existingLog_returns200() {
+        when(tourLogService.findById(logId, userId)).thenReturn(testDto);
+
+        ResponseEntity<TourLogDto> result = tourLogController.read(logId, request);
+
+        assertThat(result.getStatusCode().value()).isEqualTo(200);
+        assertThat(result.getBody()).isNotNull();
+        assertThat(result.getBody().getId()).isEqualTo(logId);
+    }
+
+    @Test
     // Service throws RuntimeException when log not found or not owned — controller returns 404
     void read_notFoundOrUnauthorized_returns404() {
         when(tourLogService.findById(logId, userId)).thenThrow(new RuntimeException("Not found"));
@@ -97,6 +117,16 @@ class TourLogControllerTest {
         assertThatThrownBy(() -> tourLogController.create(testDto, request))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("Not authorized");
+    }
+
+    @Test
+    void update_delegatesToServiceAndReturnsDto() {
+        when(tourLogService.update(logId, testDto, userId)).thenReturn(testDto);
+
+        TourLogDto result = tourLogController.update(logId, testDto, request);
+
+        assertThat(result).isNotNull();
+        verify(tourLogService).update(logId, testDto, userId);
     }
 
     @Test
