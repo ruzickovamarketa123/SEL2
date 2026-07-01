@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SearchInputViewModel } from './search-input.vm';
 
@@ -12,10 +12,7 @@ import { SearchInputViewModel } from './search-input.vm';
 export class SearchInput {
   public vm = inject(SearchInputViewModel);
 
-  @Output() searchChanged = new EventEmitter<string>();
-
   onSearch() {
-    //takes the current search term form the view model and emit it to the parent
-    this.searchChanged.emit(this.vm.searchTerm());
+    this.vm.search(this.vm.searchTerm());
   }
 }
