@@ -1,7 +1,13 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable, inject } from '@angular/core';
+import { Mediator } from '../../services/mediator.service';
 
 @Injectable()
 export class SearchInputViewModel {
-  searchTerm = signal('');
-  showModal = signal(false);
+  private mediator = inject(Mediator);
+
+  searchTerm = this.mediator.searchTerm;
+
+  search(term: string) {
+    this.mediator.onSearchChanged(term);
+  }
 }
