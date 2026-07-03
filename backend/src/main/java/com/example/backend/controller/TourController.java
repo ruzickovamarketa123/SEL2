@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import com.example.backend.entity.Tour;
 import com.example.backend.service.TourService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
@@ -51,14 +52,14 @@ public class TourController {
     }
 
     @PostMapping
-    public Tour create(@RequestBody Tour tour, HttpServletRequest request) {
+    public Tour create(@Valid @RequestBody Tour tour, HttpServletRequest request) {
         UUID userId = (UUID) request.getAttribute("userId");
         logger.info("POST /api/tours - creating tour '{}' for userId={}", tour.getName(), userId);
         return tourService.create(tour, userId);
     }
 
     @PutMapping("/{id}")
-    public Tour update(@PathVariable UUID id, @RequestBody Tour tour, HttpServletRequest request) {
+    public Tour update(@PathVariable UUID id, @Valid @RequestBody Tour tour, HttpServletRequest request) {
         UUID userId = (UUID) request.getAttribute("userId");
         logger.info("PUT /api/tours/{} by userId={}", id, userId);
         return tourService.update(id, tour, userId);

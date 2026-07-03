@@ -2,6 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.dto.UpdateUserDto;
 import com.example.backend.entity.User;
+import com.example.backend.exception.InvalidInputException;
 import com.example.backend.exception.UserNotFoundException;
 import com.example.backend.repository.UserRepository;
 import org.apache.logging.log4j.LogManager;
@@ -36,16 +37,27 @@ public class UserService {
                 });
 
         if (dto.getUsername() != null && !dto.getUsername().isBlank()) {
-            user.setUsername(dto.getUsername());
+            String username = dto.getUsername().trim();
+            if (username.length() < 3 || username.length() > 30) {
+                throw new InvalidInputException("Username must be between 3 and 30 characters");
+            }
+            user.setUsername(username);
         }
         if (dto.getEmail() != null && !dto.getEmail().isBlank()) {
-            user.setEmail(dto.getEmail());
+            String email = dto.getEmail().trim();
+            if (!email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
+                throw new InvalidInputException("Email must be valid");
+            }
+            user.setEmail(email);
         }
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            if (dto.getPassword().length() < 6) {
+                throw new InvalidInputException("Password must be at least 6 characters");
+            }
             user.setPasswordHash(passwordEncoder.encode(dto.getPassword()));
         }
 
         userRepository.save(user);
         logger.info("Profile updated successfully for userId={}", userId);
     }
-}
+}

@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import com.example.backend.dto.TourLogDto;
 import com.example.backend.service.TourLogService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class TourLogController {
     }
 
     @PostMapping
-    public TourLogDto create(@RequestBody TourLogDto dto, HttpServletRequest request) {
+    public TourLogDto create(@Valid @RequestBody TourLogDto dto, HttpServletRequest request) {
         UUID userId = (UUID) request.getAttribute("userId");
         logger.info("POST /api/logs for tourId={} userId={}", dto.getTourId(), userId);
         return tourLogService.create(dto, userId);
@@ -50,7 +51,7 @@ public class TourLogController {
 
     @PutMapping("/{id}")
     public TourLogDto update(@PathVariable UUID id,
-                             @RequestBody TourLogDto dto,
+                             @Valid @RequestBody TourLogDto dto,
                              HttpServletRequest request) {
         UUID userId = (UUID) request.getAttribute("userId");
         logger.info("PUT /api/logs/{} by userId={}", id, userId);
