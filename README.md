@@ -77,3 +77,6 @@ cd backend
 ## Documentation
 
 The full protocol — architecture, design pattern, use-case / class / sequence diagrams, wireframes, tests and time tracking — is in [`TourPlanner_Protocol_final.docx`](./TourPlanner_Protocol_final.docx).
+
+### Git link
+https://github.com/ruzickovamarketa123/SEL2.git
