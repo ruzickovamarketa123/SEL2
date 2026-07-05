@@ -1,26 +1,79 @@
-# SEL2
-- software engineering 2 labor - semester project 'Tour Planner'
-  
 # TourPlanner
-- single-screen Angular frontend application for managing tours and tour logs
- 
-## UI Layout & Wireframes & Design Decisions
-### Screen Layout
-- single-screen layout divided into four zones — a top navigation bar, a tour list on the left, a central map, and a bottom details panel
-- follows the principle of spatial consistency: the user always sees the tour list on the left, the map as the main focus, and the details of the active item below 
-### Tour List — Left Sidebar
-- following the natural left-to-right reading pattern
-- the user browses the list, selects a tour, and the result is immediately reflected in the map and the bottom panel — without any page transition
-### Map as the Central Element
-- the largest portion of the screen because it will provide key visual context for tours/tour logs
-- map stays visible even while browsing details, supporting spatial awareness — the user never loses track of where a route is located
-### Wireframes
-<img width="2084" height="1267" alt="Screenshot 2026-04-07 at 18 36 40" src="https://github.com/user-attachments/assets/bf111900-a31a-4bf9-ab98-f21f4b8426e3" />
-wireframe 1: default window
-<img width="2084" height="1268" alt="Screenshot 2026-04-07 at 18 39 09" src="https://github.com/user-attachments/assets/e20de4e2-e8af-408f-aa97-680356c9205b" />
-wireframe 2: a tour was selected by user
-<img width="2084" height="1270" alt="Screenshot 2026-04-07 at 18 40 11" src="https://github.com/user-attachments/assets/0233bfc3-daa2-4e6f-84f5-a51a32eaa484" />
-wireframe 3: tour logs was selected by user in the bottom menu
-<img width="2086" height="1265" alt="Screenshot 2026-04-07 at 18 40 42" src="https://github.com/user-attachments/assets/65e8a77a-eefd-4dd5-84d7-9734857d3995" />
-wireframe 4: a tour log was selected by user
 
+Software Engineering 2 (SWEN) semester project — a full-stack web application for planning tours and logging completed trips, with live routing on an interactive map.
+
+**Stack:** Spring Boot 4.0 · Java 25 · Angular 21 · PostgreSQL · JPA/Hibernate · Leaflet · OpenRouteService · Log4j2
+
+---
+
+## Features
+
+- **Authentication** — self-registration and login; passwords are BCrypt-hashed, sessions use stateless JWT tokens (24 h expiry).
+- **Tour CRUD** — create, read, update and delete tours. On save the backend geocodes the from/to locations and fetches distance and estimated time from OpenRouteService.
+- **Tour Logs** — each tour can hold multiple logs (date/time, distance, duration, difficulty, rating 1–5, comment).
+- **Interactive map** — the selected tour is drawn on a Leaflet map (CartoDB tiles); the route polyline is fetched live from ORS with a cancellation token so stale routes never flash when switching tours quickly.
+- **Computed attributes** — popularity and child-friendliness (each 0–5) are calculated in the business layer and shown as star ratings; both can also be used as search filters.
+- **Full-text search** — a single query searches tour name, description, from/to, transport type and log comments, optionally filtered by minimum popularity / child-friendliness. Keystrokes are debounced by 300 ms.
+- **Import / Export** — tours and their logs are exported as a versioned JSON file and re-created on import.
+- **Profile self-management** — logged-in users can update their username, e-mail and password without logging out.
+
+## Project structure
+
+```
+SEL2/
+├── backend/            Spring Boot 4 / Java 25 REST API (3-layer architecture)
+├── frontend/           Angular 21 single-page app (MVVM via signals)
+├── data/               supporting data files
+├── docker-compose.yml  PostgreSQL 16 for local development
+└── TourPlanner_Protocol_final.docx   full project protocol
+```
+
+## Getting started
+
+### Prerequisites
+
+- Java 25 (JDK) and a build tool wrapper (Maven / Gradle) — included in `backend/`
+- Node.js + npm and the Angular CLI (Angular 21)
+- Docker (for PostgreSQL) — or a local PostgreSQL 16 instance
+- An [OpenRouteService](https://openrouteservice.org/) API key (free tier) for geocoding and directions
+
+### 1. Start the database
+
+```bash
+docker compose up -d
+```
+
+This starts PostgreSQL 16 with database `tourplanner`, user `admin`, password `password`, on port `5432` — matching the backend's default datasource configuration.
+
+### 2. Run the backend
+
+```bash
+cd backend
+# add your OpenRouteService API key to src/main/resources/application.properties
+./mvnw spring-boot:run       # or ./gradlew bootRun
+```
+
+The API starts on `http://localhost:8080` under `/api`.
+
+### 3. Run the frontend
+
+```bash
+cd frontend
+npm install
+npm start                    # or: ng serve
+```
+
+The app is served on `http://localhost:4200` (the backend allows CORS from this origin).
+
+## Tests
+
+The backend ships with 42 unit tests (JUnit 5 + Mockito + AssertJ) covering business logic, computed attributes, ownership guards and the controller layer:
+
+```bash
+cd backend
+./mvnw test                  # or ./gradlew test
+```
+
+## Documentation
+
+The full protocol — architecture, design pattern, use-case / class / sequence diagrams, wireframes, tests and time tracking — is in [`TourPlanner_Protocol_final.docx`](./TourPlanner_Protocol_final.docx).
