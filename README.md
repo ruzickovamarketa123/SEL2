@@ -2,6 +2,8 @@
 
 Software Engineering 2 (SWEN) semester project — a full-stack web application for planning tours and logging completed trips, with live routing on an interactive map.
 
+GitHub Repository link: https://github.com/ruzickovamarketa123/SEL2
+
 **Stack:** Spring Boot 4.0 · Java 25 · Angular 21 · PostgreSQL · JPA/Hibernate · Leaflet · OpenRouteService · Log4j2
 
 ---
