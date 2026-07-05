@@ -663,3 +663,147 @@
 2026-07-05 18:28:18 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
 2026-07-05 18:28:18 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
 2026-07-05 18:28:18 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:21 [main] INFO  com.example.backend.BackendApplication - Starting BackendApplication using Java 25.0.2 with PID 60129 (/Users/marketaruzickova/IdeaProjects/SE2L/backend/target/classes started by marketaruzickova in /Users/marketaruzickova/IdeaProjects/SE2L/backend)
+2026-07-05 21:47:21 [main] DEBUG com.example.backend.BackendApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
+2026-07-05 21:47:21 [main] INFO  com.example.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-05 21:47:23 [main] DEBUG com.example.backend.security.JwtFilter - Filter 'jwtFilter' configured for use
+2026-07-05 21:47:28 [main] INFO  com.example.backend.BackendApplication - Started BackendApplication in 7.75 seconds (process running for 9.228)
+2026-07-05 21:47:36 [http-nio-8080-exec-2] INFO  com.example.backend.controller.AuthController - POST /api/auth/login - username='user1'
+2026-07-05 21:47:36 [http-nio-8080-exec-2] INFO  com.example.backend.service.AuthService - Login attempt for username 'user1'
+2026-07-05 21:47:36 [http-nio-8080-exec-2] INFO  com.example.backend.service.AuthService - Login successful for username 'user1'
+2026-07-05 21:47:36 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:36 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:36 [http-nio-8080-exec-6] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:36 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:50 [http-nio-8080-exec-8] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'fdefw' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:50 [http-nio-8080-exec-8] INFO  com.example.backend.service.TourService - Creating tour 'fdefw' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:50 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Geocoding location: 'Prague'
+2026-07-05 21:47:51 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Geocoded 'Prague' → 14.460249,50.06694
+2026-07-05 21:47:51 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Geocoding location: 'Vienna'
+2026-07-05 21:47:52 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Geocoded 'Vienna' → 16.348388,48.198674
+2026-07-05 21:47:52 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=14.460249,50.06694, to=16.348388,48.198674
+2026-07-05 21:47:52 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - ORS Directions: distance=316.4693km, time=3809.038333333333min
+2026-07-05 21:47:52 [http-nio-8080-exec-8] INFO  com.example.backend.service.TourService - Tour created successfully: id=46d8e537-2829-432c-8371-b38d2484c321, name='fdefw'
+2026-07-05 21:47:52 [http-nio-8080-exec-10] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:52 [http-nio-8080-exec-10] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:59 [http-nio-8080-exec-2] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Rome to Florence' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:59 [http-nio-8080-exec-2] INFO  com.example.backend.service.TourService - Creating tour 'Rome to Florence' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:47:59 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Geocoding location: 'Rome'
+2026-07-05 21:47:59 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Geocoded 'Rome' → 12.528091,41.878243
+2026-07-05 21:47:59 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Geocoding location: 'Florence'
+2026-07-05 21:47:59 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Geocoded 'Florence' → 11.370028,43.817726
+2026-07-05 21:47:59 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=driving-car, from=12.528091,41.878243, to=11.370028,43.817726
+2026-07-05 21:48:00 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - ORS Directions: distance=281.7523km, time=190.34min
+2026-07-05 21:48:00 [http-nio-8080-exec-2] INFO  com.example.backend.service.TourService - Tour created successfully: id=108da021-aee1-465e-bfa8-877e6684812d, name='Rome to Florence'
+2026-07-05 21:48:00 [http-nio-8080-exec-4] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=108da021-aee1-465e-bfa8-877e6684812d userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-4] INFO  com.example.backend.service.TourLogService - Creating log for tourId=108da021-aee1-465e-bfa8-877e6684812d userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-4] INFO  com.example.backend.service.TourLogService - TourLog created: id=59df3efa-5765-4896-96be-f3ef4fafea2e
+2026-07-05 21:48:00 [http-nio-8080-exec-5] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=108da021-aee1-465e-bfa8-877e6684812d userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-5] INFO  com.example.backend.service.TourLogService - Creating log for tourId=108da021-aee1-465e-bfa8-877e6684812d userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-5] INFO  com.example.backend.service.TourLogService - TourLog created: id=9cdc8ae9-ad8a-49d7-be95-f9dfcccedf96
+2026-07-05 21:48:00 [http-nio-8080-exec-6] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Vienna Forest Hike' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-6] INFO  com.example.backend.service.TourService - Creating tour 'Vienna Forest Hike' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoding location: 'Vienna'
+2026-07-05 21:48:00 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoded 'Vienna' → 16.348388,48.198674
+2026-07-05 21:48:00 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoding location: 'Klosterneuburg'
+2026-07-05 21:48:00 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoded 'Klosterneuburg' → 16.333802,48.297133
+2026-07-05 21:48:00 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=16.348388,48.198674, to=16.333802,48.297133
+2026-07-05 21:48:00 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - ORS Directions: distance=12.4642km, time=149.56666666666666min
+2026-07-05 21:48:00 [http-nio-8080-exec-6] INFO  com.example.backend.service.TourService - Tour created successfully: id=0128b81f-96fd-4d67-bcf8-6af6d4c476a8, name='Vienna Forest Hike'
+2026-07-05 21:48:00 [http-nio-8080-exec-7] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=0128b81f-96fd-4d67-bcf8-6af6d4c476a8 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-7] INFO  com.example.backend.service.TourLogService - Creating log for tourId=0128b81f-96fd-4d67-bcf8-6af6d4c476a8 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-7] INFO  com.example.backend.service.TourLogService - TourLog created: id=c07522a4-f258-4d3a-a031-b9c002f82ab4
+2026-07-05 21:48:00 [http-nio-8080-exec-8] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Amsterdam Bike Tour' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-8] INFO  com.example.backend.service.TourService - Creating tour 'Amsterdam Bike Tour' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Geocoding location: 'Amsterdam'
+2026-07-05 21:48:00 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Geocoded 'Amsterdam' → 4.89973,52.37243
+2026-07-05 21:48:00 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Geocoding location: 'Zaandam'
+2026-07-05 21:48:00 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Geocoded 'Zaandam' → 4.829437,52.443861
+2026-07-05 21:48:00 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=cycling-regular, from=4.89973,52.37243, to=4.829437,52.443861
+2026-07-05 21:48:00 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - ORS Directions: distance=12.933200000000001km, time=49.56666666666667min
+2026-07-05 21:48:00 [http-nio-8080-exec-8] INFO  com.example.backend.service.TourService - Tour created successfully: id=d524489c-5f9b-46c8-944d-9f01b04ae30c, name='Amsterdam Bike Tour'
+2026-07-05 21:48:00 [http-nio-8080-exec-9] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=d524489c-5f9b-46c8-944d-9f01b04ae30c userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-9] INFO  com.example.backend.service.TourLogService - Creating log for tourId=d524489c-5f9b-46c8-944d-9f01b04ae30c userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-9] INFO  com.example.backend.service.TourLogService - TourLog created: id=a04838fe-1f96-46db-a94b-e8444bdad5f5
+2026-07-05 21:48:00 [http-nio-8080-exec-10] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=d524489c-5f9b-46c8-944d-9f01b04ae30c userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-10] INFO  com.example.backend.service.TourLogService - Creating log for tourId=d524489c-5f9b-46c8-944d-9f01b04ae30c userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-10] INFO  com.example.backend.service.TourLogService - TourLog created: id=d7c45bd6-678f-4b2b-9e97-4727a2f3b0bd
+2026-07-05 21:48:00 [http-nio-8080-exec-1] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'Prague Morning Run' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-1] INFO  com.example.backend.service.TourService - Creating tour 'Prague Morning Run' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:00 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourService - Geocoding location: 'Prague Old Town'
+2026-07-05 21:48:01 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourService - Geocoded 'Prague Old Town' → 14.460249,50.06694
+2026-07-05 21:48:01 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourService - Geocoding location: 'Prague Castle'
+2026-07-05 21:48:01 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourService - Geocoded 'Prague Castle' → 14.4108,50.0911
+2026-07-05 21:48:01 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=14.460249,50.06694, to=14.4108,50.0911
+2026-07-05 21:48:01 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourService - ORS Directions: distance=4.9738km, time=59.68333333333333min
+2026-07-05 21:48:01 [http-nio-8080-exec-1] INFO  com.example.backend.service.TourService - Tour created successfully: id=d281460b-1414-49c8-98c5-61269183abcc, name='Prague Morning Run'
+2026-07-05 21:48:01 [http-nio-8080-exec-2] INFO  com.example.backend.controller.TourLogController - POST /api/logs for tourId=d281460b-1414-49c8-98c5-61269183abcc userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:01 [http-nio-8080-exec-2] INFO  com.example.backend.service.TourLogService - Creating log for tourId=d281460b-1414-49c8-98c5-61269183abcc userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:01 [http-nio-8080-exec-2] INFO  com.example.backend.service.TourLogService - TourLog created: id=1fba3f04-1f0b-49c0-85bd-baddca284c02
+2026-07-05 21:48:01 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:01 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:01 [http-nio-8080-exec-5] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:01 [http-nio-8080-exec-5] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:35 [http-nio-8080-exec-7] INFO  com.example.backend.controller.TourController - PUT /api/tours/c6dc4d3c-6f61-4b37-ac2d-ac3886fd5e75 by userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:35 [http-nio-8080-exec-7] INFO  com.example.backend.service.TourService - Updating tour id=c6dc4d3c-6f61-4b37-ac2d-ac3886fd5e75 by userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:35 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourService - Geocoding location: 'Prague Old Town'
+2026-07-05 21:48:36 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourService - Geocoded 'Prague Old Town' → 14.460249,50.06694
+2026-07-05 21:48:36 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourService - Geocoding location: 'Prague Castle'
+2026-07-05 21:48:36 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourService - Geocoded 'Prague Castle' → 14.4108,50.0911
+2026-07-05 21:48:36 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourService - Route/transport changed for tour id=c6dc4d3c-6f61-4b37-ac2d-ac3886fd5e75, recalculating ORS data
+2026-07-05 21:48:36 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=cycling-regular, from=14.460249,50.06694, to=14.4108,50.0911
+2026-07-05 21:48:36 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourService - ORS Directions: distance=6.5422km, time=23.881666666666668min
+2026-07-05 21:48:36 [http-nio-8080-exec-7] INFO  com.example.backend.service.TourService - Tour updated successfully: id=c6dc4d3c-6f61-4b37-ac2d-ac3886fd5e75
+2026-07-05 21:48:36 [http-nio-8080-exec-9] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:48:36 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:49:55 [http-nio-8080-exec-2] INFO  com.example.backend.controller.TourController - PUT /api/tours/d281460b-1414-49c8-98c5-61269183abcc by userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:49:55 [http-nio-8080-exec-2] INFO  com.example.backend.service.TourService - Updating tour id=d281460b-1414-49c8-98c5-61269183abcc by userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:49:55 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Geocoding location: 'Vienna'
+2026-07-05 21:49:55 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Geocoded 'Vienna' → 16.348388,48.198674
+2026-07-05 21:49:55 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Geocoding location: 'Prague Castle'
+2026-07-05 21:49:55 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Geocoded 'Prague Castle' → 14.4108,50.0911
+2026-07-05 21:49:55 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Route/transport changed for tour id=d281460b-1414-49c8-98c5-61269183abcc, recalculating ORS data
+2026-07-05 21:49:55 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=foot-walking, from=16.348388,48.198674, to=14.4108,50.0911
+2026-07-05 21:49:56 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - ORS Directions: distance=321.0958km, time=3864.5566666666664min
+2026-07-05 21:49:56 [http-nio-8080-exec-2] INFO  com.example.backend.service.TourService - Tour updated successfully: id=d281460b-1414-49c8-98c5-61269183abcc
+2026-07-05 21:49:56 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:49:56 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:50:52 [http-nio-8080-exec-6] INFO  com.example.backend.controller.TourController - POST /api/tours - creating tour 'jdow' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:50:52 [http-nio-8080-exec-6] INFO  com.example.backend.service.TourService - Creating tour 'jdow' for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:50:52 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoding location: 'Prague'
+2026-07-05 21:50:52 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoded 'Prague' → 14.460249,50.06694
+2026-07-05 21:50:52 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoding location: 'Milan'
+2026-07-05 21:50:52 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoded 'Milan' → 9.170685,45.473702
+2026-07-05 21:50:52 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Calling ORS Directions: profile=cycling-regular, from=14.460249,50.06694, to=9.170685,45.473702
+2026-07-05 21:50:53 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - ORS Directions: distance=977.4341km, time=3392.9483333333333min
+2026-07-05 21:50:53 [http-nio-8080-exec-6] INFO  com.example.backend.service.TourService - Tour created successfully: id=adc25fb3-868b-4f80-ad03-b5a22f595730, name='jdow'
+2026-07-05 21:50:53 [http-nio-8080-exec-8] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:50:53 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:53:22 [http-nio-8080-exec-1] INFO  com.example.backend.controller.TourController - DELETE /api/tours/adc25fb3-868b-4f80-ad03-b5a22f595730
+2026-07-05 21:53:23 [http-nio-8080-exec-1] INFO  com.example.backend.service.TourService - Deleting tour id=adc25fb3-868b-4f80-ad03-b5a22f595730 and its logs
+2026-07-05 21:53:23 [http-nio-8080-exec-1] INFO  com.example.backend.service.TourService - Tour id=adc25fb3-868b-4f80-ad03-b5a22f595730 deleted successfully
+2026-07-05 21:53:23 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:53:23 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 21:58:04 [main] INFO  com.example.backend.BackendApplication - Starting BackendApplication using Java 25.0.2 with PID 61521 (/Users/marketaruzickova/IdeaProjects/SE2L/backend/target/classes started by marketaruzickova in /Users/marketaruzickova/IdeaProjects/SE2L/backend)
+2026-07-05 21:58:04 [main] DEBUG com.example.backend.BackendApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
+2026-07-05 21:58:04 [main] INFO  com.example.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-05 21:58:05 [main] DEBUG com.example.backend.security.JwtFilter - Filter 'jwtFilter' configured for use
+2026-07-05 21:58:10 [main] INFO  com.example.backend.BackendApplication - Started BackendApplication in 6.373 seconds (process running for 7.512)
+2026-07-05 22:03:10 [main] INFO  com.example.backend.BackendApplication - Starting BackendApplication using Java 25.0.2 with PID 61990 (/Users/marketaruzickova/IdeaProjects/SE2L/backend/target/classes started by marketaruzickova in /Users/marketaruzickova/IdeaProjects/SE2L/backend)
+2026-07-05 22:03:10 [main] DEBUG com.example.backend.BackendApplication - Running with Spring Boot v4.0.5, Spring v7.0.6
+2026-07-05 22:03:10 [main] INFO  com.example.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-07-05 22:03:12 [main] DEBUG com.example.backend.security.JwtFilter - Filter 'jwtFilter' configured for use
+2026-07-05 22:03:16 [main] INFO  com.example.backend.BackendApplication - Started BackendApplication in 5.974 seconds (process running for 7.244)
+2026-07-05 22:03:33 [http-nio-8080-exec-2] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 22:03:33 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 22:03:33 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 22:03:33 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 22:03:45 [http-nio-8080-exec-6] INFO  com.example.backend.controller.TourController - PUT /api/tours/46d8e537-2829-432c-8371-b38d2484c321 by userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 22:03:45 [http-nio-8080-exec-6] INFO  com.example.backend.service.TourService - Updating tour id=46d8e537-2829-432c-8371-b38d2484c321 by userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 22:03:45 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoding location: 'Prague'
+2026-07-05 22:03:45 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoded 'Prague' → 14.460249,50.06694
+2026-07-05 22:03:45 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoding location: 'Vienna'
+2026-07-05 22:03:46 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourService - Geocoded 'Vienna' → 16.348388,48.198674
+2026-07-05 22:03:46 [http-nio-8080-exec-6] INFO  com.example.backend.service.TourService - Tour updated successfully: id=46d8e537-2829-432c-8371-b38d2484c321
+2026-07-05 22:03:46 [http-nio-8080-exec-8] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=9d599d96-9c48-4896-8d93-54706ad96a99
+2026-07-05 22:03:46 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=9d599d96-9c48-4896-8d93-54706ad96a99
