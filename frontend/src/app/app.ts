@@ -8,12 +8,13 @@ import { MapComponent } from '../components/map/map-component';
 import { AuthService } from '../services/auth.service';
 import { ProfileComponent } from '../components/auth/profile/profile';
 import { ImportExportButton } from '../components/import-export/import-export-button';
+import { StatsComponent } from '../components/stats/stats';
 import { Mediator } from '../services/mediator.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, SearchInput, List, LoginComponent, ProfileComponent, RegisterComponent, MapComponent, ImportExportButton],
+  imports: [CommonModule, SearchInput, List, LoginComponent, ProfileComponent, RegisterComponent, MapComponent, ImportExportButton, StatsComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
