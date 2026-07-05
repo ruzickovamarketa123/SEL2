@@ -104,15 +104,9 @@
           <textarea [ngModel]="vm.editData()?.comment" (ngModelChange)="vm.editData.set({...vm.editData()!, comment: $event})" rows="3" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 14px; outline: none; font-family: inherit; resize: vertical;"></textarea>
         </div>
 
-        @if (vm.errorMessage()) {
-          <div style="background: #fff0f0; color: #d32f2f; border: 1px solid #ffcdd2; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-top: 14px;">
-            {{ vm.errorMessage() }}
-          </div>
-        }
-
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
           <button type="button" (click)="vm.cancelEdit()" style="padding: 9px 18px; border-radius: 8px; border: 1.5px solid #ddd; background: white; color: #555; font-size: 14px; cursor: pointer;">cancel</button>
-          <button type="button" (click)="onSave()" [disabled]="!vm.isEditValid()" style="padding: 7px 14px;
+          <button type="button" (click)="onSave()" style="padding: 7px 14px;
           background: rgb(73, 157, 208, 0.8);
           color: #000;
           border: 1.5px solid #000;

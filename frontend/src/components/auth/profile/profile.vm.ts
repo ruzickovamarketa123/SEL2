@@ -14,6 +14,7 @@ export class ProfileViewModel {
   constructor(private authService: AuthService) {}
 
   open(): void {
+    console.log('open called');
     this.successMessage.set(null);
     this.errorMessage.set(null);
     this.form.set({ username: '', email: '', password: '' });
@@ -28,33 +29,15 @@ export class ProfileViewModel {
   updateEmail(value: string) { this.form.set({ ...this.form(), email: value }); }
   updatePassword(value: string) { this.form.set({ ...this.form(), password: value }); }
 
-  isFormValid(): string | null {
+  async save(): Promise<void> {
     const { username, email, password } = this.form();
     if (!username && !email && !password) {
-      return 'fill in at least one field to update.';
-    }
-    if (username && username.trim().length < 3) {
-      return 'username must be at least 3 characters.';
-    }
-    if (email && !email.includes('@')) {
-      return 'please enter a valid email.';
-    }
-    if (password && password.length < 6) {
-      return 'password must be at least 6 characters.';
-    }
-    return null;
-  }
-
-  async save(): Promise<void> {
-    const validationError = this.isFormValid();
-    if (validationError) {
-      this.errorMessage.set(validationError);
+      this.errorMessage.set('fill in at least one field to update.');
       return;
     }
     try {
       this.isLoading.set(true);
       await this.authService.updateProfile(this.form());
-      const { username } = this.form();
       if (username) this.authService.updateUsername(username);
       this.successMessage.set('profile updated successfully!');
     } catch (e) {
@@ -67,4 +50,4 @@ export class ProfileViewModel {
     getUsername(): string | null {
      return this.authService.getUsername();
     }
-}
+}

@@ -9,7 +9,6 @@ export class TourDetailsViewModel {
   tour = this.mediator.selectedTour;
   isEditing = signal(false);
   editTourData = signal<Tour | null>(null);
-  errorMessage = signal<string | null>(null);
 
   onEdit() {
     const currentTour = this.tour();
@@ -19,7 +18,6 @@ export class TourDetailsViewModel {
         from: currentTour.fromName || currentTour.from,
         to:   currentTour.toName   || currentTour.to,
       });
-      this.errorMessage.set(null);
       this.isEditing.set(true);
     }
   }
@@ -27,29 +25,14 @@ export class TourDetailsViewModel {
   cancelEdit() {
     this.isEditing.set(false);
     this.editTourData.set(null);
-    this.errorMessage.set(null);
   }
 
-  isEditValid(): boolean {
-    const t = this.editTourData();
-    if (!t) return false;
-    return t.name.trim().length > 0 && t.from.trim().length > 0 &&
-           t.to.trim().length > 0 && t.transportType !== null;
-  }
-
-  async saveEdit() {
+  saveEdit() {
     const updated = this.editTourData();
-    if (!updated || !this.isEditValid()) {
-      this.errorMessage.set('please fill in all required fields.');
-      return;
-    }
-    try {
-      await this.mediator.editTour(updated);
+    if (updated) {
+      this.mediator.editTour(updated);
       this.isEditing.set(false);
       this.editTourData.set(null);
-      this.errorMessage.set(null);
-    } catch (e) {
-      this.errorMessage.set('could not save changes. please try again.');
     }
   }
 
@@ -59,4 +42,4 @@ export class TourDetailsViewModel {
       this.mediator.deleteTour(currentTour.id);
     }
   }
-}
+}

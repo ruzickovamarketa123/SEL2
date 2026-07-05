@@ -1,34 +1,17 @@
 package com.example.backend.dto;
 
 import com.example.backend.entity.TourLog;
-import jakarta.validation.constraints.*;
-
 import java.util.UUID;
 
 public class TourLogDto {
     private UUID id;
     private UUID tourId;
-
-    @NotBlank(message = "Date is required")
     private String date;
-
-    @NotBlank(message = "Time is required")
     private String time;
-
-    @Positive(message = "Distance must be greater than 0")
     private double totalDistance;
-
-    @Min(value = 1, message = "Rating must be between 1 and 5")
-    @Max(value = 5, message = "Rating must be between 1 and 5")
     private int rating;
-
-    @NotBlank(message = "Comment is required")
     private String comment;
-
-    @NotBlank(message = "Difficulty is required")
     private String difficulty;
-
-    @Positive(message = "Time must be greater than 0")
     private double totalTime;
 
     public TourLogDto(TourLog log) {
@@ -65,4 +48,4 @@ public class TourLogDto {
     public void setDifficulty(String difficulty) { this.difficulty = difficulty; }
     public void setTotalTime(double totalTime) { this.totalTime = totalTime; }
 
-}
+}

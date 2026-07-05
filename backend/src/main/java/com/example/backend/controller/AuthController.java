@@ -4,7 +4,6 @@ import com.example.backend.dto.AuthResponseDto;
 import com.example.backend.dto.LoginRequestDto;
 import com.example.backend.dto.RegisterRequestDto;
 import com.example.backend.service.AuthService;
-import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +21,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public AuthResponseDto register(@Valid @RequestBody RegisterRequestDto dto) {
+    public AuthResponseDto register(@RequestBody RegisterRequestDto dto) {
         logger.info("POST /api/auth/register - username='{}'", dto.getUsername());
         return authService.register(dto);
     }
 
     @PostMapping("/login")
-    public AuthResponseDto login(@Valid @RequestBody LoginRequestDto dto) {
+    public AuthResponseDto login(@RequestBody LoginRequestDto dto) {
         logger.info("POST /api/auth/login - username='{}'", dto.getUsername());
         return authService.login(dto);
     }
-}
+}

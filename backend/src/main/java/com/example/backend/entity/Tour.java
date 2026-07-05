@@ -2,9 +2,6 @@ package com.example.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
@@ -16,25 +13,13 @@ public class Tour {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-    @NotBlank(message = "Tour name is required")
-    @Size(max = 100, message = "Tour name must be at most 100 characters")
     private String name;
-
     private String description;
-
-    @NotBlank(message = "Starting location is required")
     private String fromLocation;
-
-    @NotBlank(message = "Destination is required")
     private String toLocation;
-
     private String fromName;
     private String toName;
-
-    @NotNull(message = "Transport type is required")
     private String transportType;
-
     private Double distance;
     private Double estimatedTime;
 
@@ -113,4 +98,4 @@ public class Tour {
 
     public int getChildFriendliness() { return childFriendliness; }
     public void setChildFriendliness(int childFriendliness) { this.childFriendliness = childFriendliness; }
-}
+}
