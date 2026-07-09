@@ -19,7 +19,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    @JsonIgnore
+    @JsonIgnore //EVEN IF USER ENTITY SERIALIZED, HASH CANT LEAK
     private String passwordHash;
 
     public UUID getId() { return id; }

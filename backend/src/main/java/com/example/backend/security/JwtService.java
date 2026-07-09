@@ -18,20 +18,20 @@ public class JwtService {
 
     public String generateToken(UUID userId) {
         return Jwts.builder()
-                .subject(userId.toString())
+                .subject(userId.toString())     //SUBJECT IS UUID, NOT USERNAME
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 86400000))
-                .signWith(getKey())
+                .expiration(new Date(System.currentTimeMillis() + 86400000))        //24 HOURS EXPIRY
+                .signWith(getKey())     // SIHGNED WITH HMAC IN CONFIGURATION, NOT IN CODE
                 .compact();
     }
 
     public UUID extractUserId(String token) {
         String subject = Jwts.parser()
-                .verifyWith(getKey())
+                .verifyWith(getKey())   //checks hmac signature
                 .build()
-                .parseSignedClaims(token)
+                .parseSignedClaims(token)   //throws if signature is bad or expired
                 .getPayload()
-                .getSubject();
+                .getSubject();  //the userid from generatetoken
         return UUID.fromString(subject);
     }
 

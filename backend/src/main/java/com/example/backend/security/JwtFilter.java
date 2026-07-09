@@ -26,11 +26,14 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
+        //extracts the token
         String header = request.getHeader("Authorization");
 
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
+            //validate
             if (jwtService.isValid(token)) {
+                //resolve the user
                 UUID userId = jwtService.extractUserId(token);
                 request.setAttribute("userId", userId);
 

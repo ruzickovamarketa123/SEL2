@@ -36,7 +36,7 @@ public class AuthService {
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
-        user.setPasswordHash(passwordEncoder.encode(dto.getPassword()));
+        user.setPasswordHash(passwordEncoder.encode(dto.getPassword()));    //passwordencoer - bcryptpassword encoder wired in security config, PLAINTEXT EXISTS ONLY INSIDE THIS METHOD CALL - NEVER IN FIELD, LOGGED, PERSISTED
         userRepository.save(user);
 
         String token = jwtService.generateToken(user.getId());
@@ -53,9 +53,9 @@ public class AuthService {
                     return new UserNotFoundException("User not found");
                 });
 
-        if (!passwordEncoder.matches(dto.getPassword(), user.getPasswordHash())) {
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPasswordHash())) {      //HASHES THE ATTEMPT AND COMPARES, ONE-WAY
             logger.warn("Login failed: incorrect password for username '{}'", dto.getUsername());
-            throw new InvalidCredentialsException("Invalid password");
+            throw new InvalidCredentialsException("Invalid password");      //EXCEPTION ON FAIL, MAPS TO 401
         }
 
         String token = jwtService.generateToken(user.getId());

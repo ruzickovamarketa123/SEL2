@@ -26,7 +26,7 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    }  // ONE BEAN INJECTED EVERYWHERE A PASSWORD IS HANDLED, SALTS EACH HASH
 
     // CORS defined here so Spring Security applies it before blocking requests
     @Bean
