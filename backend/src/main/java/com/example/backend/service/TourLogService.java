@@ -36,6 +36,8 @@ public class TourLogService {
         logger.debug("Fetching all logs for userId={}", userId);
         return tourLogRepository.findByTourUserId(userId)
                 .stream()
+                // for each TourLog entity, build a new TourLogDto that wraps it
+                // (splitting dateTime into separate date/time strings for the frontend
                 .map(TourLogDto::new)
                 .toList();
     }
@@ -48,19 +50,22 @@ public class TourLogService {
 
     public TourLogDto create(TourLogDto dto, UUID userId) {
         logger.info("Creating log for tourId={} userId={}", dto.getTourId(), userId);
-
+        // The DTO tells us which tour this log is for — load it, so we
+        // can both attach the relationship and check ownership below
         Tour tour = tourRepository.findById(dto.getTourId())
                 .orElseThrow(() -> {
                     logger.error("Tour not found: id={}", dto.getTourId());
                     return new TourNotFoundException("Tour not found");
                 });
-
+        // TourLog has no "owner" field of its own
+        // This stops a user from adding logs to someone else's tour, even if they somehow know that tour's id.
         if (!tour.getUser().getId().equals(userId)) {
             logger.warn("Unauthorized log creation: userId={} tried to log on tourId={}",
                     userId, dto.getTourId());
             throw new UnauthorizedAccessException("Not authorized to add logs to this tour");
         }
-
+        //The DTO carries date/time as two separate strings
+        // but the entity needs a single combined LocalDateTime —
         TourLog log = new TourLog(
                 tour,
                 parseDateTime(dto.getDate(), dto.getTime()),
@@ -70,7 +75,8 @@ public class TourLogService {
                 dto.getDifficulty(),
                 dto.getTotalTime()
         );
-
+        // Save the new entity, then immediately wrap the *saved* version
+        // (now with a generated id) back into a DTO to return
         TourLogDto saved = new TourLogDto(tourLogRepository.save(log));
         logger.info("TourLog created: id={}", saved.getId());
         return saved;
@@ -115,6 +121,9 @@ public class TourLogService {
         return log;
     }
 
+
+    // Combines the DTO's separate "date" and "time" strings back into a single LocalDateTime
+    // which is what the TourLog entity actually stores
     private LocalDateTime parseDateTime(String date, String time) {
         return LocalDateTime.of(
                 LocalDate.parse(date),

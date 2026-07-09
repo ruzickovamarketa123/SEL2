@@ -50,6 +50,8 @@
           (importClicked)="onImport(importExportBtn)">
         </app-import-export>
 
+        <app-stats></app-stats>
+
         <app-profile></app-profile>
 
         <button class="logout-btn" (click)="authService.logout(); mediator.clearData()">
