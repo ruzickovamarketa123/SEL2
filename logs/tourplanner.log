@@ -1,0 +1,90 @@
+2026-07-09 01:05:09 [http-nio-8080-exec-6] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 01:05:09 [http-nio-8080-exec-6] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 01:05:09 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 01:05:09 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 10:14:46 [http-nio-8080-exec-5] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 10:14:46 [http-nio-8080-exec-5] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 10:14:46 [http-nio-8080-exec-7] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 10:14:46 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 10:14:56 [http-nio-8080-exec-9] INFO  com.example.backend.controller.AuthController - POST /api/auth/login - username='user'
+2026-07-09 10:14:56 [http-nio-8080-exec-9] INFO  com.example.backend.service.AuthService - Login attempt for username 'user'
+2026-07-09 10:14:56 [http-nio-8080-exec-9] WARN  com.example.backend.service.AuthService - Login failed: no user found with username 'user'
+2026-07-09 10:14:56 [http-nio-8080-exec-9] WARN  com.example.backend.exception.GlobalExceptionHandler - Resource not found: User not found
+2026-07-09 10:15:11 [http-nio-8080-exec-1] INFO  com.example.backend.controller.AuthController - POST /api/auth/register - username='user'
+2026-07-09 10:15:11 [http-nio-8080-exec-1] INFO  com.example.backend.service.AuthService - Registering new user 'user'
+2026-07-09 10:15:12 [http-nio-8080-exec-1] INFO  com.example.backend.service.AuthService - User registered successfully: id=6961149b-61f8-41db-901f-29b8c70ac8a1, username='user'
+2026-07-09 10:15:12 [http-nio-8080-exec-2] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=6961149b-61f8-41db-901f-29b8c70ac8a1
+2026-07-09 10:15:12 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=6961149b-61f8-41db-901f-29b8c70ac8a1
+2026-07-09 10:15:12 [http-nio-8080-exec-5] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=6961149b-61f8-41db-901f-29b8c70ac8a1
+2026-07-09 10:15:12 [http-nio-8080-exec-5] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=6961149b-61f8-41db-901f-29b8c70ac8a1
+2026-07-09 10:15:14 [http-nio-8080-exec-7] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=6961149b-61f8-41db-901f-29b8c70ac8a1
+2026-07-09 10:15:14 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourService - Fetching tours for userId=6961149b-61f8-41db-901f-29b8c70ac8a1
+2026-07-09 10:16:31 [http-nio-8080-exec-6] INFO  com.example.backend.controller.AuthController - POST /api/auth/login - username='user1'
+2026-07-09 10:16:31 [http-nio-8080-exec-6] INFO  com.example.backend.service.AuthService - Login attempt for username 'user1'
+2026-07-09 10:16:32 [http-nio-8080-exec-6] INFO  com.example.backend.service.AuthService - Login successful for username 'user1'
+2026-07-09 10:16:32 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 10:16:32 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 10:16:32 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 10:16:32 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 10:16:35 [http-nio-8080-exec-10] DEBUG com.example.backend.controller.TourController - GET /api/tours for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 10:16:35 [http-nio-8080-exec-10] DEBUG com.example.backend.service.TourService - Fetching tours for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:16:51 [http-nio-8080-exec-9] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:16:51 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:16:51 [http-nio-8080-exec-1] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:16:51 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:17:12 [http-nio-8080-exec-2] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:17:12 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:17:12 [http-nio-8080-exec-5] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:17:12 [http-nio-8080-exec-5] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:17:23 [http-nio-8080-exec-7] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:17:23 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:17:23 [http-nio-8080-exec-9] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:17:23 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:20:29 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:20:29 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:20:29 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 11:20:29 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:08:38 [http-nio-8080-exec-7] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:08:38 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:08:39 [http-nio-8080-exec-9] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:08:39 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:09:28 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:09:28 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:09:28 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:09:28 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:22:40 [http-nio-8080-exec-7] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:22:40 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:22:40 [http-nio-8080-exec-9] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:22:40 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:45:44 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:45:44 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:45:44 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 12:45:44 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:04:49 [http-nio-8080-exec-7] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:04:49 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:04:49 [http-nio-8080-exec-9] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:04:49 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:12:13 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:12:13 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:12:13 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:12:13 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:29:12 [http-nio-8080-exec-7] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:29:12 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:29:12 [http-nio-8080-exec-9] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:29:12 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:55:42 [http-nio-8080-exec-3] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:55:42 [http-nio-8080-exec-3] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:55:42 [http-nio-8080-exec-4] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 13:55:42 [http-nio-8080-exec-4] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:00:28 [http-nio-8080-exec-7] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:00:28 [http-nio-8080-exec-7] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:00:28 [http-nio-8080-exec-9] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:00:28 [http-nio-8080-exec-9] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:01:14 [http-nio-8080-exec-1] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:01:14 [http-nio-8080-exec-1] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:01:14 [http-nio-8080-exec-2] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:01:14 [http-nio-8080-exec-2] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:03:34 [http-nio-8080-exec-10] DEBUG com.example.backend.controller.TourLogController - GET /api/logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:03:34 [http-nio-8080-exec-10] DEBUG com.example.backend.service.TourLogService - Fetching all logs for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:03:34 [http-nio-8080-exec-8] DEBUG com.example.backend.controller.TourController - GET /api/tours/search?q=&minPopularity=0&minChildFriendliness=0 for userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd
+2026-07-09 14:03:34 [http-nio-8080-exec-8] DEBUG com.example.backend.service.TourService - Full-text search: term='' minPop=0 minChild=0 userId=2ea65940-7618-4894-ab2b-3cbe8b1c84fd

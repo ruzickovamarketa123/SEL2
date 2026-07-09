@@ -20,10 +20,10 @@ export class Mediator {
   minPopularity        = signal(0);
   minChildFriendliness = signal(0);
 
+  //timer used to debounce search input
   private searchDebounceTimer: any;
 
-  // popularity / child-friendliness now come computed from the backend on
-  // the Tour DTO itself — kept as an alias so the view models don't change.
+  // popularity / child-friendliness come computed from the backend on the Tour DTO itself
   enrichedTours = computed(() => this.tours());
 
   selectedTour = computed(() => {
@@ -41,8 +41,11 @@ export class Mediator {
   }
 
   // ── data loading ────────────────────────────────────────────────────────
+  // Loads logs first, then tours — because executeSearch() needs the
+  // backend to compute popularity/child-friendliness, 
+  // which depends on log data already being available.
   async loadData() {
-    const logs = await this.tourLogService.findAll();
+    const logs = await this.tourLogService.findAll(); //GET /api/logs
     this.tourLogs.set(logs);
     await this.executeSearch();
   }
@@ -60,6 +63,9 @@ export class Mediator {
   // ── search & filters ─────────────────────────────────────────────────────
   onSearchChanged(term: string) {
     this.searchTerm.set(term);
+    // Debounce: cancel any pending search still waiting from a previous keystroke, 
+    // then schedule a new one 300ms from now
+    // If the user keeps typing, this keeps resetting
     clearTimeout(this.searchDebounceTimer);
     this.searchDebounceTimer = setTimeout(() => this.executeSearch(), 300);
   }
@@ -68,6 +74,8 @@ export class Mediator {
     this.executeSearch();
   }
 
+  // The single place that actually calls the backend search endpoint.
+  // Private: only this class is allowed to trigger it directly
   private async executeSearch() {
     const results = await this.tourService.search(
       this.searchTerm().trim(),
@@ -89,6 +97,8 @@ export class Mediator {
   }
 
   // ── tour CRUD ────────────────────────────────────────────────────────────
+  //call the backend via tourService
+  // then re-run executeSearch() so `tours` reflects the fresh state from the database
   async addTour(newTourData: Tour) {
     await this.tourService.create(newTourData);
     await this.executeSearch();
@@ -136,12 +146,15 @@ export class Mediator {
 
   // ── import / export ──────────────────────────────────────────────────────
   async exportTours(): Promise<void> {
+    // Export needs ALL logs (not filtered/searched ones), 
+    // so it fetches them fresh here
     const allLogs = await this.tourLogService.findAll();
     await this.importExportService.exportAllTours(this.tours(), allLogs);
   }
 
   async importTours(file: File) {
     const result = await this.importExportService.importTours(file);
+    // After import, both tours and logs may have changed - refresh both.
     const logs = await this.tourLogService.findAll();
     this.tourLogs.set(logs);
     await this.executeSearch();
