@@ -25,6 +25,7 @@ export class ImportExportService {
   // ─── EXPORT ────────────────────────────────────────────────────────────────
 
   async exportAllTours(tours: Tour[], allLogs: TourLog[]): Promise<void> {
+     // For each tour, attach only the logs that belong to it
     const toursWithLogs: TourWithLogs[] = tours.map(tour => ({
       ...tour,
       logs: allLogs.filter(log => log.tourId === tour.id)
@@ -36,10 +37,19 @@ export class ImportExportService {
       tours: toursWithLogs
     };
 
+    // JSON.stringify(data, null, 2): the "2" adds 2-space indentation
     const json = JSON.stringify(exportData, null, 2);
+
+    // A Blob represents a raw chunk of data the browser can treat as a
+    // virtual file, entirely in memory — nothing is written to disk yet.
     const blob = new Blob([json], { type: 'application/json' });
+
+    // Creates a temporary local URL (like "blob:http://localhost:4200/...")
+    // that only the current browser tab understands, pointing at that Blob.
     const url  = URL.createObjectURL(blob);
 
+    //create an invisible DOM element, configure it, and simulate a click
+    //The "download" attribute forces the browser to save the file instead of navigating to it.
     const a = document.createElement('a');
     a.href     = url;
     a.download = `tours-export-${new Date().toISOString().slice(0, 10)}.json`;
@@ -49,6 +59,9 @@ export class ImportExportService {
 
   // ─── IMPORT ────────────────────────────────────────────────────────────────
 
+  // Reads a .json file the user picked and recreates every tour (and its
+  // logs) through the normal backend create() calls 
+  // every tour goes through the exact same path as if the user had typed into the Add Tour form.
   async importTours(file: File): Promise<{ imported: number; errors: string[] }> {
     const text = await file.text();
     let data: TourExportData;

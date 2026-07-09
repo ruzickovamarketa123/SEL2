@@ -33,7 +33,7 @@ export class StatsViewModel {
     this.isVisible.set(true);
     this.isLoading.set(true);
     try {
-      this.allTours.set(await this.tourService.findAll());
+      this.allTours.set(await this.tourService.findAll()); // GET /api/tours
     } catch {
       this.allTours.set([]);
     } finally {
@@ -68,8 +68,12 @@ export class StatsViewModel {
     const logs = this.logs();
     if (tours.length === 0 || logs.length === 0) return null;
 
+    //count how many logs exist for each tourId
     const countByTour = new Map<string, number>();
     for (const log of logs) {
+      // countByTour.get(log.tourId) returns undefined the FIRST time a given tourId is seen
+      // The ?? 0 says "if there's no count yet, treat it as zero"
+      // then +1 for the log currently being processed.
       countByTour.set(log.tourId, (countByTour.get(log.tourId) ?? 0) + 1);
     }
 
@@ -94,7 +98,9 @@ export class StatsViewModel {
     }
     const total = logs.length;
     return order
+      // Only keep difficulty levels that actually have at least one log
       .filter(d => counts.has(d))
+      // Turn each difficulty name into a full breakdown object.
       .map(d => ({
         difficulty: d,
         count: counts.get(d)!,

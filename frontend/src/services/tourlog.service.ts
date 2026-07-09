@@ -25,6 +25,8 @@ export class TourLogService {
     );
   }
 
+  //the body sent here is a TourLog (the frontend model, with separate date/time strings)
+  // the backend controller receives it as a TourLogDto
   async create(tourLog: TourLog): Promise<TourLog> {
     return firstValueFrom(
       this.http.post<TourLog>(this.API_URL, tourLog, { headers: this.getHeaders() })
